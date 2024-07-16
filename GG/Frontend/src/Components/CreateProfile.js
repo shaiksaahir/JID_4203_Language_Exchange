@@ -19,6 +19,7 @@ function CreateProfile() {
   const [gender, setGender] = useState('');
   const [profession, setProfession] = useState('');
   const [hobby, setHobby] = useState('');
+  const [mbti, setMBTI] = useState('');
   const [errMsg ,setErrMsg] = useState('');
   
   // States for checking the errors
@@ -55,6 +56,7 @@ function CreateProfile() {
   {value:"Finance", label:"Finance"},
   {value:"Law", label:"Law"},
   {value:"Medecine", label:"Medecine"},
+  {value:"Scientist", label:"Scientist"},
  ]
  const Hobby = [
   {value:"Reading", label:"Reading"},
@@ -68,6 +70,25 @@ function CreateProfile() {
   {value:"Gaming", label:"Gaming"},
   {value:"Cooking", label:"Cooking"},
   {value:"Fishing", label:"Fishing"},
+ ]
+
+ const MBTI = [
+  {value:"Architect", label:"Architect"},
+  {value:"Logician", label: "Logician"},
+  {value:"Commander", label:"Commander"},
+  {value:"Debater", label:"Debater"},
+  {value:"Advocate", label:"Advocate"},
+  {value:"Mediator", label:"Mediator"},
+  {value:"Protagonist", label:"Protagonist"},
+  {value:"Campaigner", label:"Campaigner"},
+  {value:"Logistician", label:"Logistician"},
+  {value:"Defender", label:"Defender"},
+  {value:"Executive", label:"Executive"},
+  {value:"Consul", label:"Consul"},
+  {value:"Virtuoso", label:"Virtuoso"},
+  {value:"Adventurer", label:"Adventurer"},
+  {value:"Entrepreneur", label:"Entrepreneur"},
+  {value:"Entertainer", label:"Entertainer"},
  ]
 
 
@@ -98,6 +119,11 @@ function CreateProfile() {
  const handleHobby = (selectedOption) => {
   setHobby(selectedOption.value);
  };
+
+ const handleMBTI = (selectedOption) => {
+  setMBTI(selectedOption.value);
+ };
+
 const [search] = useSearchParams();
  const id = search.get("id");
  console.log("Your id is: ", id)
@@ -113,8 +139,8 @@ const [search] = useSearchParams();
     }
     setError("");
     try{
-      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby)
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby);
+      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti)
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby); // integrate backend
       console.log('Create done')
 
       if (data && data.errCode !== 0){
@@ -225,6 +251,11 @@ const [search] = useSearchParams();
         <div className='form-group'>
         <label className="label">Hobby</label>
         <Select options={Hobby} onChange={handleHobby}/>
+        </div>
+
+        <div className='form-group'>
+        <label className="label">Personality Type</label>
+        <Select options={MBTI} onChange={handleMBTI}/>
         </div>
         
 
