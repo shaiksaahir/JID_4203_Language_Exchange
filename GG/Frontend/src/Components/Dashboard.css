@@ -1,0 +1,65 @@
+.leftpic {
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    width: 50px;
+    height: 55px;
+    float: left;
+  }
+  .text{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 30px;
+    height: 30px;
+    float: left;
+
+  }
+
+  .left {
+    background:linear-gradient(135deg, rgb(19, 206, 209) 0%,rgb(165, 136, 74) 100%);
+  }
+
+  .leftOnline {
+    background:lightgreen;
+    display: flex;
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: left;
+  
+  }
+  .leftOffline {
+    background:lightpink;
+    display: flex;
+    margin-top: 20px;
+    flex-direction: row;
+    align-items: left;
+  }
+  .btn-chat{
+    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+    width: 15%;
+    margin: 10px 0;
+    height: 35px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    color: white;
+    float: center;
+  }
+  .btn-help{
+    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+    width: 35px;
+    margin: 10px 0;
+    height: 35px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    color: white;
+    float: right;
+  }
+
+  .frientlist{
+    height: 200px;
+    overflow-y:scroll
+  }

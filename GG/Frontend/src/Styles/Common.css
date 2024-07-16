@@ -1,0 +1,44 @@
+.btn-group{
+    background-color: #64c4a1; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 50%; /* Set a width if needed */
+     /* Make the buttons appear below each other */
+    
+  }
+  
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  .screen-Background {
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+  }
+
+  .screen-Container {
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 15px;
+  }
+  .btn-Screen{
+    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+    width: 100%;
+    margin: 10px 0;
+    height: 30px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    color: white;
+}
+
+.screen-Content {
+  padding: 15px;
+}

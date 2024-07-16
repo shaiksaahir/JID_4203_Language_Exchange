@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "agora-rtc-sdk-ng": "^4.19.1",
+    "axios": "^1.4.0",
+    "mysql2": "^3.5.2",
+    "react-input-emoji": "^5.1.1",
+    "react-simple-keyboard": "^3.6.43",
+    "react-translator-component": "^2.2.0",
+    "simple-keyboard": "^3.6.34",
+    "translate": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2"
+  }
+}
