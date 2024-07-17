@@ -242,6 +242,12 @@ function Dashboard()  {
         <Button className="btn-chat" onClick={handleChat}>Chat</Button>
         <Button className="btn-Screen" onClick={call}>Call</Button>
         <Button className="btn-Screen" onClick={Translator}>Translator</Button>
+        <Button className="btn-Screen" onClick={() => navigate({
+              pathname: "/CreateProfile",
+              search: createSearchParams({ id: id }).toString()
+            })}>
+            Set Profile
+          </Button>
         <Button className="btn-Screen" onClick={Logout}>
           Logout
         </Button>

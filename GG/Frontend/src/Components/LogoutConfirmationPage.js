@@ -1,8 +1,7 @@
 import React from "react";
 import './LogoutConfirmationPage.scss';
-import {handleGetUser, handleUserLogout} from '../Services/userService';
-
-import {  createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
+import { handleGetUser, handleUserLogout } from '../Services/userService';
+import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 import logo from "../Styles/logo.png";
 import Button from 'react-bootstrap/Button';
 
@@ -14,53 +13,52 @@ function LogoutConfirmationPage() {
     let data;
     const navigate = useNavigate();
 
-    const[search] = useSearchParams();
+    const [search] = useSearchParams();
     const id = search.get("id");
-    console.log('test ' + id)
-    const ReturnDashboard = async(e) => {
-        navigate({
-          pathname: "/Dashboard",
-          search: createSearchParams({
-              id: id
-          }).toString()
-      });
-    }
-    const handleOnClick = async() => {
+    console.log('test ' + id);
 
-        try{
+    const ReturnDashboard = async (e) => {
+        navigate({
+            pathname: "/Dashboard",
+            search: createSearchParams({
+                id: id
+            }).toString()
+        });
+    }
+
+    const handleOnClick = async () => {
+        try {
             data = await handleUserLogout(id);
             console.log("check" + data.errorCode);
-            if (data.errorCode == 0){
+            if (data.errorCode === 0) {
                 // todo when logout successful!
                 navigate({
-                        pathname: "/",
-                        search: createSearchParams({
-                            id: id
-                        }).toString()
-                    });
-                }
-        } catch(error){
-            if (error.response){
-                if (error.response.data){
+                    pathname: "/Login",
+                });
+            }
+        } catch (error) {
+            if (error.response) {
+                if (error.response.data) {
                     this.setState({
                         errMessage: error.response.data.message
-                    })
+                    });
                 }
             }
         }
     }
+
     return (
-         <div className=" col-12 screen-Background">
+        <div className=" col-12 screen-Background">
             <div className="screen-Container">
                 <div className="screen-Content">
-                    <h6>Are you sure you want to logout ?</h6>
-                        <div className="action_btn">
-                              <Button  className="btn-yes"onClick={handleOnClick}>Yes</Button>
-                              <Button className="btn-no" onClick={ReturnDashboard}>No</Button>
-                        </div>
+                    <h6>Are you sure you want to logout?</h6>
+                    <div className="action_btn">
+                        <Button className="btn-yes" onClick={handleOnClick}>Yes</Button>
+                        <Button className="btn-no" onClick={ReturnDashboard}>No</Button>
+                    </div>
                 </div>
             </div>
-         </div>
+        </div>
     );
 }
 export default LogoutConfirmationPage;
