@@ -59,11 +59,12 @@ let handleProfileCreation = async (req, res) => {
     let gender = req.body.gender;
     let profession = req.body.profession;
     let hobby = req.body.hobby;
+    let mbti = req.body.mbti;
     let id = req.body.id
     let save = true
     //console.log("Id passed to profile controller is: ", id)
     // Call handleProfileCreation to have the value of userData
-    let userData = await userService.handleProfileCreation(id, native_language, target_language, target_language_proficiency, age, gender, profession, hobby, save)
+    let userData = await userService.handleProfileCreation(id, native_language, target_language, target_language_proficiency, age, gender, profession, hobby, mbti, save)
     console.log(userData)
     return res.status(200).json({
          errorCode: userData.errCode,
@@ -75,8 +76,9 @@ let handleProfileCreation = async (req, res) => {
 let handleDataPopulation = async (req, res) => {
     let languages = ["English", "Korean"];
     let genders = ["Male", "Female", "Other"];
-    let professions = ["Education", "Engineering", "Retail", "Finance", "Law", "Medecine"];
+    let professions = ["Education", "Engineering", "Retail", "Finance", "Law", "Medecine", "Scientist"];
     let hobbies = ["Reading", "Sport", "Gardening", "Workout", "Music", "Art", "Photography", "Writing", "Gaming", "Cooking", "Fishing"];
+    let mbtis = ["Architect", "Logician", "Commander", "Debater", "Advocate", "Mediator", "Protagonist", "Campaigner", "Logistician", "Defender", "Executive", "Consul", "Virtuoso", "Adventurer", "Entrepreneur", "Entertainer"];
     let proficiencies = ["Beginner", "Elementary", "Intermediate", "Proficient", "Fluent"];
     for (let i=0; i<100; i++) {
         let fName = "SampleUser_" + i
@@ -90,8 +92,9 @@ let handleDataPopulation = async (req, res) => {
         let gender = genders[Math.floor(Math.random() * 3)];
         let profession = professions[Math.floor(Math.random() * 6)];
         let hobby = hobbies[Math.floor(Math.random() * 11)];
+        let mbti = mbtis[Math.floor(Math.random() * 16)];
         let proficiency = proficiencies[Math.floor(Math.random() * 5)];
-        let userData = await userService.handleDataPopulation(fName, lName, email, pass, native, target, age, gender, proficiency, profession, hobby)
+        let userData = await userService.handleDataPopulation(fName, lName, email, pass, native, target, age, gender, proficiency, profession, hobby, mbti)
     }
 }
 
