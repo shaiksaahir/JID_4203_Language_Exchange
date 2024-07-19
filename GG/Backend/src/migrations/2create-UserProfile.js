@@ -35,6 +35,10 @@ module.exports = {
             allowNull: true,
             type: Sequelize.STRING
         },
+        mbti: {
+            allowNull: true,
+            type: Sequelize.STRING
+        },
         createdAt: {
             allowNull: false,
             type: Sequelize.DATE

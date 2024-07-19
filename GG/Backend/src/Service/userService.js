@@ -123,7 +123,7 @@ let checkUserEmail = (userEmail) => {
     })
 }
 
-let handleProfileCreation = (id, native_language, target_language, target_language_proficiency, age, gender, profession, hobby, save) => {
+let handleProfileCreation = (id, native_language, target_language, target_language_proficiency, age, gender, profession, hobby, mbti, save) => {
     return new Promise(async (resolve, reject) => {
         try{
             let userData = {};
@@ -136,7 +136,8 @@ let handleProfileCreation = (id, native_language, target_language, target_langua
                 age: age,
                 gender: gender,
                 profession: profession,
-                hobby: hobby
+                hobby: hobby,
+                mbti: mbti
             });
             if(save) {
                 await userProfile.save()
@@ -152,7 +153,7 @@ let handleProfileCreation = (id, native_language, target_language, target_langua
     })
 }
 
-let handleDataPopulation = (fName, lName, email, pass, native, target, age, gender, proficiency, profession, hobby) => {
+let handleDataPopulation = (fName, lName, email, pass, native, target, age, gender, proficiency, profession, hobby, mbti) => {
     return new Promise(async (resolve, reject) => {
         try{
             //await db.UserAccount.truncate()
@@ -161,7 +162,7 @@ let handleDataPopulation = (fName, lName, email, pass, native, target, age, gend
             let account = await handleUserRegister(fName, lName, email, pass, true)
             let id = account.id
             console.log("id from account is: ", id)
-            let profile = await handleProfileCreation(id, native, target, proficiency, age, gender, profession, hobby, true)
+            let profile = await handleProfileCreation(id, native, target, proficiency, age, gender, profession, hobby, mbti, true)
             console.log("hi");
             userData.errCode = 0;
             userData.errMessage = 'Data Successfully Populated!';

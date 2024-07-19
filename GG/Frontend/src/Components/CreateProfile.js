@@ -139,8 +139,9 @@ const [search] = useSearchParams();
     }
     setError("");
     try{
+      // for backend
       console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti)
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby); // integrate backend
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti);
       console.log('Create done')
 
       if (data && data.errCode !== 0){
