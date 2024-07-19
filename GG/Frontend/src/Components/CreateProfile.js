@@ -20,6 +20,7 @@ function CreateProfile() {
   const [profession, setProfession] = useState('');
   const [hobby, setHobby] = useState('');
   const [mbti, setMBTI] = useState('');
+  const [visibility, setVisibility] = useState('');
   const [errMsg ,setErrMsg] = useState('');
   
   // States for checking the errors
@@ -91,7 +92,10 @@ function CreateProfile() {
   {value:"Entertainer", label:"Entertainer"},
  ]
 
-
+ const VisibilityOptions = [
+  { value: "Show", label: "Show" },
+  { value: "Hide", label: "Hide" },
+ ];
 
 
  const handleNativeLanguage = (selectedOption) => {
@@ -124,6 +128,10 @@ function CreateProfile() {
   setMBTI(selectedOption.value);
  };
 
+ const handleVisibility = (selectedOption) => {
+  setVisibility(selectedOption.value)
+ };
+
 const [search] = useSearchParams();
  const id = search.get("id");
  console.log("Your id is: ", id)
@@ -140,8 +148,8 @@ const [search] = useSearchParams();
     setError("");
     try{
       // for backend
-      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti)
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti);
+      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility)
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility);
       console.log('Create done')
 
       if (data && data.errCode !== 0){
@@ -257,6 +265,11 @@ const [search] = useSearchParams();
         <div className='form-group'>
         <label className="label">Personality Type</label>
         <Select options={MBTI} onChange={handleMBTI}/>
+        </div>
+
+        <div className='form-group'>
+          <label className="label">Visibility</label>
+          <Select options={VisibilityOptions} onChange={handleVisibility} />
         </div>
         
 
