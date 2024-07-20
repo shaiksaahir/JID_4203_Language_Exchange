@@ -21,6 +21,7 @@ function CreateProfile() {
   const [hobby, setHobby] = useState('');
   const [mbti, setMBTI] = useState('');
   const [visibility, setVisibility] = useState('');
+  const [dateAvailable, setDateAvailable] = useState('');
   const [errMsg ,setErrMsg] = useState('');
   
   // States for checking the errors
@@ -97,6 +98,15 @@ function CreateProfile() {
   { value: "Hide", label: "Hide" },
  ];
 
+const DateAvailable = [
+  { value: "Sunday", label: "Sunday" },
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
+];
 
  const handleNativeLanguage = (selectedOption) => {
   console.log(selectedOption.value)
@@ -131,6 +141,10 @@ function CreateProfile() {
  const handleVisibility = (selectedOption) => {
   setVisibility(selectedOption.value)
  };
+const handleDateAvailability = (selectedOptions) => {
+  const values = selectedOptions.map(option => option.value);
+  setDateAvailable(values);
+};
 
 const [search] = useSearchParams();
  const id = search.get("id");
@@ -148,8 +162,8 @@ const [search] = useSearchParams();
     setError("");
     try{
       // for backend
-      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility)
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility);
+      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility + dateAvailable)
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility + dateAvailable);
       console.log('Create done')
 
       if (data && data.errCode !== 0){
@@ -265,6 +279,11 @@ const [search] = useSearchParams();
         <div className='form-group'>
         <label className="label">Personality Type</label>
         <Select options={MBTI} onChange={handleMBTI}/>
+        </div>
+
+        <div className='form-group'>
+        <label className="label">Date Availability</label>
+        <Select options={DateAvailable} isMulti onChange={handleDateAvailability}/>
         </div>
 
         <div className='form-group'>
