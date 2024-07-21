@@ -21,8 +21,8 @@ function CreateProfile() {
   const [hobby, setHobby] = useState('');
   const [mbti, setMBTI] = useState('');
   const [visibility, setVisibility] = useState('');
-  const [dateAvailable, setDateAvailable] = useState('');
-  const [timeAvailable, setTimeAvailable] = useState('');
+  const [datesAvailable, setDatesAvailable] = useState('');
+  const [timesAvailable, setTimesAvailable] = useState('');
   const [errMsg ,setErrMsg] = useState('');
   
   // States for checking the errors
@@ -99,7 +99,7 @@ function CreateProfile() {
   { value: "Hide", label: "Hide" },
  ];
 
-const DateAvailable = [
+const DatesAvailable = [
   { value: "Sunday", label: "Sunday" },
   { value: "Monday", label: "Monday" },
   { value: "Tuesday", label: "Tuesday" },
@@ -109,7 +109,7 @@ const DateAvailable = [
   { value: "Saturday", label: "Saturday" },
 ];
 
-const TimeAvailable = [
+const TimesAvailable = [
   { value: "12AM - 1AM", label: "12AM - 1AM" },
   { value: "1AM - 2AM", label: "1AM - 2AM" },
   { value: "2AM - 3AM", label: "2AM - 3AM" },
@@ -169,13 +169,16 @@ const TimeAvailable = [
  const handleVisibility = (selectedOption) => {
   setVisibility(selectedOption.value)
  };
-const handleDateAvailability = (selectedOptions) => {
+
+const handleDatesAvailable = (selectedOptions) => {
   const values = selectedOptions.map(option => option.value);
-  setDateAvailable(values);
+  setDatesAvailable(values);
+
 };
-const handleTimeAvailability = (selectedOptions) => {
+const handleTimesAvailable = (selectedOptions) => {
   const values = selectedOptions.map(option => option.value);
-  setTimeAvailable(values);
+  setTimesAvailable(values);
+
 };
 
 const [search] = useSearchParams();
@@ -193,10 +196,12 @@ const [search] = useSearchParams();
     }
     setError("");
     try{
-      // for backend
-      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility + dateAvailable + timeAvailable)
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility + dateAvailable + timeAvailable);
+        // for backend
+        console.log('Sending create: ' + nativeLanguage + targetLanguage + targetLanguageProficiency + age + gender + profession + hobby + mbti + datesAvailable + timesAvailable + visibility);
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, "" + datesAvailable, "" + timesAvailable, visibility);
       console.log('Create done')
+      console.log(datesAvailable);
+      console.log(timesAvailable);
 
       if (data && data.errCode !== 0){
           setSubmitted(true);
@@ -315,12 +320,12 @@ const [search] = useSearchParams();
 
         <div className='form-group'>
         <label className="label">Date Availability</label>
-        <Select options={DateAvailable} isMulti onChange={handleDateAvailability}/>
+        <Select options={DatesAvailable} isMulti onChange={handleDatesAvailable}/>
         </div>
 
         <div className='form-group'>
         <label className="label">Time Availability</label>
-        <Select options={TimeAvailable} isMulti onChange={handleTimeAvailability}/>
+        <Select options={TimesAvailable} isMulti onChange={handleTimesAvailable}/>
         </div>
 
         <div className='form-group'>
