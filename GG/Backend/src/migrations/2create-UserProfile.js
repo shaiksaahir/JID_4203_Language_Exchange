@@ -1,4 +1,8 @@
 'use strict';
+
+const { type } = require("os");
+const { sequelize } = require("../models");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('UserProfile', {
@@ -38,6 +42,14 @@ module.exports = {
         mbti: {
             allowNull: true,
             type: Sequelize.STRING
+        },
+        dates_available: {
+            allowNull: true,
+            type: sequelize.STRING
+        },
+        times_available: {
+            allowNull: true,
+            type: sequelize.STRING
         },
         visibility: {
             allowNull: true,

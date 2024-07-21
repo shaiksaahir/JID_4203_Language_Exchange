@@ -50,7 +50,7 @@ function Dashboard()  {
         //console.log("start")
         let lists = await handleFindFriendsApi(id);
         setfriendids(lists.chatsData)
-        console.log('friends list length: ' + friendids.length)
+        //console.log('friends list length: ' + friendids.length)
         for(let i = 0; i < friendids.length; i++) {
           let friend = await handleUserDashBoardApi(friendids[i].user2_ID);
           let friendName = friend.user.firstName + ' ' + friend.user.lastName

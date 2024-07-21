@@ -28,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     profession: DataTypes.STRING,
     hobby: DataTypes.STRING,
     mbti: DataTypes.STRING,
+    dates_available: DataTypes.STRING,
+    times_available: DataTypes.STRING,
     visibility: DataTypes.STRING
   }, {
     sequelize,

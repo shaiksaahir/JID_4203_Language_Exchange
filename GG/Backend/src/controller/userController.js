@@ -60,12 +60,14 @@ let handleProfileCreation = async (req, res) => {
     let profession = req.body.profession;
     let hobby = req.body.hobby;
     let mbti = req.body.mbti;
+    let dates_available = req.body.dates_available;
+    let times_available = req.body.times_available;
     let visibility = req.body.visibility;
     let id = req.body.id
     let save = true
     //console.log("Id passed to profile controller is: ", id)
     // Call handleProfileCreation to have the value of userData
-    let userData = await userService.handleProfileCreation(id, native_language, target_language, target_language_proficiency, age, gender, profession, hobby, mbti, visibility, save)
+    let userData = await userService.handleProfileCreation(id, native_language, target_language, target_language_proficiency, age, gender, profession, hobby, mbti, dates_available, times_available, visibility, save)
     console.log(userData)
     return res.status(200).json({
          errorCode: userData.errCode,
@@ -80,6 +82,8 @@ let handleDataPopulation = async (req, res) => {
     let professions = ["Education", "Engineering", "Retail", "Finance", "Law", "Medecine", "Scientist"];
     let hobbies = ["Reading", "Sport", "Gardening", "Workout", "Music", "Art", "Photography", "Writing", "Gaming", "Cooking", "Fishing"];
     let mbtis = ["Architect", "Logician", "Commander", "Debater", "Advocate", "Mediator", "Protagonist", "Campaigner", "Logistician", "Defender", "Executive", "Consul", "Virtuoso", "Adventurer", "Entrepreneur", "Entertainer"];
+    let dates_available_types = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let times_available_types = ["12AM - 1AM", "1AM - 2AM"];
     let visibilities = ["Show", "Hide"];
     let proficiencies = ["Beginner", "Elementary", "Intermediate", "Proficient", "Fluent"];
     for (let i=0; i<100; i++) {
@@ -95,9 +99,11 @@ let handleDataPopulation = async (req, res) => {
         let profession = professions[Math.floor(Math.random() * 6)];
         let hobby = hobbies[Math.floor(Math.random() * 11)];
         let mbti = mbtis[Math.floor(Math.random() * 16)];
+        let dates = dates_available_types[Math.floor(Math.random() * 7)];
+        let times = times_available_types[Math.floor(Math.random() * 2)];
         let visibility = visibilities[Math.floor(Math.random() * 2)];
         let proficiency = proficiencies[Math.floor(Math.random() * 5)];
-        let userData = await userService.handleDataPopulation(fName, lName, email, pass, native, target, age, gender, proficiency, profession, hobby, mbti, visibility)
+        let userData = await userService.handleDataPopulation(fName, lName, email, pass, native, target, age, gender, proficiency, profession, hobby, mbti, dates, times, visibility)
     }
 }
 

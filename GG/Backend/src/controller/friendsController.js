@@ -14,7 +14,7 @@ let findFriends = async (req, res) => {
     //let user1_ID = req.params.user1_ID
     console.log("iddd" + req.body.id)
     let user1_ID = req.body.id
-    console.log("check friends for userID >>>>", user1_ID)
+    //console.log("check friends for userID >>>>", user1_ID)
     let messageData = await friendsService.handleFindFriends(user1_ID)
     console.log(messageData.data)
     return res.status(200).json({
