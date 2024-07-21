@@ -82,7 +82,7 @@ let handleDataPopulation = async (req, res) => {
     let professions = ["Education", "Engineering", "Retail", "Finance", "Law", "Medecine", "Scientist"];
     let hobbies = ["Reading", "Sport", "Gardening", "Workout", "Music", "Art", "Photography", "Writing", "Gaming", "Cooking", "Fishing"];
     let mbtis = ["Architect", "Logician", "Commander", "Debater", "Advocate", "Mediator", "Protagonist", "Campaigner", "Logistician", "Defender", "Executive", "Consul", "Virtuoso", "Adventurer", "Entrepreneur", "Entertainer"];
-    let dates_available_types = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    let dates_available_types = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     let times_available_types = ["12AM - 1AM", "1AM - 2AM"];
     let visibilities = ["Show", "Hide"];
     let proficiencies = ["Beginner", "Elementary", "Intermediate", "Proficient", "Fluent"];

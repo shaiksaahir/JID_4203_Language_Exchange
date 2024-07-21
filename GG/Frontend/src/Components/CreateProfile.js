@@ -194,12 +194,12 @@ const [search] = useSearchParams();
     }
     setError("");
     try{
-      // for backend
-      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility + datesAvailable + timesAvailable);
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility, datesAvailable, timesAvailable);
+        // for backend
+        console.log('Sending create: ' + nativeLanguage + targetLanguage + targetLanguageProficiency + age + gender + profession + hobby + mbti + datesAvailable + timesAvailable + visibility);
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, "" + datesAvailable, "" + timesAvailable, visibility);
       console.log('Create done')
-      console.log(dates_available);
-      console.log(time_available);
+      console.log(datesAvailable);
+      console.log(timesAvailable);
 
       if (data && data.errCode !== 0){
           setSubmitted(true);
