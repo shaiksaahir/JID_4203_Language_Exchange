@@ -169,6 +169,7 @@ const TimesAvailable = [
  const handleVisibility = (selectedOption) => {
   setVisibility(selectedOption.value)
  };
+
 const handleDatesAvailable = (selectedOptions) => {
   const values = selectedOptions.map(option => option.value);
   setDatesAvailable(values);
@@ -177,6 +178,7 @@ const handleDatesAvailable = (selectedOptions) => {
 const handleTimesAvailable = (selectedOptions) => {
   const values = selectedOptions.map(option => option.value);
   setTimesAvailable(values);
+
 };
 
 const [search] = useSearchParams();
