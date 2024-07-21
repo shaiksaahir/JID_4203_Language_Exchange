@@ -21,6 +21,8 @@ function CreateProfile() {
   const [hobby, setHobby] = useState('');
   const [mbti, setMBTI] = useState('');
   const [visibility, setVisibility] = useState('');
+  const [dateAvailable, setDateAvailable] = useState('');
+  const [timeAvailable, setTimeAvailable] = useState('');
   const [errMsg ,setErrMsg] = useState('');
   
   // States for checking the errors
@@ -97,6 +99,42 @@ function CreateProfile() {
   { value: "Hide", label: "Hide" },
  ];
 
+const DateAvailable = [
+  { value: "Sunday", label: "Sunday" },
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
+];
+
+const TimeAvailable = [
+  { value: "12AM - 1AM", label: "12AM - 1AM" },
+  { value: "1AM - 2AM", label: "1AM - 2AM" },
+  { value: "2AM - 3AM", label: "2AM - 3AM" },
+  { value: "3AM - 4AM", label: "3AM - 4AM" },
+  { value: "4AM - 5AM", label: "4AM - 5AM" },
+  { value: "5AM - 6AM", label: "5AM - 6AM" },
+  { value: "6AM - 7AM", label: "6AM - 7AM" },
+  { value: "7AM - 8AM", label: "7AM - 8AM" },
+  { value: "8AM - 9AM", label: "8AM - 9AM" },
+  { value: "9AM - 10AM", label: "9AM - 10AM" },
+  { value: "10AM - 11AM", label: "10AM - 11AM" },
+  { value: "11AM - 12PM", label: "11AM - 12PM" },
+  { value: "12PM - 1PM", label: "12PM - 1PM" },
+  { value: "1PM - 2PM", label: "1PM - 2PM" },
+  { value: "2PM - 3PM", label: "2PM - 3PM" },
+  { value: "3PM - 4PM", label: "3PM - 4PM" },
+  { value: "4PM - 5PM", label: "4PM - 5PM" },
+  { value: "5PM - 6PM", label: "5PM - 6PM" },
+  { value: "6PM - 7PM", label: "6PM - 7PM" },
+  { value: "7PM - 8PM", label: "7PM - 8PM" },
+  { value: "8PM - 9PM", label: "8PM - 9PM" },
+  { value: "9PM - 10PM", label: "9PM - 10PM" },
+  { value: "10PM - 11PM", label: "10PM - 11PM" },
+  { value: "11PM - 12AM", label: "11PM - 12AM" },
+];
 
  const handleNativeLanguage = (selectedOption) => {
   console.log(selectedOption.value)
@@ -131,6 +169,14 @@ function CreateProfile() {
  const handleVisibility = (selectedOption) => {
   setVisibility(selectedOption.value)
  };
+const handleDateAvailability = (selectedOptions) => {
+  const values = selectedOptions.map(option => option.value);
+  setDateAvailable(values);
+};
+const handleTimeAvailability = (selectedOptions) => {
+  const values = selectedOptions.map(option => option.value);
+  setTimeAvailable(values);
+};
 
 const [search] = useSearchParams();
  const id = search.get("id");
@@ -148,8 +194,8 @@ const [search] = useSearchParams();
     setError("");
     try{
       // for backend
-      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility)
-      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility);
+      console.log('Sending create: ' + nativeLanguage + targetLanguage+ targetLanguageProficiency+ age+ gender+ profession+ hobby + mbti + visibility + dateAvailable + timeAvailable)
+      let data = await handleProfileCreationAPI(id, nativeLanguage, targetLanguage, targetLanguageProficiency, age, gender, profession, hobby, mbti, visibility + dateAvailable + timeAvailable);
       console.log('Create done')
 
       if (data && data.errCode !== 0){
@@ -265,6 +311,16 @@ const [search] = useSearchParams();
         <div className='form-group'>
         <label className="label">Personality Type</label>
         <Select options={MBTI} onChange={handleMBTI}/>
+        </div>
+
+        <div className='form-group'>
+        <label className="label">Date Availability</label>
+        <Select options={DateAvailable} isMulti onChange={handleDateAvailability}/>
+        </div>
+
+        <div className='form-group'>
+        <label className="label">Time Availability</label>
+        <Select options={TimeAvailable} isMulti onChange={handleTimeAvailability}/>
         </div>
 
         <div className='form-group'>
