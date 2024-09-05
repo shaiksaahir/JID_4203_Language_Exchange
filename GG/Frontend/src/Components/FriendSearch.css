@@ -18,3 +18,23 @@
     list-style-type: none;
     padding: 0;
   }
+
+  .friend-search button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .friend-search button:hover {
+    background-color: #4cae4c;
+  }
+  
+  .friend-search ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
