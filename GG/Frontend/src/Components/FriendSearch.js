@@ -30,12 +30,21 @@ const FriendSearch = () => {
     fetchUserNames();
   }, []);
 
-  // Function to handle clicking on a username
+  // Function to handle adding a user to recent chat partners
   const handleUserClick = (user) => {
     // Add the user to the recent chat partners list, ensuring no duplicates
-    if (!recentChatPartners.includes(user)) {
+    if (!recentChatPartners.some((partner) => partner.firstName === user.firstName && partner.lastName === user.lastName)) {
       setRecentChatPartners([...recentChatPartners, user]);
     }
+  };
+
+  // Function to handle removing a user from recent chat partners
+  const handleRemoveChatPartner = (user) => {
+    // Remove the user from the recent chat partners list
+    const updatedPartners = recentChatPartners.filter(
+      (partner) => !(partner.firstName === user.firstName && partner.lastName === user.lastName)
+    );
+    setRecentChatPartners(updatedPartners);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -51,7 +60,7 @@ const FriendSearch = () => {
             <button onClick={() => handleUserClick(user)}>
               {user.firstName} {user.lastName}
             </button>
-          </li>
+          </li> // Makes each username clickable to add to recent chat partners
         ))}
       </ul>
 
@@ -63,8 +72,10 @@ const FriendSearch = () => {
         ) : (
           recentChatPartners.map((user, index) => (
             <li key={index}>
-              {user.firstName} {user.lastName}
-            </li>
+              <button onClick={() => handleRemoveChatPartner(user)}>
+                {user.firstName} {user.lastName}
+              </button>
+            </li> // Makes each recent chat partner clickable to remove them from the list
           ))
         )}
       </ul>
