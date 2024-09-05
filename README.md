@@ -3,13 +3,16 @@
 # Release Notes
 ## Version 2.1.0
 ### Features
+* Added a Find Friend page which lists the names of all the other accounts on the application for users to browse
 * Added MBTI personality type selector on the profile creation page
 * Added available dates and times selector on the profile creation page
 * Added profile visibility on the profile creation page
 ### Bug Fixes
 * Made the application clonable from GitHub
+* Fixed the import statement in APIController.js so that the GET and POST requests could use pool.execute
 ### Known Issues
-* Profile visibility does not do anything since our creation of profiles will be in a later sprint. It is connected to the backend and database.
+* UserNames are not attached to profile preferences of the user, like MBTI or meeting time
+* Profile visibility does not do anything since our creation of profiles will be in a later sprint. It is connected to the backend and database
 
 # Install Guide
 ## PREREQUISITES 
