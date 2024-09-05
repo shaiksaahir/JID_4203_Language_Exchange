@@ -77,6 +77,7 @@ let handleProfileCreation = async (req, res) => {
 }
 
 let handleDataPopulation = async (req, res) => {
+    // for testing purposes - does not need to be fully accurate
     let languages = ["English", "Korean"];
     let genders = ["Male", "Female", "Other"];
     let professions = ["Education", "Engineering", "Retail", "Finance", "Law", "Medecine", "Scientist"];
