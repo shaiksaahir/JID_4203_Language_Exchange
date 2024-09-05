@@ -10,13 +10,16 @@ let createFriends = async (req, res) => {
      })
 }
 
+
+// TOWNSHEND: several of these console.logs were in infinite loops; didn't have time to trace them down so I commented them out.
+// that's the only update to this file
 let findFriends = async (req, res) => {
     //let user1_ID = req.params.user1_ID
-    console.log("iddd" + req.body.id)
+    //console.log("iddd" + req.body.id)
     let user1_ID = req.body.id
     //console.log("check friends for userID >>>>", user1_ID)
     let messageData = await friendsService.handleFindFriends(user1_ID)
-    console.log(messageData.data)
+    //console.log(messageData.data)
     return res.status(200).json({
         message: messageData.errMessage,
         chatsData: messageData.data? messageData.data : {}
@@ -27,7 +30,7 @@ let findFriend = async (req, res) => {
     let user1_ID = req.params.user1_ID
     let user2_ID = req.params.user2_ID
 
-    console.log("check if two users are friends >>>>", user1_ID, user2_ID)
+    //console.log("check if two users are friends >>>>", user1_ID, user2_ID)
     let messageData = await friendsService.handleFindFriend(user1_ID, user2_ID)
     return res.status(200).json({
         message: messageData.errMessage,

@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import HelpPage from '../Components/HelpPage';
 import Translator from "../Components/Translator";
 import Videocall from "../Components/Videocall";
+import FriendSearch from '../Components/FriendSearch'; // FriendSearch added to React App hierarchy
 
 const App = () => {
 
@@ -30,6 +31,7 @@ const App = () => {
           <Route path ="/Register" element ={<Registration />}/>
           <Route path ="/CreateProfile" element ={<CreateProfile />}/>
           <Route path ="/Dashboard" element ={<Dashboard />}/>
+          <Route path ="/FriendSearch" element ={<FriendSearch />}/>
           <Route path ="/Translator" element = {<Translator />}/>
           <Route path ="/Videocall" element = {<Videocall />}/>
           <Route path ="/LogoutConfirmation" element ={<LogoutConfirmationPage />}/>

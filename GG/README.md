@@ -4,10 +4,13 @@
 ## Version 2.1.0
 ### Features
 * Added MBTI personality type selector on profile creation page
+* Added a Find Friend page which lists the names of all the other accounts on the application for users to browse
 ### Bug Fixes
 * Made the application clonable from GitHub
+* fixed the import statement in APIController.js so that the GET and POST requests could use pool.execute
 ### Known Issues
 * \#1 userprofile MySQL table not up-to-date
+* UserNames are not attached to profile preferences of the user, like MBTI or meeting time
 
 # Install Guide
 ## PREREQUISITES 
