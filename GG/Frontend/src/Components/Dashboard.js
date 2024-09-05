@@ -127,6 +127,15 @@ function Dashboard()  {
       }).toString()
   });
   }
+  //TOWNSHEND: re-purposed Find Friends button to navigate to FriendSearch page
+  const friendSearch = async(e) => {
+    navigate({
+      pathname: "/FriendSearch",
+      search: createSearchParams({
+          senderid: id
+      }).toString()
+  });
+  }
 
   const createVideoCall = () => {
     var channelId = Math.floor(10000 + Math.random() * 90000)
@@ -154,7 +163,7 @@ function Dashboard()  {
     }
   }
 
-  let friends = []
+  /** let friends = []
   const match = async(e) => {
     try {
       console.log("First Check")
@@ -179,7 +188,7 @@ function Dashboard()  {
     } catch (error) {
       console.log(error);
     }
-  }
+  } **/
 
   const handleHelp = async(e) => {
     navigate({
@@ -216,6 +225,7 @@ function Dashboard()  {
   //   //   </div>
   //   // );
   // }
+  
   for(let i = 0; i < friendids.length; i++) {
     array.push(
       <div className='left'>
@@ -237,8 +247,7 @@ function Dashboard()  {
         <h1>{FName} {LName}</h1>
         <h2>{email}</h2>
         
-        
-        <Button className="btn-Screen" onClick={match}>Find Friend</Button>
+        <Button className="btn-Screen" onClick={friendSearch}>Find Friend</Button>
         <Button className="btn-chat" onClick={handleChat}>Chat</Button>
         <Button className="btn-Screen" onClick={call}>Call</Button>
         <Button className="btn-Screen" onClick={Translator}>Translator</Button>
