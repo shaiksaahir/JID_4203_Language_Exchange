@@ -1,6 +1,9 @@
-import pool from '../config/connectDB';
+import { pool } from '../config/connectDB'; //TOWNSHEND: this was formally connected to sequelize...
+//but the methods were using .execute method, so I changed the import to the pool object
 
-let getAllUsers = async (req, res) => { //GET function
+//TOWNSHEND: getAllUsers may be the best way to sort users on a page since all data on a UserAccount is attached to the user
+// I can explore this more
+let getAllUsers = async (req, res) => {
     const [rows, fields] = await pool.execute(`SELECT * FROM UserAccount`);
     return res.status(200).json({
         message: 'ok',
@@ -51,6 +54,24 @@ let deleteUser = async (req, res) => { // DELETE function
     })
 }
 
+//TOWNSHEND: I created a simpler function that isolated the user firstName and lastName
+// but may not be good for sorting.
+const getUserNames = async (req, res) => {
+    try {
+      const [users] = await pool.execute(`SELECT firstName, lastName FROM UserAccount`); // uses mysql2 function to access database
+      res.status(200).json({
+        message: 'ok',
+        data: users
+      });
+    } catch (error) {
+      console.error('Error retrieving user names:', error); // Log error details
+      res.status(500).json({
+        message: 'Error retrieving user names',
+        error: error.message
+      });
+    }
+};
+
 module.exports = { 
-    getAllUsers, createNewUser, updateUser, deleteUser
+    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, // added getUserNames as an export
 }

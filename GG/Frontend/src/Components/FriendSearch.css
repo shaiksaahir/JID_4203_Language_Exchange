@@ -1,0 +1,20 @@
+/*TOWNSHEND: just generic CSS styling; FriendSearch appears to be inherited styling from somewhere else...why is it green!*/
+
+.friend-search {
+    padding: 20px;
+    text-align: center;
+  }
+  
+.friend-search input {
+    margin: 10px;
+    padding: 5px;
+  }
+  
+.friend-search button {
+    padding: 5px 10px;
+  }
+  
+.friend-search ul {
+    list-style-type: none;
+    padding: 0;
+  }
