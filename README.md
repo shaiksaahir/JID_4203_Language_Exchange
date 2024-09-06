@@ -4,6 +4,7 @@
 ## Version 2.1.0
 ### Features
 * Added a Find Friend page which lists the names of all the other accounts on the application for users to browse
+* Added option to select users from Friend List and add them to/remove from a list of Recent Chat Partners
 * Added MBTI personality type selector on the profile creation page
 * Added available dates and times selector on the profile creation page
 * Added profile visibility on the profile creation page
