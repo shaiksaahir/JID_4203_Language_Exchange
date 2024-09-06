@@ -1,40 +1,61 @@
 /*TOWNSHEND: just generic CSS styling; FriendSearch appears to be inherited styling from somewhere else...why is it green!*/
+/* Style for the main user buttons in the user list */
 
-.friend-search {
-    padding: 20px;
-    text-align: center;
-  }
-  
-.friend-search input {
-    margin: 10px;
-    padding: 5px;
-  }
-  
-.friend-search button {
-    padding: 5px 10px;
-  }
-  
+/* Style for the main user buttons in the user list */
+/* Style for the main user buttons in the user list */
+.friend-search .user-button {
+  padding: 10px 20px;
+  margin: 10px auto; /* Center the button horizontally */
+  width: 50%; /* 1/2 the width of the screen */
+  display: block;
+  border-radius: 5px;
+  border: none;
+  background-color: #5cb85c; /* Light green background */
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.friend-search .user-button:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+/* Style for the list of recent chat partners */
+.partner-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 10px auto; /* Center the button horizontally */
+  width: 50%; /* 1/2 the width of the screen */
+  border-radius: 5px;
+  background-color: #5cb85c; /* Light green background to match user button */
+  color: white;
+  border: none;
+}
+
+.partner-item:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+/* Style for the "x" button to remove a user */
+.remove-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.remove-button:hover {
+  background-color: #c0392b;
+}
+
+/* Center the Recent Chat Partners section */
 .friend-search ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  .friend-search button {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    border: none;
-    background-color: #5cb85c;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .friend-search button:hover {
-    background-color: #4cae4c;
-  }
-  
-  .friend-search ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}

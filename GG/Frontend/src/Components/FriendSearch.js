@@ -57,7 +57,7 @@ const FriendSearch = () => {
       <ul>
         {userNames.map((user, index) => (
           <li key={index}>
-            <button onClick={() => handleUserClick(user)}>
+            <button className="user-button" onClick={() => handleUserClick(user)}>
               {user.firstName} {user.lastName}
             </button>
           </li> // Makes each username clickable to add to recent chat partners
@@ -72,10 +72,11 @@ const FriendSearch = () => {
         ) : (
           recentChatPartners.map((user, index) => (
             <li key={index}>
-              <button onClick={() => handleRemoveChatPartner(user)}>
-                {user.firstName} {user.lastName}
-              </button>
-            </li> // Makes each recent chat partner clickable to remove them from the list
+              <div className="partner-item">
+                <span>{user.firstName} {user.lastName}</span>
+                <button className="remove-button" onClick={() => handleRemoveChatPartner(user)}>x</button>
+              </div>
+            </li> // Each recent chat partner has an "x" button to remove them
           ))
         )}
       </ul>
