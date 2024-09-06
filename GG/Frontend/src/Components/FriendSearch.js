@@ -5,32 +5,47 @@
  * preferences, which may require displaying data through getAllUsers rather than getUserNames
  */
 import React, { useState, useEffect } from 'react';
-import { handleGetUserNamesApi } from '../Services/findFriendsService'; // FindFriendsService handles the API address
+import { handleGetUserNamesApi } from '../Services/findFriendsService'; // API function to fetch usernames
 import './FriendSearch.css';
 
 const FriendSearch = () => {
-  const [userNames, setUserNames] = useState([]); // define initial state of UserNames before fetching data
+  const [userNames, setUserNames] = useState([]); // State to store fetched usernames
+  const [recentChatPartners, setRecentChatPartners] = useState([]); // State for managing recent chat partners
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserNames = async () => {
       try {
-        const response = await handleGetUserNamesApi(); // Call the API function that retrieves the first and last name of each UserAccount
-        console.log('API response:', response.data); // Log the response data
-        setUserNames(response.data); // Directly set data to UserNames array to be used in a map and displayed to users
-        setLoading(false); // Set loading to false once data is fetched
+        const response = await handleGetUserNamesApi(); // Fetch user names from the backend
+        setUserNames(response.data); // Store fetched user names in state
+        setLoading(false); // Stop loading once data is fetched
       } catch (err) {
         console.error('Error fetching user names:', err);
-        setError(err); // Set error if there is an issue
-        setLoading(false); // Set loading to false in case of an error
+        setError(err); // Handle any errors
+        setLoading(false); // Stop loading in case of an error
       }
     };
 
     fetchUserNames();
   }, []);
 
-  console.log('User names state:', userNames); // Log new state of UserNames after fetch; should be an array of names
+  // Function to handle adding a user to recent chat partners
+  const handleUserClick = (user) => {
+    // Add the user to the recent chat partners list, ensuring no duplicates
+    if (!recentChatPartners.some((partner) => partner.firstName === user.firstName && partner.lastName === user.lastName)) {
+      setRecentChatPartners([...recentChatPartners, user]);
+    }
+  };
+
+  // Function to handle removing a user from recent chat partners
+  const handleRemoveChatPartner = (user) => {
+    // Remove the user from the recent chat partners list
+    const updatedPartners = recentChatPartners.filter(
+      (partner) => !(partner.firstName === user.firstName && partner.lastName === user.lastName)
+    );
+    setRecentChatPartners(updatedPartners);
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -38,11 +53,32 @@ const FriendSearch = () => {
   return (
     <div className="friend-search">
       <h1>User Names</h1>
-      <p>Here are the user names from the database:</p>
+      <p>Click on a username to add them to your Recent Chat Partners:</p>
       <ul>
         {userNames.map((user, index) => (
-          <li key={index}>{user.firstName} {user.lastName}</li> // display User Names
+          <li key={index}>
+            <button className="user-button" onClick={() => handleUserClick(user)}>
+              {user.firstName} {user.lastName}
+            </button>
+          </li> // Makes each username clickable to add to recent chat partners
         ))}
+      </ul>
+
+      {/* Section for Recent Chat Partners */}
+      <h2>Recent Chat Partners</h2>
+      <ul>
+        {recentChatPartners.length === 0 ? (
+          <li>No recent chat partners.</li>
+        ) : (
+          recentChatPartners.map((user, index) => (
+            <li key={index}>
+              <div className="partner-item">
+                <span>{user.firstName} {user.lastName}</span>
+                <button className="remove-button" onClick={() => handleRemoveChatPartner(user)}>x</button>
+              </div>
+            </li> // Each recent chat partner has an "x" button to remove them
+          ))
+        )}
       </ul>
     </div>
   );
