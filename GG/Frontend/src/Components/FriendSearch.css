@@ -1,7 +1,48 @@
-/*TOWNSHEND: just generic CSS styling; FriendSearch appears to be inherited styling from somewhere else...why is it green!*/
-/* Style for the main user buttons in the user list */
+/* Styling, now includes left-side filter styling */
 
-/* Style for the main user buttons in the user list */
+/* Style for the filter section on the left */
+.filter-section {
+  width: 20%;
+  background-color: #f4f4f4; /* Light gray background */
+  padding: 20px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filter-group input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.filter-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.filter-button:hover {
+  background-color: #45a049;
+}
+
 /* Style for the main user buttons in the user list */
 .friend-search .user-button {
   padding: 10px 20px;
@@ -58,4 +99,10 @@
   list-style-type: none;
   padding: 0;
   width: 100%;
+}
+
+/* Main container layout for the FriendSearch component */
+.friend-search-container {
+  display: flex;
+  gap: 20px; /* Add space between the filter section and the user list */
 }
