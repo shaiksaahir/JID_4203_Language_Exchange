@@ -5,6 +5,7 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 ### Features
 * Added a Find Friend page which lists the names of all the other accounts on the application for users to browse
 * Added option to select users from Friend List and add them to/remove from a list of Recent Chat Partners
+* Added option to filter and sort users from Friend List 
 * Added MBTI personality type selector on the profile creation page
 * Added available dates and times selector on the profile creation page
 * Added profile visibility on the profile creation page
