@@ -13,7 +13,7 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 * Fixed the import statement in APIController.js so that the GET and POST requests could use pool.execute
 ### Known Issues
 * UserNames are not attached to profile preferences of the user, like MBTI or meeting time
-* Profile visibility does not do anything since our creation of profiles will be in a later sprint. It is connected to the backend and database
+* Profile visibility does not do anything since our creation of profiles will be in a later sprint. It is connected to the backend and database.
 
 # Install Guide
 ## PREREQUISITES 
