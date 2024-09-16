@@ -31,7 +31,7 @@ function Videocall() {
         <div className="screen-Content">
           <h1>Video Call</h1>
             {!joined && (
-              <Button className='btn-Screen' onClick={() => setJoined(true)}>
+              <Button className='btn-join' onClick={() => setJoined(true)}>
                 Join Room
               </Button>
             )}
