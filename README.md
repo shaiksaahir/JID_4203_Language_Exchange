@@ -1,6 +1,15 @@
 # JID-4203 | Language Exchange Matchmaker
 This project aims to continue development on an AI-enhanced matchmaking app for language exchange, specifically designed to help exchange students at Georgia Tech and Yonsei University in Korea improve their English and Korean language skills. The goal is to bridge the language gap, making it easier for students to form friendships and enhance their learning experience while participating in exchange programs.
+
 # Release Notes
+## Version 2.2.0
+### Features
+* 
+### Bug Fixes
+* Fixed Video Call page format issues
+### Known Issues
+* 
+
 ## Version 2.1.0
 ### Features
 * Added a Find Friend page which lists the names of all the other accounts on the application for users to browse
