@@ -20,9 +20,14 @@ function Videocall() {
     });
   }
 
+  const [age, setAge] = useState('');
+  const handlePartners = (e) => {
+      setAge(e.target.value);
+  };
+
   return (
     <div className="screen-Background">
-      <div className="screen-Container">
+      <div className="call-container">
         <div className="screen-Content">
           <h1>Video Call</h1>
             {!joined && (
@@ -31,6 +36,13 @@ function Videocall() {
               </Button>
             )}
             {joined && <VideoRoom />}
+        </div>
+        <div className="screen-Content">
+            <h5>Prefered Number of Chat Partners</h5>
+            <input
+                placeholder="Enter"
+                onChange={handlePartners} className="input"
+                type="text" />
         </div>
         <Button className="btn-help" onClick={handleBack} >back</Button>
       </div>

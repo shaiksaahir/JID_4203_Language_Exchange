@@ -113,3 +113,13 @@ iframe
   padding: 5px;
 }
 
+.call-container {
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+}
