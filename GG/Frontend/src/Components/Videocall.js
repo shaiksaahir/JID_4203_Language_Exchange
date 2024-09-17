@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 
 function Videocall() {
-  const [joined, setJoined] = useState();
+    const [joined, setJoined] = useState();
+    const [partners, setPartners] = useState(0);
 
   const navigate = useNavigate();
   const[search] = useSearchParams();
@@ -20,9 +21,8 @@ function Videocall() {
     });
   }
 
-  const [age, setAge] = useState('');
   const handlePartners = (e) => {
-      setAge(e.target.value);
+      setPartners(parseInt(e.target.value) || 0);
   };
 
   return (
@@ -35,13 +35,14 @@ function Videocall() {
                 Join Room
               </Button>
             )}
-            {joined && <VideoRoom />}
+            {joined && <VideoRoom partners={partners}/>}
         </div>
         <div className="screen-Content">
-            <h5>Prefered Number of Chat Partners</h5>
+            <h5>Preferred Number of Chat Partners</h5>
             <input
                 placeholder="Enter"
-                onChange={handlePartners} className="input"
+                onChange={handlePartners}
+                className="input"
                 type="text" />
         </div>
         <Button className="btn-help" onClick={handleBack} >back</Button>

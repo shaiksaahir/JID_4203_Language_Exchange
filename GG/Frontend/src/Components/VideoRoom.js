@@ -14,22 +14,25 @@ const client = AgoraRTC.createClient({
   codec: 'vp8',
 });
 
-export const VideoRoom = () => {
+export const VideoRoom = ({ partners }) => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
-
   var [hidden, setHidden] = useState(false)
 
   const handleUserJoined = async (user, mediaType) => {
-    await client.subscribe(user, mediaType);
+      if (partners === 0 || users.length < partners) {
+          await client.subscribe(user, mediaType);
 
-    if (mediaType === 'video') {
-      setUsers((previousUsers) => [...previousUsers, user]);
-    }
+          if (mediaType === 'video') {
+              setUsers((previousUsers) => [...previousUsers, user]);
+          }
 
-    if (mediaType === 'audio') {
-      user.audioTrack.play()
-    }
+          if (mediaType === 'audio') {
+              user.audioTrack.play()
+          }
+      } else {
+          console.log("User limit reached. Cannot join new users.");
+      }
   };
 
   const handleUserLeft = (user) => {
@@ -86,7 +89,7 @@ export const VideoRoom = () => {
       client.off('user-left', handleUserLeft);
       client.unpublish().then(() => client.leave());
     };
-  }, []);
+  }, [partners]);
 
   return (
     <div
