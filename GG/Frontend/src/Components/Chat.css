@@ -33,6 +33,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
 }
 .conversation:hover {
   background: #80808038;
@@ -73,4 +74,49 @@
    .follower.conversation>div>.name{
     display: none;
    }
+}
+.audio-preferences {
+  background-color: #FAFAFA;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.audio-preferences h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.mute-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mute-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.mic-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mic-selection select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
 }
