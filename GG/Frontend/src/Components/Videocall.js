@@ -7,6 +7,8 @@ import { createSearchParams, useSearchParams, useNavigate } from "react-router-d
 
 function Videocall() {
   const [joined, setJoined] = useState();
+  const [partners, setPartners] = useState(0); // Combined both branches
+
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get("id");
@@ -20,17 +22,31 @@ function Videocall() {
     });
   };
 
+  const handlePartners = (e) => {
+    setPartners(parseInt(e.target.value) || 0);
+  };
+
   return (
     <div className="screen-Background">
-      <div className="screen-Container">
+      <div className="call-container">
         <div className="screen-Content">
           <h1>Video Call</h1>
           {!joined && (
-            <Button className="btn-Screen" onClick={() => setJoined(true)}>
+            <Button className="btn-join" onClick={() => setJoined(true)}>
               Join Room
             </Button>
           )}
-          {joined && <VideoRoom />}
+          {joined && <VideoRoom partners={partners} />}
+        </div>
+
+        <div className="screen-Content">
+          <h5>Preferred Number of Chat Partners</h5>
+          <input
+            placeholder="Enter"
+            onChange={handlePartners}
+            className="input"
+            type="text"
+          />
         </div>
 
         {/* Audio Preferences Section */}

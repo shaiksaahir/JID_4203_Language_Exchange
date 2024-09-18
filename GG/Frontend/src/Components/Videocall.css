@@ -43,3 +43,31 @@
   border-radius: 0.5rem;
   border: 1px solid #ccc;
 }
+
+/* Additions from main branch */
+.btn-join {
+  background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  width: 30%;
+  margin: 10px 0;
+  height: 40px;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+.frientlist {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.call-container {
+  width: 30%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+}
