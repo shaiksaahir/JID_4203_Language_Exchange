@@ -4,7 +4,7 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 # Release Notes
 ## Version 2.2.0
 ### Features
-* 
+* Added way to specify maximum number of partners available to join a video call
 ### Bug Fixes
 * Fixed Video Call page format issues
 ### Known Issues
