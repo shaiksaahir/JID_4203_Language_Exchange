@@ -1,135 +1,73 @@
-.leftpic {
-  display: block;
-  margin-left: 0;
-  margin-right: 0;
-  width: 50px;
-  height: 55px;
-  float: left;
-}
-.text{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  width: 30px;
-  height: 30px;
-  float: left;
-
-}
-.left {
-  background:linear-gradient(135deg, rgb(19, 206, 209) 0%,rgb(165, 136, 74) 100%);
+.audio-preferences {
+  background-color: #FAFAFA;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  margin-top: 20px;
-  flex-direction: row;
-  align-items: left;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-iframe
-{
-    display: none;
+.audio-preferences h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-
+.mute-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.btn-chat{
-  background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-  width: 19%;
-  margin: 10px 0;
-  height: 35px;
-  border-radius: 15px;
-  outline: none;
-  border: none;
+
+.mute-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #ff6666;
   color: white;
-  float: center;
-}
-.btn-help{
-  background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-  width: 15%;
-  margin: 10px 0;
-  height: 35px;
-  border-radius: 15px;
-  outline: none;
   border: none;
-  color: white;
-  float: right;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }
+
+.mic-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mic-selection select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+/* Additions from main branch */
 .btn-join {
-    background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-    width: 30%;
-    margin: 10px 0;
-    height: 40px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    color: white;
+  background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+  width: 30%;
+  margin: 10px 0;
+  height: 40px;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  color: white;
 }
 
-.frientlist{
+.frientlist {
   height: 200px;
-  overflow-y:scroll
-}
-
-.App {
-  text-align: center;
-  background-color:green;
-}
- 
-.label{
-  display: block;
-  font-size: larger;
-  color: black;
-  padding: 5px;
-}
- 
-.input{
-  font-size: larger;
-  padding: 5px;
-  margin: 2px;
-  
-}
-.btn{
-  color: white;
-  border-radius: 5px;
-  font-size: larger;
-  display: block;
-  padding: 5px;
-  margin: 10px auto;
-}
- 
-.messages{
-  display: flex;
-  justify-content: center;
-}
- 
-.error{
-  display: block;
-  background-color: red;
-  color: white;
-  width: fit-content;
-  height: 45px;
-  padding: 5px;
-}
- 
-.success{
-  display: block;
-  background-color: lightblue;
-  color: black;
-  width: fit-content;
-  height: 50px;
-  padding: 5px;
+  overflow-y: scroll;
 }
 
 .call-container {
-    width: 30%;
-    height: 100%;
-    margin: 0 auto;
-    border-radius: 10px;
-    background-color: white;
-    padding: 15px;
-    justify-content: center;
-    align-items: center;
+  width: 30%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
 }
