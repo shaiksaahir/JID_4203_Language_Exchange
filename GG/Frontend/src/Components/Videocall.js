@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from "react";
 import './Videocall.css';
 import { VideoRoom } from './VideoRoom';
@@ -7,11 +7,33 @@ import { createSearchParams, useSearchParams, useNavigate } from "react-router-d
 
 function Videocall() {
   const [joined, setJoined] = useState();
-  const [partners, setPartners] = useState(0); // Combined both branches
-
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get("id");
+
+  const [microphones, setMicrophones] = useState([]);
+  const [selectedMic, setSelectedMic] = useState('');
+
+  useEffect(() => {
+    async function getMicrophones() {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const audioDevices = devices.filter(device => device.kind === 'audioinput');
+        setMicrophones(audioDevices);
+        if (audioDevices.length > 0) {
+          setSelectedMic(audioDevices[0].deviceId); // Set default microphone
+        }
+      } catch (err) {
+        console.error('Error accessing media devices:', err);
+      }
+    }
+    getMicrophones();
+  }, []);
+
+  const handleMicChange = (e) => {
+    setSelectedMic(e.target.value);
+    // Here you can implement code to switch to the selected microphone
+  };
 
   const handleBack = async (e) => {
     navigate({
@@ -22,31 +44,17 @@ function Videocall() {
     });
   };
 
-  const handlePartners = (e) => {
-    setPartners(parseInt(e.target.value) || 0);
-  };
-
   return (
     <div className="screen-Background">
-      <div className="call-container">
+      <div className="screen-Container">
         <div className="screen-Content">
           <h1>Video Call</h1>
           {!joined && (
-            <Button className="btn-join" onClick={() => setJoined(true)}>
+            <Button className="btn-Screen" onClick={() => setJoined(true)}>
               Join Room
             </Button>
           )}
-          {joined && <VideoRoom partners={partners} />}
-        </div>
-
-        <div className="screen-Content">
-          <h5>Preferred Number of Chat Partners</h5>
-          <input
-            placeholder="Enter"
-            onChange={handlePartners}
-            className="input"
-            type="text"
-          />
+          {joined && <VideoRoom selectedMic={selectedMic} />}
         </div>
 
         {/* Audio Preferences Section */}
@@ -57,10 +65,16 @@ function Videocall() {
           </div>
           <div className="mic-selection">
             <label htmlFor="mic">Select Microphone:</label>
-            <select id="mic" name="mic">
-              <option value="default">Default Microphone</option>
-              <option value="mic1">Microphone 1</option>
-              <option value="mic2">Microphone 2</option>
+            <select id="mic" name="mic" value={selectedMic} onChange={handleMicChange}>
+              {microphones.length > 0 ? (
+                microphones.map((mic) => (
+                  <option key={mic.deviceId} value={mic.deviceId}>
+                    {mic.label || `Microphone ${mic.deviceId}`}
+                  </option>
+                ))
+              ) : (
+                <option>No microphones available</option>
+              )}
             </select>
           </div>
         </div>
