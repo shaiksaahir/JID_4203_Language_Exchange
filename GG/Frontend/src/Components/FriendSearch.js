@@ -1,73 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { handleGetAllUsersApi, handleGetUserNamesApi } from '../Services/findFriendsService';
-
+import { handleGetUserNamesApi, handleGetUserPreferencesApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
 
 const FriendSearch = () => {
-  const [userNames, setUserNames] = useState([]); // State to store fetched usernames
-  const [recentChatPartners, setRecentChatPartners] = useState([]); // State for managing recent chat partners
+  const [userNames, setUserNames] = useState([]);
+  const [allUserNames, setAllUserNames] = useState([]); // Store all users for filtering
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({ name: '' }); // State for filter inputs
-
-
+  const [filterInput, setFilterInput] = useState(''); // For name filtering
+  const [preferenceFilterInput, setPreferenceFilterInput] = useState(''); // For preference filtering
 
   useEffect(() => {
     const fetchUserNames = async () => {
       try {
-        const response = await handleGetUserNamesApi(); // Fetch user names from the backend
-        setUserNames(response.data); // Store fetched user names in state
-        setLoading(false); // Stop loading once data is fetched
+        const response = await handleGetUserNamesApi(); // Fetch all user names
+        setUserNames(response.data);
+        setAllUserNames(response.data); // Store original list
+        setLoading(false);
       } catch (err) {
-        console.error('Error fetching user names:', err);
-        setError(err); // Handle any errors
-        setLoading(false); // Stop loading in case of an error
+        setError(err);
+        setLoading(false);
       }
     };
 
     fetchUserNames();
   }, []);
 
-  
-
-  // Function to handle adding a user to recent chat partners
-  const handleUserClick = (user) => {
-    // Add the user to the recent chat partners list, ensuring no duplicates
-    if (!recentChatPartners.some((partner) => partner.firstName === user.firstName && partner.lastName === user.lastName)) {
-      setRecentChatPartners([...recentChatPartners, user]);
+  // Filter by name or email
+  const handleNameFilter = () => {
+    if (filterInput.trim() === "") {
+      setUserNames(allUserNames); // Reset to all users if input is empty
+    } else {
+      const filteredNames = allUserNames.filter(user =>
+        user.firstName.toLowerCase().includes(filterInput.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(filterInput.toLowerCase()) ||
+        user.email.toLowerCase().includes(filterInput.toLowerCase())
+      );
+      setUserNames(filteredNames.length > 0 ? filteredNames : allUserNames); // If no match, show all users
     }
   };
 
-  
+  // Filter by preferences (using preference API)
+  const handlePreferenceFilter = async () => {
+    if (preferenceFilterInput.trim() === "") {
+      setUserNames(allUserNames); // Reset to all users if input is empty
+    } else {
+      try {
+        const preferencesResponse = await handleGetUserPreferencesApi(); // Fetch all preferences
+        const preferences = preferencesResponse.data;
 
-  const handleFilterSubmit = async () => {
-    try {
-      setLoading(true); // Show loading while fetching data
-      const response = await handleGetAllUsersApi({ name: filters.name }); // Fetch filtered data from backend
-      if (response.data) {
-        setUserNames(response.data); // Update the user list with the filtered data
-      } else {
-        setUserNames([]); // Clear the list if no data is returned
+        // Filter preferences based on input value
+        const filteredPreferences = preferences.filter(pref =>
+          Object.values(pref).some(value =>
+            String(value).toLowerCase().includes(preferenceFilterInput.toLowerCase())
+          )
+        );
+
+        // If no match, show all users
+        if (filteredPreferences.length === 0) {
+          setUserNames(allUserNames);
+        } else {
+          // Extract matching user IDs from preferences
+          const matchedUserIds = filteredPreferences.map(pref => pref.id);
+
+          // Filter usernames by matching IDs
+          const filteredNamesByPreferences = allUserNames.filter(user => matchedUserIds.includes(user.id));
+
+          // If no match, show all users
+          setUserNames(filteredNamesByPreferences.length > 0 ? filteredNamesByPreferences : allUserNames);
+        }
+      } catch (error) {
+        console.error('Error fetching user preferences:', error);
       }
-      setLoading(false); // Stop loading after data is fetched
-    } catch (err) {
-      console.error('Error applying filter:', err);
-      setError(err);
-      setLoading(false); // Stop loading in case of an error
     }
-  };
-  // Function to handle removing a user from recent chat partners
-  const handleRemoveChatPartner = (user) => {
-    // Remove the user from the recent chat partners list
-    const updatedPartners = recentChatPartners.filter(
-      (partner) => !(partner.firstName === user.firstName && partner.lastName === user.lastName)
-    );
-    setRecentChatPartners(updatedPartners);
-  };
-
-  // Handle filter input change
-  const handleFilterChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
   if (loading) return <p>Loading...</p>;
@@ -75,52 +80,47 @@ const FriendSearch = () => {
 
   return (
     <div className="friend-search-container">
-      {/* Left-side filter section */}
-      <div className="filter-section">
-        <h2>Filter Users</h2>
-        <div className="filter-group">
-          <label htmlFor="name">Name:</label>
+      {/* Filter Sidebar */}
+      <div className="filter-sidebar">
+        {/* Filter by Name Section */}
+        <div className="filter-section">
+          <h3>Filter Users by Name</h3>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={filters.name}
-            onChange={handleFilterChange}
-            placeholder="Filter by name"
+            placeholder="Enter name or email"
+            value={filterInput}
+            onChange={(e) => setFilterInput(e.target.value)}
           />
+          <button onClick={handleNameFilter}>
+            Filter by Name
+          </button>
         </div>
-        <button className="filter-button" onClick={handleFilterSubmit}>Apply Filter</button>
+
+        {/* Filter by Preferences Section */}
+        <div className="filter-section">
+          <h3>Filter Users by Preference</h3>
+          <input
+            type="text"
+            placeholder="Enter preference"
+            value={preferenceFilterInput}
+            onChange={(e) => setPreferenceFilterInput(e.target.value)}
+          />
+          <button onClick={handlePreferenceFilter}>
+            Filter by Preference
+          </button>
+        </div>
       </div>
 
-      {/* Main content area for user names */}
+      {/* Main Search Area */}
       <div className="friend-search">
         <h1>User Names</h1>
-        <p>Click on a username to add them to your Recent Chat Partners:</p>
+        <p>Here are the user names from the database:</p>
         <ul>
           {userNames.map((user, index) => (
             <li key={index}>
-              <button className="user-button" onClick={() => handleUserClick(user)}>
-                {user.firstName} {user.lastName}
-              </button>
-            </li> // Makes each username clickable to add to recent chat partners
+              {user.firstName} {user.lastName}
+            </li>
           ))}
-        </ul>
-
-        {/* Section for Recent Chat Partners */}
-        <h2>Recent Chat Partners</h2>
-        <ul>
-          {recentChatPartners.length === 0 ? (
-            <li>No recent chat partners.</li>
-          ) : (
-            recentChatPartners.map((user, index) => (
-              <li key={index}>
-                <div className="partner-item">
-                  <span>{user.firstName} {user.lastName}</span>
-                  <button className="remove-button" onClick={() => handleRemoveChatPartner(user)}>x</button>
-                </div>
-              </li> // Each recent chat partner has an "x" button to remove them
-            ))
-          )}
         </ul>
       </div>
     </div>
