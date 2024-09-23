@@ -1,4 +1,22 @@
-.audio-preferences {
+/* Preferences Wrapper fixed at bottom with margins */
+.preferences-wrapper-bottom {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 25%; /* 1/4th margin from the left */
+  right: 25%; /* 1/4th margin from the right */
+  padding: 1rem;
+  gap: 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.half-width {
+  flex: 1; /* Make both sections take up equal space */
+}
+
+.audio-preferences, .video-preferences {
   background-color: #FAFAFA;
   border-radius: 1rem;
   padding: 1rem;
@@ -9,10 +27,17 @@
   margin-top: 1rem;
 }
 
-.audio-preferences h3 {
+.audio-preferences h3, .video-preferences h3 {
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.mic-selection select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
 }
 
 .mute-section {
@@ -29,45 +54,4 @@
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-}
-
-.mic-selection {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.mic-selection select {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-}
-
-/* Additions from main branch */
-.btn-join {
-  background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-  width: 30%;
-  margin: 10px 0;
-  height: 40px;
-  border-radius: 15px;
-  outline: none;
-  border: none;
-  color: white;
-}
-
-.frientlist {
-  height: 200px;
-  overflow-y: scroll;
-}
-
-.call-container {
-  width: 30%;
-  height: 100%;
-  margin: 0 auto;
-  border-radius: 10px;
-  background-color: white;
-  padding: 15px;
-  justify-content: center;
-  align-items: center;
 }
