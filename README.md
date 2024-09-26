@@ -1,14 +1,29 @@
-# JDA-4203 | Language Exchange Matchmaker
+# JID-4203 | Language Exchange Matchmaker
+This project aims to continue development on an AI-enhanced matchmaking app for language exchange, specifically designed to help exchange students at Georgia Tech and Yonsei University in Korea improve their English and Korean language skills. The goal is to bridge the language gap, making it easier for students to form friendships and enhance their learning experience while participating in exchange programs.
 
 # Release Notes
-## Version 1.6.0
+## Version 2.2.0
 ### Features
-* Added MBTI personality type selector on profile creation page
+* Added way to specify maximum number of partners available to join a video call
+### Bug Fixes
+* Fixed Video Call page format issues
+### Known Issues
+* 
+
+## Version 2.1.0
+### Features
+* Added a Find Friend page which lists the names of all the other accounts on the application for users to browse
+* Added option to select users from Friend List and add them to/remove from a list of Recent Chat Partners
+* Added option to filter and sort users from Friend List 
+* Added MBTI personality type selector on the profile creation page
+* Added available dates and times selector on the profile creation page
+* Added profile visibility on the profile creation page
 ### Bug Fixes
 * Made the application clonable from GitHub
+* Fixed the import statement in APIController.js so that the GET and POST requests could use pool.execute
 ### Known Issues
-* \#1 Backend is not connected
-* \#2 userprofile MySQL table not up-to-date
+* UserNames are not attached to profile preferences of the user, like MBTI or meeting time
+* Profile visibility does not do anything since our creation of profiles will be in a later sprint. It is connected to the backend and database.
 
 # Install Guide
 ## PREREQUISITES 

@@ -1,20 +1,108 @@
-/*TOWNSHEND: just generic CSS styling; FriendSearch appears to be inherited styling from somewhere else...why is it green!*/
+/* Styling, now includes left-side filter styling */
 
-.friend-search {
-    padding: 20px;
-    text-align: center;
-  }
-  
-.friend-search input {
-    margin: 10px;
-    padding: 5px;
-  }
-  
-.friend-search button {
-    padding: 5px 10px;
-  }
-  
+/* Style for the filter section on the left */
+.filter-section {
+  width: 20%;
+  background-color: #f4f4f4; /* Light gray background */
+  padding: 20px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filter-group input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.filter-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.filter-button:hover {
+  background-color: #45a049;
+}
+
+/* Style for the main user buttons in the user list */
+.friend-search .user-button {
+  padding: 10px 20px;
+  margin: 10px auto; /* Center the button horizontally */
+  width: 50%; /* 1/2 the width of the screen */
+  display: block;
+  border-radius: 5px;
+  border: none;
+  background-color: #5cb85c; /* Light green background */
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.friend-search .user-button:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+/* Style for the list of recent chat partners */
+.partner-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 10px auto; /* Center the button horizontally */
+  width: 50%; /* 1/2 the width of the screen */
+  border-radius: 5px;
+  background-color: #5cb85c; /* Light green background to match user button */
+  color: white;
+  border: none;
+}
+
+.partner-item:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+/* Style for the "x" button to remove a user */
+.remove-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.remove-button:hover {
+  background-color: #c0392b;
+}
+
+/* Center the Recent Chat Partners section */
 .friend-search ul {
-    list-style-type: none;
-    padding: 0;
-  }
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+/* Main container layout for the FriendSearch component */
+.friend-search-container {
+  display: flex;
+  gap: 20px; /* Add space between the filter section and the user list */
+}
