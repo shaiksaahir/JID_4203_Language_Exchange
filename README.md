@@ -8,7 +8,7 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 ### Bug Fixes
 * Fixed Video Call page format issues
 ### Known Issues
-* 
+* Save Translation button producing runtime error
 
 ## Version 2.1.0
 ### Features
