@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
-import Button from 'react-bootstrap/Button';
 
-const APP_ID = 'your-app-id';
-const TOKEN = 'your-agora-token';
+const APP_ID = 'your-app-id';  // Your Agora APP_ID
+const TOKEN = 'your-agora-token';  // Agora token
 const CHANNEL = 'test';
 
 const client = AgoraRTC.createClient({
@@ -33,8 +32,14 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
     setUsers((previousUsers) =>
       previousUsers.filter((u) => u.uid !== user.uid)
     );
-    user.videoTrack && user.videoTrack.close();
-    user.audioTrack && user.audioTrack.close();
+    if (user.videoTrack) {
+      user.videoTrack.stop();
+      user.videoTrack.close();
+    }
+    if (user.audioTrack) {
+      user.audioTrack.stop();
+      user.audioTrack.close();
+    }
   };
 
   // Manage video track based on "Show Video" or "Hide Video"
@@ -57,7 +62,7 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
     };
 
     manageVideoTrack();
-  }, [videoOption]);
+  }, [videoOption]);  // Re-run when videoOption changes
 
   useEffect(() => {
     client.on('user-published', handleUserJoined);
@@ -73,14 +78,13 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       });
 
     return () => {
-      client.unpublish(localTracks);
       localTracks.forEach((track) => {
         track.stop();
         track.close();
       });
       client.leave();
     };
-  }, []);
+  }, [selectedMic]);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>

@@ -33,7 +33,6 @@ function Videocall() {
 
   const handleMicChange = (e) => {
     setSelectedMic(e.target.value);
-    // Here you can implement code to switch to the selected microphone
   };
 
   const handleVideoOptionChange = (e) => {
@@ -62,7 +61,7 @@ function Videocall() {
           {joined && (
             <VideoRoom
               selectedMic={selectedMic}
-              videoOption={videoOption}
+              videoOption={videoOption}  // Pass the video option
             />
           )}
         </div>
