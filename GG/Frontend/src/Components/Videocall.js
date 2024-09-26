@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 
 function Videocall() {
-  const [joined, setJoined] = useState();
+  const [joined, setJoined] = useState(false);
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get("id");
@@ -33,12 +33,10 @@ function Videocall() {
 
   const handleMicChange = (e) => {
     setSelectedMic(e.target.value);
-    // Here you can implement code to switch to the selected microphone
   };
 
   const handleVideoOptionChange = (e) => {
     setVideoOption(e.target.value);
-    // Implement logic to hide/show video
   };
 
   const handleBack = async (e) => {
@@ -60,7 +58,12 @@ function Videocall() {
               Join Room
             </Button>
           )}
-          {joined && <VideoRoom selectedMic={selectedMic} videoOption={videoOption} />}
+          {joined && (
+            <VideoRoom
+              selectedMic={selectedMic}
+              videoOption={videoOption}  // Pass the video option
+            />
+          )}
         </div>
 
         {/* Preferences Wrapper at Bottom */}
@@ -92,7 +95,12 @@ function Videocall() {
             <h3>Video Preferences</h3>
             <div className="mic-selection">
               <label htmlFor="video-options">Video Options:</label>
-              <select id="video-options" name="video-options" value={videoOption} onChange={handleVideoOptionChange}>
+              <select
+                id="video-options"
+                name="video-options"
+                value={videoOption}
+                onChange={handleVideoOptionChange}
+              >
                 <option value="Show Video">Show Video</option>
                 <option value="Hide Video">Hide Video</option>
               </select>
