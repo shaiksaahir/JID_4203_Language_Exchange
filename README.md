@@ -7,6 +7,8 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 * Added way to specify maximum number of partners available to join a video call
 ### Bug Fixes
 * Fixed Video Call page format issues
+* Fixed FriendsList backend database showing "Network Error"
+* Fixed FriendsList sorting by preferences
 ### Known Issues
 * 
 
