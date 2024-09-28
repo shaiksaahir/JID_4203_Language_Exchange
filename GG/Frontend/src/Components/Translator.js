@@ -5,7 +5,7 @@ import './Dashboard.css';
 import './Translator.css';
 import Button from 'react-bootstrap/Button';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
-import translate from 'translate';
+import translate from 'translate'; // imports the translate package that accesses the four different translation services that can be used in our program
 import { handleTranslator } from '../Services/userService';
 
 function Translator() {
@@ -22,7 +22,7 @@ function Translator() {
     }
     const translateButton = async (button) => {
         console.log("Translate pressed", button);
-        const text = await translate(input, {to: "ko", from: "en"});
+        const text = await translate(input, {to: "ko", from: "en"}); // this method declaration will use the google translation service by default
         setInput(text)
     }
     const saveButton = async (button) => {

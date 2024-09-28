@@ -1,4 +1,11 @@
+/**
+ * New page which allows a user to see all of the other users with accounts on the application.
+ * Author: Townshend White
+ * Version 0.1 -- in future, page needs to display User Names but also be able to toggle through other UserAccount profile
+ * preferences, which may require displaying data through getAllUsers rather than getUserNames
+ */
 import React, { useState, useEffect } from 'react';
+
 import { handleGetUserNamesApi, handleGetUserPreferencesApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
 
