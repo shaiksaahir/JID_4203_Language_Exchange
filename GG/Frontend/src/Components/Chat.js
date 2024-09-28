@@ -97,7 +97,6 @@ const Chat = () => {
               setSendMessage={setSendMessage}
               receivedMessage={receivedMessage}
               />
-              
             </div>
         </div>
     );

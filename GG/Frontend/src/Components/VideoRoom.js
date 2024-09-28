@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
+import Button from 'react-bootstrap/Button';
 
-const APP_ID = 'your-app-id';  // Your Agora APP_ID
-const TOKEN = 'your-agora-token';  // Agora token
+const APP_ID = 'a6764cf8e2e146d5a2ed71c111c01b9a';
+const TOKEN = '007eJxTYODL+LjX6uDyC5M4mr9mGAfI25WZfAv3PnnltVmkVY/vCl0FhkQzczOT5DSLVKNUQxOzFNNEo9QUc8NkQ0PDZAPDJMvEW7q5qQ2BjAzzVs1lZWSAQBCfhaEktbiEgQEAP7wfhA==';
 const CHANNEL = 'test';
+
+var mute = false;
 
 const client = AgoraRTC.createClient({
   mode: 'rtc',
   codec: 'vp8',
 });
 
-export const VideoRoom = ({ selectedMic, videoOption }) => {
+export const VideoRoom = () => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
-  const [videoTrack, setVideoTrack] = useState(null);
+
+  var [hidden, setHidden] = useState(false)
 
   const handleUserJoined = async (user, mediaType) => {
     await client.subscribe(user, mediaType);
@@ -24,7 +28,7 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
     }
 
     if (mediaType === 'audio') {
-      user.audioTrack.play();
+      user.audioTrack.play()
     }
   };
 
@@ -32,37 +36,20 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
     setUsers((previousUsers) =>
       previousUsers.filter((u) => u.uid !== user.uid)
     );
-    if (user.videoTrack) {
-      user.videoTrack.stop();
-      user.videoTrack.close();
-    }
-    if (user.audioTrack) {
-      user.audioTrack.stop();
-      user.audioTrack.close();
-    }
+    user.videoTrack.close();
+    user.audioTrack.close();
   };
 
-  // Manage video track based on "Show Video" or "Hide Video"
-  useEffect(() => {
-    const manageVideoTrack = async () => {
-      if (videoOption === 'Show Video') {
-        if (!videoTrack) {
-          const cameraVideoTrack = await AgoraRTC.createCameraVideoTrack();
-          setVideoTrack(cameraVideoTrack);
-          client.publish([cameraVideoTrack]);
-        }
-      } else if (videoOption === 'Hide Video') {
-        if (videoTrack) {
-          client.unpublish([videoTrack]);
-          videoTrack.stop();
-          videoTrack.close();
-          setVideoTrack(null);
-        }
-      }
-    };
+  const handleMute = async(e) => {
+    mute = !mute
+    await localTracks[0].setEnabled(!mute)
+  }
 
-    manageVideoTrack();
-  }, [videoOption]);  // Re-run when videoOption changes
+  const hide = async(e) => {
+    hidden = !hidden
+    console.log(hidden)
+    await localTracks[1].setEnabled(!hidden)
+  }
 
   useEffect(() => {
     client.on('user-published', handleUserJoined);
@@ -70,35 +57,53 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
 
     client
       .join(APP_ID, CHANNEL, TOKEN, null)
-      .then((uid) => {
-        AgoraRTC.createMicrophoneAudioTrack({ microphoneId: selectedMic }).then((audioTrack) => {
-          client.publish([audioTrack]);
-          setLocalTracks((prev) => [...prev, audioTrack]);
-        });
+      .then((uid) =>
+        Promise.all([
+          AgoraRTC.createMicrophoneAndCameraTracks(),
+          uid,
+        ])
+      )
+      .then(([tracks, uid]) => {
+        const [audioTrack, videoTrack] = tracks;
+        setLocalTracks(tracks);
+        setUsers((previousUsers) => [
+          ...previousUsers,
+          {
+            uid,
+            videoTrack,
+            audioTrack,
+          },
+        ]);
+        client.publish(tracks);
       });
 
     return () => {
-      localTracks.forEach((track) => {
-        track.stop();
-        track.close();
-      });
-      client.leave();
+      for (let localTrack of localTracks) {
+        localTrack.stop();
+        localTrack.close();
+      }
+      client.off('user-published', handleUserJoined);
+      client.off('user-left', handleUserLeft);
+      client.unpublish().then(() => client.leave());
     };
-  }, [selectedMic]);
+  }, []);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{ display: 'flex', justifyContent: 'center' }}
+    >
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 200px)',
-          gap: '1rem',
         }}
       >
         {users.map((user) => (
-          <VideoPlayer key={user.uid} user={user} />
+          !hidden ? <VideoPlayer key={user.uid} user={user} /> : null
         ))}
       </div>
+      <Button className="btn-mute" onClick={handleMute} >Mute</Button>
+      <Button className="btn-hide" onClick={()=>setHidden(!hidden)} >Hide Video</Button>
     </div>
   );
 };
