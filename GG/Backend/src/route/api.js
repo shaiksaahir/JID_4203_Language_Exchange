@@ -10,6 +10,7 @@ const initAPIRoute = (app) => {
     router.put('/update-user', APIController.updateUser); // method put
     router.delete('/delete-user/:id', APIController.deleteUser); // method delete
     router.get('/user-names', APIController.getUserNames); // GET method to fetch user names
+    router.get('/user-preferences', APIController.getUserPreferences);
     return app.use('/api/v1/', router)
 }
 

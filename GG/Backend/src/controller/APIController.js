@@ -4,32 +4,12 @@ import { pool } from '../config/connectDB'; //TOWNSHEND: this was formally conne
 //TOWNSHEND: getAllUsers may be the best way to sort users on a page since all data on a UserAccount is attached to the user
 // I can explore this more
 let getAllUsers = async (req, res) => {
-    try {
-        const { name } = req.query; // Get the username from query parameters
-    
-        // Check if the username is provided
-        if (!name) {
-          return res.status(400).json({ message: 'Username query parameter is missing' });
-        }
-    
-        // Use parameterized query to prevent SQL injection
-        const [users] = await pool.execute(`SELECT firstName FROM UserAccount WHERE firstName = ?`, [name]);
-    
-        return res.status(200).json({
-          message: 'ok',
-          data: users
-        });
-      } catch (error) {
-        console.error('Error retrieving users:', error);
-        return res.status(500).json({
-          message: 'Error retrieving users',
-          error: error.message
-        });
-      }
-};
-
-
-
+    const [rows, fields] = await pool.execute(`SELECT * FROM UserAccount`);
+    return res.status(200).json({
+        message: 'ok',
+        data: rows
+    })
+}
 
 let createNewUser = async (req, res) => { //POST function
     let { firstName, lastName, email, address } = req.body;
@@ -73,13 +53,27 @@ let deleteUser = async (req, res) => { // DELETE function
         message: 'ok'
     })
 }
-
+const getUserPreferences = async (req , res) => {
+  try {
+    const [userPreferences] = await pool.execute(`SELECT * FROM UserProfile`); 
+    res.status(200).json({
+      message: 'ok',
+      data: userPreferences
+    });
+  } catch (error) {
+    console.error('Error retrieving user names:', error); // Log error details
+    res.status(500).json({
+      message: 'Error retrieving preferences',
+      error: error.message
+    });
+  }
+}
 //TOWNSHEND: I created a simpler function that isolated the user firstName and lastName
 // but may not be good for sorting.
 const getUserNames = async (req, res) => {
     try {
-        const [users] = await pool.execute(`SELECT firstName, lastName FROM UserAccount`);
-        res.status(200).json({
+      const [users] = await pool.execute(`SELECT * FROM UserAccount`); // uses mysql2 function to access database
+      res.status(200).json({
         message: 'ok',
         data: users
       });
@@ -93,5 +87,5 @@ const getUserNames = async (req, res) => {
 };
 
 module.exports = { 
-    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, // added getUserNames as an export
+    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences // added getUserNames as an export
 }
