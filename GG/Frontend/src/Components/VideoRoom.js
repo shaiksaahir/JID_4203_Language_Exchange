@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
 import Button from 'react-bootstrap/Button';
+import translate from 'translate'; // imports the translate package that accesses the four different translation services that can be used in our program
+
 
 const APP_ID = 'a6764cf8e2e146d5a2ed71c111c01b9a';
 const TOKEN = '007eJxTYODL+LjX6uDyC5M4mr9mGAfI25WZfAv3PnnltVmkVY/vCl0FhkQzczOT5DSLVKNUQxOzFNNEo9QUc8NkQ0PDZAPDJMvEW7q5qQ2BjAzzVs1lZWSAQBCfhaEktbiEgQEAP7wfhA==';
@@ -53,13 +55,34 @@ export const VideoRoom = () => {
     await localTracks[1].setEnabled(!hidden)
   }
 
+// Translation logic with language detection
+const translateInput = async (text) => {
+  try {
+    // Detect if the text is in Korean or English using Javascript's regex.test(String) method of character detection
+    const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text); // the regular expression used is the standard expression for detecting korean characters
+    
+    // Translate to English if it's in Korean, or to Korean if it's in English
+    const translatedText = isKorean 
+      ? await translate(text, { to: "en", from: "ko" }) 
+      : await translate(text, { to: "ko", from: "en" });
+
+    return translatedText;
+  } catch (error) {
+    console.error("Translation failed", error);
+    return text; // Fallback to original text if translation fails
+  }
+};
+
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = async (e) => {
     if (e.key === 'Enter' && inputText.trim() !== '') {
-      setSavedText((prevText) => prevText + (prevText ? '\n' : '') + inputText); // Append the input with a newline
+
+      const translatedText = await translateInput(inputText);
+
+      setSavedText((prevText) => prevText + (prevText ? '\n' : '') + translatedText); // Append the input with a newline
       setInputText(''); // Clear the input field after saving
     }
   };

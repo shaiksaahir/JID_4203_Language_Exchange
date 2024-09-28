@@ -21,6 +21,7 @@
 * Added MBTI personality type selector on the profile creation page
 * Added available dates and times selector on the profile creation page
 * Added profile visibility on the profile creation page
+* Added an input box in the VideoRoom which will create a translated transcript of user-inputted text
 ### Bug Fixes
 * Made the application clonable from GitHub
 ### Known Issues
