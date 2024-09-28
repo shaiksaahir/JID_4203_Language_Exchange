@@ -6,6 +6,8 @@
 * Added way to specify maximum number of partners available to join a video call
 ### Bug Fixes
 * Fixed Video Call page format issues
+* Fixed FriendsList backend database showing "Network Error"
+* Fixed FriendsList sorting by preferences
 ### Known Issues
 * 
 
