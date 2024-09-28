@@ -157,7 +157,7 @@ function Dashboard()  {
   const addFriend1 = async(e) => {
     try {
       console.log('friend add attempt')
-      let data = await handleCreateFriendsApi(id, friends[0].id);
+      let data = await handleCreateFriendsApi(id, friendids[0].id);
     } catch(err) {
 
     }

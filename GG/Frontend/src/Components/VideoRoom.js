@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
 import translate from 'translate'; // imports the translate package that accesses the four different translation services that can be used in our program
+import Button from 'react-bootstrap/Button';
 
-
-const APP_ID = 'your-app-id';  // Your Agora APP_ID
-const TOKEN = 'your-agora-token';  // Agora token
+const APP_ID = 'a6764cf8e2e146d5a2ed71c111c01b9a';
+const TOKEN = '007eJxTYODL+LjX6uDyC5M4mr9mGAfI25WZfAv3PnnltVmkVY/vCl0FhkQzczOT5DSLVKNUQxOzFNNEo9QUc8NkQ0PDZAPDJMvEW7q5qQ2BjAzzVs1lZWSAQBCfhaEktbiEgQEAP7wfhA==';
 const CHANNEL = 'test';
+
+var mute = false;
 
 const client = AgoraRTC.createClient({
   mode: 'rtc',
   codec: 'vp8',
 });
 
-export const VideoRoom = ({ selectedMic, videoOption }) => {
+export const VideoRoom = () => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
   const [videoTrack, setVideoTrack] = useState(null);
@@ -28,7 +30,7 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
     }
 
     if (mediaType === 'audio') {
-      user.audioTrack.play();
+      user.audioTrack.play()
     }
   };
 
@@ -36,16 +38,10 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
     setUsers((previousUsers) =>
       previousUsers.filter((u) => u.uid !== user.uid)
     );
-    if (user.videoTrack) {
-      user.videoTrack.stop();
-      user.videoTrack.close();
-    }
-    if (user.audioTrack) {
-      user.audioTrack.stop();
-      user.audioTrack.close();
-    }
+    user.videoTrack.close();
+    user.audioTrack.close();
   };
-
+  
     // Translation logic with language detection
     const translateInput = async (text) => {
       try {
@@ -94,8 +90,11 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       }
     };
 
-    manageVideoTrack();
-  }, [videoOption]);  // Re-run when videoOption changes
+  const hide = async(e) => {
+    hidden = !hidden
+    console.log(hidden)
+    await localTracks[1].setEnabled(!hidden)
+  }
 
   useEffect(() => {
     client.on('user-published', handleUserJoined);
@@ -103,21 +102,36 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
 
     client
       .join(APP_ID, CHANNEL, TOKEN, null)
-      .then((uid) => {
-        AgoraRTC.createMicrophoneAudioTrack({ microphoneId: selectedMic }).then((audioTrack) => {
-          client.publish([audioTrack]);
-          setLocalTracks((prev) => [...prev, audioTrack]);
-        });
+      .then((uid) =>
+        Promise.all([
+          AgoraRTC.createMicrophoneAndCameraTracks(),
+          uid,
+        ])
+      )
+      .then(([tracks, uid]) => {
+        const [audioTrack, videoTrack] = tracks;
+        setLocalTracks(tracks);
+        setUsers((previousUsers) => [
+          ...previousUsers,
+          {
+            uid,
+            videoTrack,
+            audioTrack,
+          },
+        ]);
+        client.publish(tracks);
       });
 
     return () => {
-      localTracks.forEach((track) => {
-        track.stop();
-        track.close();
-      });
-      client.leave();
+      for (let localTrack of localTracks) {
+        localTrack.stop();
+        localTrack.close();
+      }
+      client.off('user-published', handleUserJoined);
+      client.off('user-left', handleUserLeft);
+      client.unpublish().then(() => client.leave());
     };
-  }, [selectedMic]);
+  }, []);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center',  whiteSpace: 'pre-wrap', }}>
@@ -125,11 +139,10 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 200px)',
-          gap: '1rem',
         }}
       >
         {users.map((user) => (
-          <VideoPlayer key={user.uid} user={user} />
+          !hidden ? <VideoPlayer key={user.uid} user={user} /> : null
         ))}
       </div>
 
@@ -138,6 +151,7 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
         type="text"
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
+
         onKeyPress={handleKeyPress}
         placeholder="Type here and press Enter"
         style={{ marginTop: '20px', padding: '10px', width: '300px' }}
@@ -158,7 +172,6 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       >
         {savedText || 'No conversation yet...'}
       </div>
-
     </div>
   );
 };
