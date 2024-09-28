@@ -5,45 +5,131 @@
  * preferences, which may require displaying data through getAllUsers rather than getUserNames
  */
 import React, { useState, useEffect } from 'react';
-import { handleGetUserNamesApi } from '../Services/findFriendsService'; // FindFriendsService handles the API address
+
+import { handleGetUserNamesApi, handleGetUserPreferencesApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
 
 const FriendSearch = () => {
-  const [userNames, setUserNames] = useState([]); // define initial state of UserNames before fetching data
+  const [userNames, setUserNames] = useState([]);
+  const [allUserNames, setAllUserNames] = useState([]); // Store all users for filtering
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filterInput, setFilterInput] = useState(''); // For name filtering
+  const [preferenceFilterInput, setPreferenceFilterInput] = useState(''); // For preference filtering
 
   useEffect(() => {
     const fetchUserNames = async () => {
       try {
-        const response = await handleGetUserNamesApi(); // Call the API function that retrieves the first and last name of each UserAccount
-        console.log('API response:', response.data); // Log the response data
-        setUserNames(response.data); // Directly set data to UserNames array to be used in a map and displayed to users
-        setLoading(false); // Set loading to false once data is fetched
+        const response = await handleGetUserNamesApi(); // Fetch all user names
+        setUserNames(response.data);
+        setAllUserNames(response.data); // Store original list
+        setLoading(false);
       } catch (err) {
-        console.error('Error fetching user names:', err);
-        setError(err); // Set error if there is an issue
-        setLoading(false); // Set loading to false in case of an error
+        setError(err);
+        setLoading(false);
       }
     };
 
     fetchUserNames();
   }, []);
 
-  console.log('User names state:', userNames); // Log new state of UserNames after fetch; should be an array of names
+  // Filter by name or email
+  const handleNameFilter = () => {
+    if (filterInput.trim() === "") {
+      setUserNames(allUserNames); // Reset to all users if input is empty
+    } else {
+      const filteredNames = allUserNames.filter(user =>
+        user.firstName.toLowerCase().includes(filterInput.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(filterInput.toLowerCase()) ||
+        user.email.toLowerCase().includes(filterInput.toLowerCase())
+      );
+      setUserNames(filteredNames.length > 0 ? filteredNames : allUserNames); // If no match, show all users
+    }
+  };
+
+  // Filter by preferences (using preference API)
+  const handlePreferenceFilter = async () => {
+    if (preferenceFilterInput.trim() === "") {
+      setUserNames(allUserNames); // Reset to all users if input is empty
+    } else {
+      try {
+        const preferencesResponse = await handleGetUserPreferencesApi(); // Fetch all preferences
+        const preferences = preferencesResponse.data;
+
+        // Filter preferences based on input value
+        const filteredPreferences = preferences.filter(pref =>
+          Object.values(pref).some(value =>
+            String(value).toLowerCase().includes(preferenceFilterInput.toLowerCase())
+          )
+        );
+
+        // If no match, show all users
+        if (filteredPreferences.length === 0) {
+          setUserNames(allUserNames);
+        } else {
+          // Extract matching user IDs from preferences
+          const matchedUserIds = filteredPreferences.map(pref => pref.id);
+
+          // Filter usernames by matching IDs
+          const filteredNamesByPreferences = allUserNames.filter(user => matchedUserIds.includes(user.id));
+
+          // If no match, show all users
+          setUserNames(filteredNamesByPreferences.length > 0 ? filteredNamesByPreferences : allUserNames);
+        }
+      } catch (error) {
+        console.error('Error fetching user preferences:', error);
+      }
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="friend-search">
-      <h1>User Names</h1>
-      <p>Here are the user names from the database:</p>
-      <ul>
-        {userNames.map((user, index) => (
-          <li key={index}>{user.firstName} {user.lastName}</li> // display User Names
-        ))}
-      </ul>
+    <div className="friend-search-container">
+      {/* Filter Sidebar */}
+      <div className="filter-sidebar">
+        {/* Filter by Name Section */}
+        <div className="filter-section">
+          <h3>Filter Users by Name</h3>
+          <input
+            type="text"
+            placeholder="Enter name or email"
+            value={filterInput}
+            onChange={(e) => setFilterInput(e.target.value)}
+          />
+          <button onClick={handleNameFilter}>
+            Filter by Name
+          </button>
+        </div>
+
+        {/* Filter by Preferences Section */}
+        <div className="filter-section">
+          <h3>Filter Users by Preference</h3>
+          <input
+            type="text"
+            placeholder="Enter preference"
+            value={preferenceFilterInput}
+            onChange={(e) => setPreferenceFilterInput(e.target.value)}
+          />
+          <button onClick={handlePreferenceFilter}>
+            Filter by Preference
+          </button>
+        </div>
+      </div>
+
+      {/* Main Search Area */}
+      <div className="friend-search">
+        <h1>User Names</h1>
+        <p>Here are the user names from the database:</p>
+        <ul>
+          {userNames.map((user, index) => (
+            <li key={index}>
+              {user.firstName} {user.lastName}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

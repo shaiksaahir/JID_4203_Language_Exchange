@@ -53,12 +53,26 @@ let deleteUser = async (req, res) => { // DELETE function
         message: 'ok'
     })
 }
-
+const getUserPreferences = async (req , res) => {
+  try {
+    const [userPreferences] = await pool.execute(`SELECT * FROM UserProfile`); 
+    res.status(200).json({
+      message: 'ok',
+      data: userPreferences
+    });
+  } catch (error) {
+    console.error('Error retrieving user names:', error); // Log error details
+    res.status(500).json({
+      message: 'Error retrieving preferences',
+      error: error.message
+    });
+  }
+}
 //TOWNSHEND: I created a simpler function that isolated the user firstName and lastName
 // but may not be good for sorting.
 const getUserNames = async (req, res) => {
     try {
-      const [users] = await pool.execute(`SELECT firstName, lastName FROM UserAccount`); // uses mysql2 function to access database
+      const [users] = await pool.execute(`SELECT * FROM UserAccount`); // uses mysql2 function to access database
       res.status(200).json({
         message: 'ok',
         data: users
@@ -73,5 +87,5 @@ const getUserNames = async (req, res) => {
 };
 
 module.exports = { 
-    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, // added getUserNames as an export
+    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences // added getUserNames as an export
 }

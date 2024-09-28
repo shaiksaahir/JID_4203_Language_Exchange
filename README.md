@@ -4,6 +4,8 @@
 ## Version 1.6.0
 ### Features
 * Added way to specify maximum number of partners available to join a video call
+* Added a list of video preferences for users to filter patners
+* Added a list of audio preferences for users to filter partners
 ### Bug Fixes
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"
