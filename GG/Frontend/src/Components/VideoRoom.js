@@ -17,6 +17,8 @@ const client = AgoraRTC.createClient({
 export const VideoRoom = () => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
+  const [inputText, setInputText] = useState(''); // For handling input text
+  const [savedText, setSavedText] = useState(''); // For saving the entered text
 
   var [hidden, setHidden] = useState(false)
 
@@ -50,6 +52,17 @@ export const VideoRoom = () => {
     console.log(hidden)
     await localTracks[1].setEnabled(!hidden)
   }
+
+  const handleInputChange = (e) => {
+    setInputText(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && inputText.trim() !== '') {
+      setSavedText((prevText) => prevText + (prevText ? '\n' : '') + inputText); // Append the input with a newline
+      setInputText(''); // Clear the input field after saving
+    }
+  };
 
   useEffect(() => {
     client.on('user-published', handleUserJoined);
@@ -90,7 +103,7 @@ export const VideoRoom = () => {
 
   return (
     <div
-      style={{ display: 'flex', justifyContent: 'center' }}
+      style={{ display: 'flex', justifyContent: 'center',  whiteSpace: 'pre-wrap', }}
     >
       <div
         style={{
@@ -104,6 +117,19 @@ export const VideoRoom = () => {
       </div>
       <Button className="btn-mute" onClick={handleMute} >Mute</Button>
       <Button className="btn-hide" onClick={()=>setHidden(!hidden)} >Hide Video</Button>
+
+      {/* Add the input box for typing a message */}
+      <input
+        type="text"
+        value={inputText}
+        onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
+        placeholder="Type here and press Enter"
+        style={{ marginTop: '20px', padding: '10px', width: '300px' }}
+      />
+      
+      {/* Display the saved text */}
+      {savedText && <p style={{ marginTop: '10px' }}>Saved input: {savedText}</p>}
     </div>
   );
 };
