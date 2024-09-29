@@ -45,24 +45,6 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       user.audioTrack.close();
     }
   };
-  
-    // Translation logic with language detection
-    const translateInput = async (text) => {
-      try {
-        // Detect if the text is in Korean or English based on character set
-        const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-        
-        // Translate to English if it's in Korean, or to Korean if it's in English
-        const translatedText = isKorean 
-          ? await translate(text, { to: "en", from: "ko" }) 
-          : await translate(text, { to: "ko", from: "en" });
-  
-        return translatedText;
-      } catch (error) {
-        console.error("Translation failed", error);
-        return text; // Fallback to original text if translation fails
-      }
-    };
 
     // Translation logic with language detection
     const translateInput = async (text) => {
