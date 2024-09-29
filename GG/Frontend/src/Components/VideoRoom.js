@@ -13,7 +13,7 @@ const client = AgoraRTC.createClient({
   codec: 'vp8',
 });
 
-export const VideoRoom = ({ selectedMic, videoOption }) => {
+export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
   const [videoTrack, setVideoTrack] = useState(null);
@@ -21,14 +21,18 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
   const [savedText, setSavedText] = useState(''); // For saving the entered text
 
   const handleUserJoined = async (user, mediaType) => {
-    await client.subscribe(user, mediaType);
+    if (partners === 0 || users.length < partners) {
+        await client.subscribe(user, mediaType);
 
-    if (mediaType === 'video') {
-      setUsers((previousUsers) => [...previousUsers, user]);
-    }
+        if (mediaType === 'video') {
+            setUsers((previousUsers) => [...previousUsers, user]);
+        }
 
-    if (mediaType === 'audio') {
-      user.audioTrack.play();
+        if (mediaType === 'audio') {
+            user.audioTrack.play();
+        }
+    } else {
+          console.log("User limit reached. Cannot join new users.");
     }
   };
 
@@ -117,10 +121,10 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       });
       client.leave();
     };
-  }, [selectedMic]);
+  }, [selectedMic, partners]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center',  whiteSpace: 'pre-wrap', }}>
+    <div style={{ display: 'grid', placeItems: 'center',  whiteSpace: 'pre-wrap' }}>
       <div
         style={{
           display: 'grid',
@@ -155,6 +159,9 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
           overflowY: 'auto',
           whiteSpace: 'pre-wrap', // Ensure newlines are displayed
           backgroundColor: '#f0f0f0',
+          justifyContent: 'center', // Horizontally center
+          alignItems: 'center',
+          display: 'flex',
         }}
       >
         {savedText || 'No conversation yet...'}

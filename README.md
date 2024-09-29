@@ -1,17 +1,19 @@
 # JDA-4203 | Language Exchange Matchmaker
 
 # Release Notes
-## Version 1.6.0
+## Version 2.2.0
 ### Features
 * Added way to specify maximum number of partners available to join a video call
-* Added an input box in the Video Room which formats as a translated transcript of user-inputted text.
-
+* Added an input box in the Video Room which formats as a translated transcript of user-inputted text
+* Added audio preferences for the user; updated mute button and added microphone selection
+* Added video preferences; can now hide video
 ### Bug Fixes
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"
 * Fixed FriendsList sorting by preferences
 ### Known Issues
-* Audio and Video features are not working from the previous iteration of the project. Several Node modules are not working properly.
+* Audio and Video features are not working from the previous iteration of the project
+* Several Node modules are not working properly
 
 ## Version 2.1.0
 ### Features
