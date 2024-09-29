@@ -124,7 +124,7 @@ const FriendSearch = () => {
       {/* Main Search Area */}
       <div className="friend-search">
         <h1>User Names</h1>
-        <p>Click on a username to add them to your Recent Chat Partners:</p>
+        <p>Here are Usernames from the Database:</p>
         <ul className="user-list">
           {userNames.map((user, index) => (
             <li key={index}>
