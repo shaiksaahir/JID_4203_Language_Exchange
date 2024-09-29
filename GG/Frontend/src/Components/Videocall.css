@@ -42,16 +42,61 @@
 
 .mute-section {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+    align-items: center;
 }
 
 .mute-btn {
   padding: 0.5rem 1rem;
+  width: 25%;
   font-size: 1rem;
   background-color: #ff6666;
   color: white;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+}
+
+.btn-help {
+    background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    width: 15%;
+    margin: 10px 0;
+    height: 35px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    color: white;
+    float: right;
+}
+
+.btn-join {
+    background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    width: 30%;
+    margin: 10px 0;
+    height: 40px;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    color: white;
+}
+
+.call-container {
+    width: 30%;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 30px;
+    height: 30px;
+    float: left;
 }
