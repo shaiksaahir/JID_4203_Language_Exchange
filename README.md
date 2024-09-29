@@ -11,7 +11,7 @@
 * Fixed FriendsList backend database showing "Network Error"
 * Fixed FriendsList sorting by preferences
 ### Known Issues
-* 
+* Audio and Video features are not working from the previous iteration of the project. Several Node modules are not working properly.
 
 ## Version 2.1.0
 ### Features
