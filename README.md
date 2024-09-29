@@ -4,14 +4,14 @@
 ## Version 1.6.0
 ### Features
 * Added way to specify maximum number of partners available to join a video call
-* Added a list of video preferences for users to filter patners
-* Added a list of audio preferences for users to filter partners
+* Added an input box in the Video Room which formats as a translated transcript of user-inputted text.
+
 ### Bug Fixes
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"
 * Fixed FriendsList sorting by preferences
 ### Known Issues
-* 
+* Audio and Video features are not working from the previous iteration of the project. Several Node modules are not working properly.
 
 ## Version 2.1.0
 ### Features

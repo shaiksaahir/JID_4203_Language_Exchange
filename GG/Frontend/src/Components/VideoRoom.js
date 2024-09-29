@@ -45,7 +45,7 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       user.audioTrack.close();
     }
   };
-
+  
     // Translation logic with language detection
     const translateInput = async (text) => {
       try {
@@ -64,6 +64,24 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       }
     };
 
+    // Translation logic with language detection
+    const translateInput = async (text) => {
+      try {
+        // Detect if the text is in Korean or English based on character set
+        const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
+        
+        // Translate to English if it's in Korean, or to Korean if it's in English
+        const translatedText = isKorean 
+          ? await translate(text, { to: "en", from: "ko" }) 
+          : await translate(text, { to: "ko", from: "en" });
+  
+        return translatedText;
+      } catch (error) {
+        console.error("Translation failed", error);
+        return text; // Fallback to original text if translation fails
+      }
+    };
+  
   const handleKeyPress = async (e) => {
     if (e.key === 'Enter' && inputText.trim() !== '') {
       // Translate the input before appending
@@ -138,6 +156,7 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
         type="text"
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
+
         onKeyPress={handleKeyPress}
         placeholder="Type here and press Enter"
         style={{ marginTop: '20px', padding: '10px', width: '300px' }}
