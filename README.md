@@ -10,7 +10,7 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 ### Bug Fixes
 * Fixed Video Call page format issues
 ### Known Issues
-* 
+* Audio and Video features are not working from the previous iteration of the project. Several Node modules are not working properly.
 
 ## Version 2.1.0
 ### Features
