@@ -1,11 +1,4 @@
-/**
- * New page which allows a user to see all of the other users with accounts on the application.
- * Author: Townshend White
- * Version 0.1 -- in future, page needs to display User Names but also be able to toggle through other UserAccount profile
- * preferences, which may require displaying data through getAllUsers rather than getUserNames
- */
 import React, { useState, useEffect } from 'react';
-
 import { handleGetUserNamesApi, handleGetUserPreferencesApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
 
@@ -16,6 +9,7 @@ const FriendSearch = () => {
   const [error, setError] = useState(null);
   const [filterInput, setFilterInput] = useState(''); // For name filtering
   const [preferenceFilterInput, setPreferenceFilterInput] = useState(''); // For preference filtering
+  const [recentChatPartners, setRecentChatPartners] = useState([]); // State to manage recent chat partners
 
   useEffect(() => {
     const fetchUserNames = async () => {
@@ -82,6 +76,20 @@ const FriendSearch = () => {
     }
   };
 
+  // Handle click to add a user to recent chat partners
+  const handleUserClick = (user) => {
+    // Prevent duplicates in the recent chat partners list
+    if (!recentChatPartners.some(partner => partner.id === user.id)) {
+      setRecentChatPartners([...recentChatPartners, user]);
+    }
+  };
+
+  // Handle removing a user from recent chat partners
+  const handleRemovePartner = (userId) => {
+    const updatedPartners = recentChatPartners.filter(partner => partner.id !== userId);
+    setRecentChatPartners(updatedPartners);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -89,7 +97,6 @@ const FriendSearch = () => {
     <div className="friend-search-container">
       {/* Filter Sidebar */}
       <div className="filter-sidebar">
-        {/* Filter by Name Section */}
         <div className="filter-section">
           <h3>Filter Users by Name</h3>
           <input
@@ -98,9 +105,7 @@ const FriendSearch = () => {
             value={filterInput}
             onChange={(e) => setFilterInput(e.target.value)}
           />
-          <button onClick={handleNameFilter}>
-            Filter by Name
-          </button>
+          <button onClick={handleNameFilter}>Filter by Name</button>
         </div>
 
         {/* Filter by Preferences Section */}
@@ -112,22 +117,39 @@ const FriendSearch = () => {
             value={preferenceFilterInput}
             onChange={(e) => setPreferenceFilterInput(e.target.value)}
           />
-          <button onClick={handlePreferenceFilter}>
-            Filter by Preference
-          </button>
+          <button onClick={handlePreferenceFilter}>Filter by Preference</button>
         </div>
       </div>
 
       {/* Main Search Area */}
       <div className="friend-search">
         <h1>User Names</h1>
-        <p>Here are the user names from the database:</p>
-        <ul>
+        <p>Here are Usernames from the Database:</p>
+        <ul className="user-list">
           {userNames.map((user, index) => (
             <li key={index}>
-              {user.firstName} {user.lastName}
+              <button className="user-button" onClick={() => handleUserClick(user)}>
+                {user.firstName} {user.lastName}
+              </button>
             </li>
           ))}
+        </ul>
+
+        {/* Section for Recent Chat Partners */}
+        <h2>Recent Chat Partners</h2>
+        <ul className="recent-chat-list">
+          {recentChatPartners.length === 0 ? (
+            <li>No recent chat partners.</li>
+          ) : (
+            recentChatPartners.map((user, index) => (
+              <li key={index} className="recent-chat-partner">
+                <button className="user-button">
+                  {user.firstName} {user.lastName}
+                </button>
+                <button className="remove-button" onClick={() => handleRemovePartner(user.id)}>X</button>
+              </li>
+            ))
+          )}
         </ul>
       </div>
     </div>
