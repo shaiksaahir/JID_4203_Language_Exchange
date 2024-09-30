@@ -13,7 +13,7 @@ function Videocall() {
 
   const [microphones, setMicrophones] = useState([]);
   const [selectedMic, setSelectedMic] = useState('');
-  const [videoOption, setVideoOption] = useState('Show Video'); // Default video option
+  const [videoOption, setVideoOption] = useState('Hide Video'); // Default video option
   const [partners, setPartners] = useState(0);
 
   const handlePartners = (e) => {
@@ -117,8 +117,8 @@ function Videocall() {
                 value={videoOption}
                 onChange={handleVideoOptionChange}
               >
-                <option value="Show Video">Show Video</option>
                 <option value="Hide Video">Hide Video</option>
+                <option value="Show Video">Show Video</option>
               </select>
             </div>
           </div>
