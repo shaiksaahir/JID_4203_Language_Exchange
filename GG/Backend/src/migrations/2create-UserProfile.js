@@ -45,11 +45,11 @@ module.exports = {
         },
         dates_available: {
             allowNull: true,
-            type: sequelize.STRING
+            type: Sequelize.STRING
         },
         times_available: {
             allowNull: true,
-            type: sequelize.STRING
+            type: Sequelize.STRING
         },
         visibility: {
             allowNull: true,

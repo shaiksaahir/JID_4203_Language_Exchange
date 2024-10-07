@@ -54,7 +54,7 @@ function Translator() {
     };
     return (
         <div className="screen-Background">
-        <div  className="screen-Container">
+        <div  className="screen-Container" style={{ justifyContent: 'center' }}>
         <div className="screen-Content">
       
         <h1 className="centered">Translator</h1>

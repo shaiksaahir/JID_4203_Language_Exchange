@@ -1,6 +1,17 @@
 # JDA-4203 | Language Exchange Matchmaker
 
 # Release Notes
+## Version 2.3.0
+### Features
+* 
+### Bug Fixes
+* Fixed video display not working during a call
+* Fixed display of all buttons
+* Centered necessary UI objects
+* Fixed UserProfile database migration issue
+### Known Issues
+* 
+
 ## Version 2.2.0
 ### Features
 * Added way to specify maximum number of partners available to join a video call

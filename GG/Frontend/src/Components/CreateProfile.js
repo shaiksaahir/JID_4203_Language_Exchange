@@ -258,7 +258,7 @@ const [search] = useSearchParams();
  
   return (
     <div className="screen-Background">
-      <div className="screen-Container">
+      <div className="screen-Container" style={{ justifyContent: 'center' }}>
       <div className="screen-Content">
         <div>
         <h1>Set Profile</h1>
@@ -271,7 +271,7 @@ const [search] = useSearchParams();
       </div>
  
       <form>
-        <div className="d-grid gap-2">
+        <div className="profile-container">
         {/* Labels and inputs for form data */}
 
         <div className='form-group'>
