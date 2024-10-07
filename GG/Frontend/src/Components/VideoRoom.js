@@ -4,9 +4,9 @@ import { VideoPlayer } from './VideoPlayer';
 import translate from 'translate'; // imports the translate package that accesses the four different translation services that can be used in our program
 
 
-const APP_ID = 'your-app-id';  // Your Agora APP_ID
-const TOKEN = 'your-agora-token';  // Agora token
-const CHANNEL = 'test';
+const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
+const TOKEN = '007eJxTYNgj/M41byOfxmHOe09nzpl180iSjUD3riNdCql71p1y3/ZCgcHUINHcMM3A0iwp0cLEJNU4KdXEwCAlxTI5zcA81TTFZCULc3pDICPD7YvyLIwMEAjiczPkJpYkZ+QmZmfmpTMwAACobCN7';  // Agora token
+const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
   mode: 'rtc',
