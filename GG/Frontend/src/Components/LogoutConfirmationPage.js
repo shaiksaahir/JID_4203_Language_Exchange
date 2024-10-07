@@ -49,7 +49,7 @@ function LogoutConfirmationPage() {
 
     return (
         <div className=" col-12 screen-Background">
-            <div className="screen-Container">
+            <div className="screen-Container" style={{ justifyContent: 'center' }}>
                 <div className="screen-Content">
                     <h6>Are you sure you want to logout?</h6>
                     <div className="action_btn">

@@ -34,7 +34,7 @@ body{
 }
 .keyboard{
   width: 680px;
-  margin:400px -175px 100px;
+  margin:400px -340px;
   display: flex;
   position: fixed;
   flex-direction: column;
