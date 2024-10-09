@@ -29,13 +29,15 @@ const FriendSearch = () => {
 
   // Filter by name or email
   const handleNameFilter = () => {
-    if (filterInput.trim() === "") {
+    const lowerCaseFilterInput = filterInput.trim().toLowerCase(); // Convert input to lowercase once
+
+    if (lowerCaseFilterInput === "") {
       setUserNames(allUserNames); // Reset to all users if input is empty
     } else {
       const filteredNames = allUserNames.filter(user =>
-        user.firstName.toLowerCase().includes(filterInput.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(filterInput.toLowerCase()) ||
-        user.email.toLowerCase().includes(filterInput.toLowerCase())
+        user.firstName.toLowerCase().includes(lowerCaseFilterInput) ||
+        user.lastName.toLowerCase().includes(lowerCaseFilterInput) ||
+        user.email.toLowerCase().includes(lowerCaseFilterInput)
       );
       setUserNames(filteredNames.length > 0 ? filteredNames : allUserNames); // If no match, show all users
     }
@@ -43,7 +45,9 @@ const FriendSearch = () => {
 
   // Filter by preferences (using preference API)
   const handlePreferenceFilter = async () => {
-    if (preferenceFilterInput.trim() === "") {
+    const lowerCasePreferenceInput = preferenceFilterInput.trim().toLowerCase(); // Convert input to lowercase once
+
+    if (lowerCasePreferenceInput === "") {
       setUserNames(allUserNames); // Reset to all users if input is empty
     } else {
       try {
@@ -53,7 +57,7 @@ const FriendSearch = () => {
         // Filter preferences based on input value
         const filteredPreferences = preferences.filter(pref =>
           Object.values(pref).some(value =>
-            String(value).toLowerCase().includes(preferenceFilterInput.toLowerCase())
+            String(value).toLowerCase().includes(lowerCasePreferenceInput)
           )
         );
 
@@ -157,3 +161,4 @@ const FriendSearch = () => {
 };
 
 export default FriendSearch;
+
