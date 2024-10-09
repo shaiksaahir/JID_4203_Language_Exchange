@@ -1,14 +1,30 @@
-# JID-4203 | Language Exchange Matchmaker
-This project aims to continue development on an AI-enhanced matchmaking app for language exchange, specifically designed to help exchange students at Georgia Tech and Yonsei University in Korea improve their English and Korean language skills. The goal is to bridge the language gap, making it easier for students to form friendships and enhance their learning experience while participating in exchange programs.
+# JDA-4203 | Language Exchange Matchmaker
 
 # Release Notes
+## Version 2.3.0
+### Features
+* 
+### Bug Fixes
+* Fixed video display not working during a call
+* Fixed display of all buttons
+* Centered necessary UI objects
+* Fixed UserProfile database migration issue
+### Known Issues
+* 
+
 ## Version 2.2.0
 ### Features
 * Added way to specify maximum number of partners available to join a video call
+* Added an input box in the Video Room which formats as a translated transcript of user-inputted text
+* Added audio preferences for the user; updated mute button and added microphone selection
+* Added video preferences; can now hide video
 ### Bug Fixes
 * Fixed Video Call page format issues
+* Fixed FriendsList backend database showing "Network Error"
+* Fixed FriendsList sorting by preferences
 ### Known Issues
-* 
+* Audio and Video features are not working from the previous iteration of the project
+* Several Node modules are not working properly
 
 ## Version 2.1.0
 ### Features
@@ -18,12 +34,12 @@ This project aims to continue development on an AI-enhanced matchmaking app for 
 * Added MBTI personality type selector on the profile creation page
 * Added available dates and times selector on the profile creation page
 * Added profile visibility on the profile creation page
+* Added an input box in the VideoRoom which will create a translated transcript of user-inputted text
 ### Bug Fixes
 * Made the application clonable from GitHub
-* Fixed the import statement in APIController.js so that the GET and POST requests could use pool.execute
 ### Known Issues
-* UserNames are not attached to profile preferences of the user, like MBTI or meeting time
-* Profile visibility does not do anything since our creation of profiles will be in a later sprint. It is connected to the backend and database.
+* \#1 Backend is not connected
+* \#2 userprofile MySQL table not up-to-date
 
 # Install Guide
 ## PREREQUISITES 

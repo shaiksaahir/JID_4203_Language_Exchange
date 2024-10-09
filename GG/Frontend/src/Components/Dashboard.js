@@ -248,7 +248,7 @@ function Dashboard()  {
         <h2>{email}</h2>
         
         <Button className="btn-Screen" onClick={friendSearch}>Find Friend</Button>
-        <Button className="btn-chat" onClick={handleChat}>Chat</Button>
+        <Button className="btn-Screen" onClick={handleChat}>Chat</Button>
         <Button className="btn-Screen" onClick={call}>Call</Button>
         <Button className="btn-Screen" onClick={Translator}>Translator</Button>
         <Button className="btn-Screen" onClick={() => navigate({

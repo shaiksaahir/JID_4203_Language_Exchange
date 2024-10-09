@@ -12,12 +12,12 @@ const testDB = async () => {
 
   try {
     // Query to fetch user names
-    const [rows, fields] = await connection.execute('SELECT email FROM UserAccount'); // fetching the same data as FriendSearch
+    const [rows, fields] = await connection.execute('SELECT firstName, lastName FROM UserAccount'); // fetching the same data as FriendSearch
     
     // Formatted the output to list each user's name in terminal
     console.log('User Names:');
     rows.forEach(row => {
-      console.log(`${row.email}`);
+      console.log(`${row.firstName} ${row.lastName}`);
     });
   } catch (error) {
     console.error('Error executing query:', error);

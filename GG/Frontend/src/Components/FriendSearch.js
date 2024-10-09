@@ -109,7 +109,7 @@ const FriendSearch = () => {
             value={filterInput}
             onChange={(e) => setFilterInput(e.target.value)}
           />
-          <button onClick={handleNameFilter}>Filter by Name</button>
+          <button className="filter-btn" onClick={handleNameFilter}>Filter by Name</button>
         </div>
 
         {/* Filter by Preferences Section */}
@@ -121,7 +121,7 @@ const FriendSearch = () => {
             value={preferenceFilterInput}
             onChange={(e) => setPreferenceFilterInput(e.target.value)}
           />
-          <button onClick={handlePreferenceFilter}>Filter by Preference</button>
+          <button className="filter-btn" onClick={handlePreferenceFilter}>Filter by Preference</button>
         </div>
       </div>
 
@@ -161,3 +161,4 @@ const FriendSearch = () => {
 };
 
 export default FriendSearch;
+

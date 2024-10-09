@@ -1,3 +1,4 @@
+
 /* Sidebar for filter */
 .filter-sidebar {
   width: 200px;
@@ -45,6 +46,11 @@
   margin-bottom: 30px; /* Add space between filter sections */
 }
 
+.filter-btn {
+    width: fit-content;
+    height: fit-content;
+}
+
 .friend-search-container {
   display: flex;
   justify-content: center;
@@ -62,4 +68,55 @@
   max-width: 400px;
   margin-left: 20px;
   font-family: Arial, sans-serif;
+}
+
+/* Remove bullet points from the list */
+.user-list,
+.recent-chat-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style for each user button */
+.user-button {
+  padding: 10px 20px;
+  margin: 10px auto; /* Center the button horizontally */
+  width: 100%; /* Full width of the parent */
+  display: block;
+  border-radius: 5px;
+  border: none;
+  background-color: #5cb85c; /* Light green background */
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.user-button:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+/* Style for Recent Chat Partner to match the User Button */
+.recent-chat-partner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  background-color: #5cb85c; /* Match with user-button color */
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* Style for the remove button */
+.remove-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.remove-button:hover {
+  background-color: #c0392b;
 }

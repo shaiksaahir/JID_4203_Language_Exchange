@@ -6,13 +6,19 @@ import Button from 'react-bootstrap/Button';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 
 function Videocall() {
-  const [joined, setJoined] = useState();
+  const [joined, setJoined] = useState(false);
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get("id");
 
   const [microphones, setMicrophones] = useState([]);
   const [selectedMic, setSelectedMic] = useState('');
+  const [videoOption, setVideoOption] = useState('Hide Video'); // Default video option
+  const [partners, setPartners] = useState(0);
+
+  const handlePartners = (e) => {
+      setPartners(parseInt(e.target.value) || 0);
+  };
 
   useEffect(() => {
     async function getMicrophones() {
@@ -32,7 +38,10 @@ function Videocall() {
 
   const handleMicChange = (e) => {
     setSelectedMic(e.target.value);
-    // Here you can implement code to switch to the selected microphone
+  };
+
+  const handleVideoOptionChange = (e) => {
+    setVideoOption(e.target.value);
   };
 
   const handleBack = async (e) => {
@@ -46,36 +55,72 @@ function Videocall() {
 
   return (
     <div className="screen-Background">
-      <div className="screen-Container">
+      <div className="call-container">
         <div className="screen-Content">
           <h1>Video Call</h1>
           {!joined && (
-            <Button className="btn-Screen" onClick={() => setJoined(true)}>
+            <Button className="btn-join" onClick={() => setJoined(true)}>
               Join Room
             </Button>
           )}
-          {joined && <VideoRoom selectedMic={selectedMic} />}
+          {joined && (
+            <VideoRoom
+              selectedMic={selectedMic}
+              videoOption={videoOption}  // Pass the video option
+              partners={partners}
+            />
+          )}
         </div>
 
-        {/* Audio Preferences Section */}
-        <div className="audio-preferences">
-          <h3>Audio Preferences</h3>
-          <div className="mute-section">
-            <button className="mute-btn">Mute</button>
+        {/*Chat Partners Section*/}
+        <div className="screen-Content">
+            <h5>Preferred Number of Chat Partners</h5>
+            <input
+                placeholder="Enter"
+                onChange={handlePartners}
+                className="input"
+                type="text" />
+        </div>
+
+        {/* Preferences Wrapper at Bottom */}
+        <div className="preferences-wrapper-bottom">
+          {/* Audio Preferences Section */}
+          <div className="audio-preferences half-width">
+            <h3>Audio Preferences</h3>
+            <div className="mute-section">
+              <button className="mute-btn">Mute</button>
+            </div>
+            <div className="mic-selection">
+              <label htmlFor="mic">Select Microphone:</label>
+              <select id="mic" name="mic" value={selectedMic} onChange={handleMicChange}>
+                {microphones.length > 0 ? (
+                  microphones.map((mic) => (
+                    <option key={mic.deviceId} value={mic.deviceId}>
+                      {mic.label || `Microphone ${mic.deviceId}`}
+                    </option>
+                  ))
+                ) : (
+                  <option>No microphones available</option>
+                )}
+              </select>
+            </div>
           </div>
-          <div className="mic-selection">
-            <label htmlFor="mic">Select Microphone:</label>
-            <select id="mic" name="mic" value={selectedMic} onChange={handleMicChange}>
-              {microphones.length > 0 ? (
-                microphones.map((mic) => (
-                  <option key={mic.deviceId} value={mic.deviceId}>
-                    {mic.label || `Microphone ${mic.deviceId}`}
-                  </option>
-                ))
-              ) : (
-                <option>No microphones available</option>
-              )}
-            </select>
+
+          {/* Video Preferences Section */}
+          <div className="video-preferences half-width">
+            <h3>Video Preferences</h3>
+            <div className="mic-selection">
+              <label htmlFor="video-options">Video Options:</label>
+              <select
+                id="video-options"
+                name="video-options"
+                value={videoOption}
+                onChange={handleVideoOptionChange}
+              >
+                <option value="Hide Video">Hide Video</option>
+                <option value="Show Video">Show Video</option>
+              </select>
+            </div>
           </div>
         </div>
 

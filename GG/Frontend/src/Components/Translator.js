@@ -5,7 +5,7 @@ import './Dashboard.css';
 import './Translator.css';
 import Button from 'react-bootstrap/Button';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
-import translate from 'translate';
+import translate from 'translate'; // imports the translator module which supports four different translation engines
 import { handleTranslator } from '../Services/userService';
 
 function Translator() {
@@ -22,7 +22,7 @@ function Translator() {
     }
     const translateButton = async (button) => {
         console.log("Translate pressed", button);
-        const text = await translate(input, {to: "ko", from: "en"});
+        const text = await translate(input, {to: "ko", from: "en"}); // uses default google translation engine since no other engine was specified
         setInput(text)
     }
     const saveButton = async (button) => {
@@ -54,7 +54,7 @@ function Translator() {
     };
     return (
         <div className="screen-Background">
-        <div  className="screen-Container">
+        <div  className="screen-Container" style={{ justifyContent: 'center' }}>
         <div className="screen-Content">
       
         <h1 className="centered">Translator</h1>
