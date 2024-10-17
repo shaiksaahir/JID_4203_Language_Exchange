@@ -9,8 +9,10 @@
 * Fixed display of all buttons
 * Centered necessary UI objects
 * Fixed UserProfile database migration issue
+* Searching for friends is now case insensitive
 ### Known Issues
-* 
+* Video calling throws errors
+* Selecting a user on the Find Friends page does not add them to the friendsmodel database
 
 ## Version 2.2.0
 ### Features
@@ -38,8 +40,8 @@
 ### Bug Fixes
 * Made the application clonable from GitHub
 ### Known Issues
-* \#1 Backend is not connected
-* \#2 userprofile MySQL table not up-to-date
+* Backend is not connected
+* userprofile MySQL table not up-to-date
 
 # Install Guide
 ## PREREQUISITES 
