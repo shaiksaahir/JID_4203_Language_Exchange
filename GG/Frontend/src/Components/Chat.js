@@ -4,10 +4,11 @@ import "./Chat.css";
 import Conversation from "./Conversation";
 import ChatBox from "./ChatBox";
 import LogoSearch from "./LogoSearch";
-import { createSearchParams, useSearchParams, useNavigate, Navigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import {handleChatApi, handleGetUser} from '../Services/userService';
 import { io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
+import Button from 'react-bootstrap/Button';
 
 const Chat = () => {
 
@@ -20,6 +21,8 @@ const Chat = () => {
     const [sendMessage, setSendMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [receivedMessage, setReceivedMessage] = useState(null);
+    const navigate = useNavigate();
+    const id = search.get("id");
 
     // Get the chats which come from current login user to display as chat lists
     useEffect(() => {
@@ -65,6 +68,15 @@ const Chat = () => {
       return online ? true : false;
    };
 
+   const handleBack = async (e) => {
+    navigate({
+      pathname: "/Dashboard",
+      search: createSearchParams({
+        id: id
+      }).toString()
+    });
+  };
+
    return (
         <div className="Chat">
             {/* Left Side */}
@@ -97,6 +109,10 @@ const Chat = () => {
               setSendMessage={setSendMessage}
               receivedMessage={receivedMessage}
               />
+            </div>
+
+            <div>
+            <Button className="btn-help" onClick={handleBack}>Back</Button>
             </div>
         </div>
     );
