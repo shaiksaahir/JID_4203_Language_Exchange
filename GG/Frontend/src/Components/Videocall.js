@@ -13,7 +13,12 @@ function Videocall() {
 
   const [microphones, setMicrophones] = useState([]);
   const [selectedMic, setSelectedMic] = useState('');
-  const [videoOption, setVideoOption] = useState('Show Video'); // Default video option
+  const [videoOption, setVideoOption] = useState('Hide Video'); // Default video option
+  const [partners, setPartners] = useState(0);
+
+  const handlePartners = (e) => {
+      setPartners(parseInt(e.target.value) || 0);
+  };
 
   useEffect(() => {
     async function getMicrophones() {
@@ -50,11 +55,11 @@ function Videocall() {
 
   return (
     <div className="screen-Background">
-      <div className="screen-Container">
+      <div className="call-container">
         <div className="screen-Content">
           <h1>Video Call</h1>
           {!joined && (
-            <Button className="btn-Screen" onClick={() => setJoined(true)}>
+            <Button className="btn-join" onClick={() => setJoined(true)}>
               Join Room
             </Button>
           )}
@@ -62,8 +67,19 @@ function Videocall() {
             <VideoRoom
               selectedMic={selectedMic}
               videoOption={videoOption}  // Pass the video option
+              partners={partners}
             />
           )}
+        </div>
+
+        {/*Chat Partners Section*/}
+        <div className="screen-Content">
+            <h5>Preferred Number of Chat Partners</h5>
+            <input
+                placeholder="Enter"
+                onChange={handlePartners}
+                className="input"
+                type="text" />
         </div>
 
         {/* Preferences Wrapper at Bottom */}
@@ -101,8 +117,8 @@ function Videocall() {
                 value={videoOption}
                 onChange={handleVideoOptionChange}
               >
-                <option value="Show Video">Show Video</option>
                 <option value="Hide Video">Hide Video</option>
+                <option value="Show Video">Show Video</option>
               </select>
             </div>
           </div>

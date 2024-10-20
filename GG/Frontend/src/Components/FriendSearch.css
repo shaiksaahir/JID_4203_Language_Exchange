@@ -46,6 +46,11 @@
   margin-bottom: 30px; /* Add space between filter sections */
 }
 
+.filter-btn {
+    width: fit-content;
+    height: fit-content;
+}
+
 .friend-search-container {
   display: flex;
   justify-content: center;
@@ -64,8 +69,6 @@
   margin-left: 20px;
   font-family: Arial, sans-serif;
 }
-<<<<<<< Updated upstream
-=======
 
 /* Remove bullet points from the list */
 .user-list,
@@ -129,4 +132,4 @@
   color: white;
   float: right;
 }
->>>>>>> Stashed changes
+

@@ -4,16 +4,16 @@ import { VideoPlayer } from './VideoPlayer';
 import translate from 'translate'; // imports the translate package that accesses the four different translation services that can be used in our program
 
 
-const APP_ID = 'your-app-id';  // Your Agora APP_ID
-const TOKEN = 'your-agora-token';  // Agora token
-const CHANNEL = 'test';
+const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
+const TOKEN = '007eJxTYNgj/M41byOfxmHOe09nzpl180iSjUD3riNdCql71p1y3/ZCgcHUINHcMM3A0iwp0cLEJNU4KdXEwCAlxTI5zcA81TTFZCULc3pDICPD7YvyLIwMEAjiczPkJpYkZ+QmZmfmpTMwAACobCN7';  // Agora token
+const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
   mode: 'rtc',
   codec: 'vp8',
 });
 
-export const VideoRoom = ({ selectedMic, videoOption }) => {
+export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
   const [videoTrack, setVideoTrack] = useState(null);
@@ -21,14 +21,18 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
   const [savedText, setSavedText] = useState(''); // For saving the entered text
 
   const handleUserJoined = async (user, mediaType) => {
-    await client.subscribe(user, mediaType);
+    if (partners === 0 || users.length < partners) {
+        await client.subscribe(user, mediaType);
 
-    if (mediaType === 'video') {
-      setUsers((previousUsers) => [...previousUsers, user]);
-    }
+        if (mediaType === 'video') {
+            setUsers((previousUsers) => [...previousUsers, user]);
+        }
 
-    if (mediaType === 'audio') {
-      user.audioTrack.play();
+        if (mediaType === 'audio') {
+            user.audioTrack.play();
+        }
+    } else {
+          console.log("User limit reached. Cannot join new users.");
     }
   };
 
@@ -117,10 +121,10 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
       });
       client.leave();
     };
-  }, [selectedMic]);
+  }, [selectedMic, partners]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center',  whiteSpace: 'pre-wrap', }}>
+    <div style={{ display: 'grid', placeItems: 'center',  whiteSpace: 'pre-wrap' }}>
       <div
         style={{
           display: 'grid',
@@ -155,6 +159,9 @@ export const VideoRoom = ({ selectedMic, videoOption }) => {
           overflowY: 'auto',
           whiteSpace: 'pre-wrap', // Ensure newlines are displayed
           backgroundColor: '#f0f0f0',
+          justifyContent: 'center', // Horizontally center
+          alignItems: 'center',
+          display: 'flex',
         }}
       >
         {savedText || 'No conversation yet...'}

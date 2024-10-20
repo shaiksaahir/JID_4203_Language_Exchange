@@ -1,17 +1,32 @@
 # JDA-4203 | Language Exchange Matchmaker
 
 # Release Notes
-## Version 1.6.0
+## Version 2.3.0
+### Features
+* 
+### Bug Fixes
+* Fixed video display not working during a call
+* Fixed display of all buttons
+* Centered necessary UI objects
+* Fixed UserProfile database migration issue
+* Searching for friends is now case insensitive
+### Known Issues
+* Video calling throws errors
+* Selecting a user on the Find Friends page does not add them to the friendsmodel database
+
+## Version 2.2.0
 ### Features
 * Added way to specify maximum number of partners available to join a video call
-* Added an input box in the Video Room which formats as a translated transcript of user-inputted text.
-
+* Added an input box in the Video Room which formats as a translated transcript of user-inputted text
+* Added audio preferences for the user; updated mute button and added microphone selection
+* Added video preferences; can now hide video
 ### Bug Fixes
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"
 * Fixed FriendsList sorting by preferences
 ### Known Issues
-* Audio and Video features are not working from the previous iteration of the project. Several Node modules are not working properly.
+* Audio and Video features are not working from the previous iteration of the project
+* Several Node modules are not working properly
 
 ## Version 2.1.0
 ### Features
@@ -25,8 +40,8 @@
 ### Bug Fixes
 * Made the application clonable from GitHub
 ### Known Issues
-* \#1 Backend is not connected
-* \#2 userprofile MySQL table not up-to-date
+* Backend is not connected
+* userprofile MySQL table not up-to-date
 
 # Install Guide
 ## PREREQUISITES 
