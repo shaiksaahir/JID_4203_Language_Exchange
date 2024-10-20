@@ -10,6 +10,7 @@
 * Centered necessary UI objects
 * Fixed UserProfile database migration issue
 * Searching for friends is now case insensitive
+* Application crashing in certain profile generation cases is now fixed.
 ### Known Issues
 * Video calling throws errors
 * Selecting a user on the Find Friends page does not add them to the friendsmodel database
