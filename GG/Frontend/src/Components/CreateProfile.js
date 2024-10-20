@@ -255,6 +255,15 @@ const [search] = useSearchParams();
       </div>
     );
   };
+
+  const handleBack = async (e) => {
+    navigate({
+      pathname: "/Dashboard",
+      search: createSearchParams({
+        id: id
+      }).toString()
+    });
+  };
  
   return (
     <div className="screen-Background">
@@ -339,6 +348,9 @@ const [search] = useSearchParams();
           Create Profile
         </Button>
       </form>
+      </div>
+      <div>
+        <Button className="btn-help" onClick={handleBack}>Back</Button>
       </div>
       </div>
     </div>

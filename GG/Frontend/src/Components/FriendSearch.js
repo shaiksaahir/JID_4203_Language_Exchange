@@ -8,6 +8,8 @@ import React, { useState, useEffect } from 'react';
 
 import { handleGetUserNamesApi, handleGetUserPreferencesApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
+import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 const FriendSearch = () => {
   const [userNames, setUserNames] = useState([]);
@@ -16,6 +18,13 @@ const FriendSearch = () => {
   const [error, setError] = useState(null);
   const [filterInput, setFilterInput] = useState(''); // For name filtering
   const [preferenceFilterInput, setPreferenceFilterInput] = useState(''); // For preference filtering
+<<<<<<< Updated upstream
+=======
+  const [recentChatPartners, setRecentChatPartners] = useState([]); // State to manage recent chat partners
+  const navigate = useNavigate();
+  const [search] = useSearchParams();
+  const id = search.get("id");
+>>>>>>> Stashed changes
 
   useEffect(() => {
     const fetchUserNames = async () => {
@@ -85,6 +94,15 @@ const FriendSearch = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  const handleBack = async (e) => {
+    navigate({
+      pathname: "/Dashboard",
+      search: createSearchParams({
+        id: id
+      }).toString()
+    });
+  };
+
   return (
     <div className="friend-search-container">
       {/* Filter Sidebar */}
@@ -129,6 +147,9 @@ const FriendSearch = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div>
+      <Button className="btn-help" onClick={handleBack}>Back</Button>
       </div>
     </div>
   );

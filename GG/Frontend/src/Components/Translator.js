@@ -52,6 +52,16 @@ function Translator() {
         console.log("Clear pressed", button);
         setInput("")
     };
+
+    const handleBack = async (e) => {
+        navigate({
+          pathname: "/Dashboard",
+          search: createSearchParams({
+            id: id
+          }).toString()
+        });
+      };
+
     return (
         <div className="screen-Background">
         <div  className="screen-Container">
@@ -104,6 +114,9 @@ function Translator() {
             <div class="space" id="space" onClick={onSpace}>Space</div>
             <div class="backspace" id="backspace" onClick={onBack}>Backspace</div>
         </div>
+        <div>
+      <Button className="btn-help" onClick={handleBack}>Back</Button>
+      </div>
     </div>
         </div></div></div>
     );
