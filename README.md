@@ -19,7 +19,7 @@
 * Added way to specify maximum number of partners available to join a video call
 * Added an input box in the Video Room which formats as a translated transcript of user-inputted text
 * Added audio preferences for the user; updated mute button and added microphone selection
-* Added video preferences; can now hide video
+* Added video preferences; can now show and hide video
 ### Bug Fixes
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"
