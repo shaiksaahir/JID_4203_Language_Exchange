@@ -29,7 +29,7 @@
 
 .filter-sidebar button {
   padding: 10px;
-  background-color: #28a745;
+  background-color: #22c0c3;
   color: white;
   border: none;
   border-radius: 5px;
@@ -38,7 +38,7 @@
 }
 
 .filter-sidebar button:hover {
-  background-color: #218838;
+  background-color: #1eb0b3;
 }
 
 /* Space between filter sections */
@@ -56,6 +56,7 @@
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
+  background:linear-gradient(135deg, rgba(34,193,195,1) 0%,rgba(253,187,45,1) 100%);
 }
 
 .friend-search {
@@ -85,14 +86,14 @@
   display: block;
   border-radius: 5px;
   border: none;
-  background-color: #5cb85c; /* Light green background */
+  background-color: #22c0c3; /* Light blue background */
   color: white;
   cursor: pointer;
   text-align: center;
 }
 
 .user-button:hover {
-  background-color: #4cae4c; /* Darker green on hover */
+  background-color: #1eb0b3; /* Darker blue on hover */
 }
 
 /* Style for Recent Chat Partner to match the User Button */
@@ -101,7 +102,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  background-color: #5cb85c; /* Match with user-button color */
+  background-color: #22c0c3; /* Match with user-button color */
   margin-bottom: 10px;
   border-radius: 5px;
 }
@@ -120,16 +121,3 @@
 .remove-button:hover {
   background-color: #c0392b;
 }
-
-.btn-help {
-  background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-  width: 70px;
-  margin: 10px 10px;
-  height: 35px;
-  border-radius: 15px;
-  outline: none;
-  border: none;
-  color: white;
-  float: right;
-}
-
