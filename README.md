@@ -3,14 +3,16 @@
 # Release Notes
 ## Version 2.3.0
 ### Features
-* 
+* Added a way for users to leave comments after calling another user
 ### Bug Fixes
 * Fixed video display not working during a call
-* Fixed display of all buttons
-* Centered necessary UI objects
 * Fixed UserProfile database migration issue
 * Searching for friends is now case insensitive
-* Application crashing in certain profile generation cases is now fixed.
+* Application crashing in certain profile generation cases is now fixed
+* Added a back button to pages where one was missing
+* Fixed display of all buttons
+* Centered necessary UI objects
+* Find Friends page has consistent UI
 ### Known Issues
 * Video calling throws errors
 * Selecting a user on the Find Friends page does not add them to the friendsmodel database
