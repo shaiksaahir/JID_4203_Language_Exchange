@@ -10,6 +10,7 @@
 * Centered necessary UI objects
 * Fixed UserProfile database migration issue
 * Searching for friends is now case insensitive
+* Application crashing in certain profile generation cases is now fixed.
 ### Known Issues
 * Video calling throws errors
 * Selecting a user on the Find Friends page does not add them to the friendsmodel database
@@ -19,7 +20,7 @@
 * Added way to specify maximum number of partners available to join a video call
 * Added an input box in the Video Room which formats as a translated transcript of user-inputted text
 * Added audio preferences for the user; updated mute button and added microphone selection
-* Added video preferences; can now hide video
+* Added video preferences; can now show and hide video
 ### Bug Fixes
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"

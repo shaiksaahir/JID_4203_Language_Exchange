@@ -8,6 +8,23 @@ const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
 const TOKEN = '007eJxTYNgj/M41byOfxmHOe09nzpl180iSjUD3riNdCql71p1y3/ZCgcHUINHcMM3A0iwp0cLEJNU4KdXEwCAlxTI5zcA81TTFZCULc3pDICPD7YvyLIwMEAjiczPkJpYkZ+QmZmfmpTMwAACobCN7';  // Agora token
 const CHANNEL = 'matchmaking';
 
+// const { RtcTokenBuilder, RtcRole } = require('agora-access-token');
+
+// // Replace with your actual values
+// const appID = "your-app-id";
+// const appCertificate = "your-app-certificate";
+// const channelName = "your-channel-name";
+// const uid = 0; // Use 0 for allowing any user
+// const role = RtcRole.PUBLISHER; // or RtcRole.SUBSCRIBER
+
+// const expirationTimeInSeconds = 3600; // Set the token to expire in 1 hour (3600 seconds)
+// const currentTimestamp = Math.floor(Date.now() / 1000);
+// const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
+
+// const token = RtcTokenBuilder.buildTokenWithUid(appID, appCertificate, channelName, uid, role, privilegeExpiredTs);
+
+// console.log("Generated Token:", token);
+
 const client = AgoraRTC.createClient({
   mode: 'rtc',
   codec: 'vp8',
@@ -79,6 +96,25 @@ export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
     }
   };
 
+  // const fetchNewToken = async () => {
+  //   try {
+  //     const response = await fetch("/api/agora-token", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         channelName: "your-channel-name",
+  //       }),
+  //     });
+  //     const data = await response.json();
+  //     return data.token;
+  //   } catch (error) {
+  //     console.error("Failed to fetch new token", error);
+  //     return null;
+  //   }
+  // };
+
   // Manage video track based on "Show Video" or "Hide Video"
   useEffect(() => {
     const manageVideoTrack = async () => {
@@ -105,6 +141,12 @@ export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
     client.on('user-published', handleUserJoined);
     client.on('user-left', handleUserLeft);
 
+    // client.on('token-privilege-did-expire', async () => {
+    //   // Handle token renewal here
+    //   const newToken = await fetchNewToken(); // Fetch a new token from your server
+    //   await client.renewToken(newToken); // Renew the token with Agora
+    // });
+
     client
       .join(APP_ID, CHANNEL, TOKEN, null)
       .then((uid) => {
@@ -113,6 +155,18 @@ export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
           setLocalTracks((prev) => [...prev, audioTrack]);
         });
       });
+
+      // client
+      // .join(APP_ID, CHANNEL, TOKEN, null)
+      // .then((uid) => {
+      //   AgoraRTC.createMicrophoneAudioTrack({ microphoneId: selectedMic }).then((audioTrack) => {
+      //     client.publish([audioTrack]);
+      //     setLocalTracks((prev) => [...prev, audioTrack]);
+      //   });
+      // })
+      // .catch((error) => {
+      //   console.error("Error joining the Agora channel:", error);
+      // });
 
     return () => {
       localTracks.forEach((track) => {
