@@ -4,7 +4,8 @@ import { VideoPlayer } from './VideoPlayer';
 import Button from 'react-bootstrap/Button';
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYNgj/M41byOfxmHOe09nzpl180iSjUD3riNdCql71p1y3/ZCgcHUINHcMM3A0iwp0cLEJNU4KdXEwCAlxTI5zcA81TTFZCULc3pDICPD7YvyLIwMEAjiczPkJpYkZ+QmZmfmpTMwAACobCN7';  // Agora token
+const TOKEN = '007eJxTYGBeGlXoUBefk76joki2R36e2qKbphbOp9e0md7YzB7ztFKBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMVkr6dmekMgI8OeKZdZGRkgEMTnZshNLEnOyE3MzsxLZ2AAALj8IVw='; 
+ // Agora token
 const CHANNEL = 'matchmaking';
 
 
