@@ -1,6 +1,14 @@
 # JDA-4203 | Language Exchange Matchmaker
 
 # Release Notes
+## Version 2.4.0
+### Features
+* Added a more robust and protective registration/password system
+### Bug Fixes
+* Fixed
+### Known Issues
+* Video calling throws errors
+
 ## Version 2.3.0
 ### Features
 * Added a way for users to leave comments after calling another user
