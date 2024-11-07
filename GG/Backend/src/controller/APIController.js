@@ -85,7 +85,35 @@ const getUserNames = async (req, res) => {
       });
     }
 };
+let addFriend = async (req, res) => {
+  const { user_id_2, user_2_first_name, user_2_last_name } = req.body;
 
+  // Validate that all necessary parameters are provided
+  if (!user_id_2 || !user_2_first_name || !user_2_last_name) {
+      return res.status(400).json({
+          message: 'Missing parameters'
+      });
+  }
+
+  try {
+      // Assuming you have an `id` auto-incremented field in your FriendsList table, and that user_id_1 is no longer required
+      const [result] = await pool.execute(
+          'INSERT INTO FriendsList (user_id_2, user_2_first_name, user_2_last_name) VALUES (?, ?, ?)',
+          [user_id_2, user_2_first_name, user_2_last_name]
+      );
+      
+      res.status(201).json({
+          message: 'Friend added successfully',
+          data: result
+      });
+  } catch (error) {
+      console.error('Error adding friend:', error);
+      res.status(500).json({
+          message: 'Error adding friend',
+          error: error.message
+      });
+  }
+};
 module.exports = { 
-    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences // added getUserNames as an export
+    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences // added getUserNames as an export
 }

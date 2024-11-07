@@ -11,6 +11,8 @@ const initAPIRoute = (app) => {
     router.delete('/delete-user/:id', APIController.deleteUser); // method delete
     router.get('/user-names', APIController.getUserNames); // GET method to fetch user names
     router.get('/user-preferences', APIController.getUserPreferences);
+    router.post('/addFriend', APIController.addFriend);
+
     return app.use('/api/v1/', router)
 }
 

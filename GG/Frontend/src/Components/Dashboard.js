@@ -16,6 +16,7 @@ import { handleGetProfile, handleGetUser, handleMatch } from '../Services/userSe
 import ListGroupItem from 'react-bootstrap/esm/ListGroupItem';
 
 
+
 function Dashboard()  {
 
   //const [errMessage setErrMsg] = useState('');
@@ -127,15 +128,17 @@ function Dashboard()  {
       }).toString()
   });
   }
+
+
+
+  const friendSearch = () => {
+    navigate('/FriendSearch', { state: { 
+      id: id, 
+    }});
+  };
+
   //TOWNSHEND: re-purposed Find Friends button to navigate to FriendSearch page
-  const friendSearch = async(e) => {
-    navigate({
-      pathname: "/FriendSearch",
-      search: createSearchParams({
-          senderid: id
-      }).toString()
-  });
-  }
+  
 
   const createVideoCall = () => {
     var channelId = Math.floor(10000 + Math.random() * 90000)
@@ -251,6 +254,13 @@ function Dashboard()  {
         <Button className="btn-Screen" onClick={handleChat}>Chat</Button>
         <Button className="btn-Screen" onClick={call}>Call</Button>
         <Button className="btn-Screen" onClick={Translator}>Translator</Button>
+
+      <Button className="btn-Screen" onClick={() => navigate({
+            pathname: "/FriendsList",
+            search: createSearchParams({ id: id }).toString()
+          })}>
+          Friends List
+      </Button>
         <Button className="btn-Screen" onClick={() => navigate({
               pathname: "/CreateProfile",
               search: createSearchParams({ id: id }).toString()
