@@ -84,7 +84,7 @@ let handleDataPopulation = async (req, res) => {
     let mbtis = ["Architect", "Logician", "Commander", "Debater", "Advocate", "Mediator", "Protagonist", "Campaigner", "Logistician", "Defender", "Executive", "Consul", "Virtuoso", "Adventurer", "Entrepreneur", "Entertainer"];
     let dates_available_types = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     let times_available_types = ["12AM - 1AM", "1AM - 2AM"];
-    let visibilities = ["Show", "Hide"];
+    let visibilities = ["Show", "Hide", "Friends Only"];
     let proficiencies = ["Beginner", "Elementary", "Intermediate", "Proficient", "Fluent"];
     for (let i=0; i<100; i++) {
         let fName = "SampleUser_" + i

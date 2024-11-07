@@ -97,6 +97,7 @@ function CreateProfile() {
  const VisibilityOptions = [
   { value: "Show", label: "Show" },
   { value: "Hide", label: "Hide" },
+  { value: "Friends Only", label: "Friends Only"},
  ];
 
 const DatesAvailable = [

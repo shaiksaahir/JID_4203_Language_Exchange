@@ -5,6 +5,7 @@
 ### Features
 * Added a way to add other users to a friends list by selecting on them in the Find Friends page
 * Added a Friends List page where the users can view and remove other users
+* Added a "Friends Only" option to user visibility profile preference
 * Added a more robust and protective registration/password system
 ### Bug Fixes
 * Video now shows in the call
