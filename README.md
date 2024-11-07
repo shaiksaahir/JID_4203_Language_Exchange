@@ -3,15 +3,21 @@
 # Release Notes
 ## Version 2.4.0
 ### Features
+* Added a way to add other users to a friends list by selecting on them in the Find Friends page
+* Added a Friends List page where the users can view and remove other users
 * Added a more robust and protective registration/password system
 ### Bug Fixes
-* Fixed
+* Video now shows in the call
+* The friends list database now correctly populates
+* Removed prevoius friends list from dashboard
 ### Known Issues
-* Video calling throws errors
+* Unable to test video call with multiple users
 
 ## Version 2.3.0
 ### Features
-* Added a way for users to leave comments after calling another user
+* Added a way for users to leave comments for their chat partner after a call
+* Added a way for users to rank their chat partner's profiency in their target language after a call
+* Added a way for users to rate their chat partner's ability as a study partner after a call
 ### Bug Fixes
 * Fixed video display not working during a call
 * Fixed UserProfile database migration issue
@@ -47,7 +53,7 @@
 * Added MBTI personality type selector on the profile creation page
 * Added available dates and times selector on the profile creation page
 * Added profile visibility on the profile creation page
-* Added an input box in the VideoRoom which will create a translated transcript of user-inputted text
+* Added a way to logout of the application
 ### Bug Fixes
 * Made the application clonable from GitHub
 ### Known Issues
