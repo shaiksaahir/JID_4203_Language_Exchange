@@ -25,6 +25,8 @@ let initWebRoute = (app) => {
     router.post('/Dashboard', dashBoardController.handleDashBoard)
     router.post('/findFriends', friendsController.findFriends)
     router.post('/createFriends/:id1/:id2', friendsController.createFriends)
+    router.post('/api/addFriend', friendsController.addFriend);
+
 
     router.get('/api/findMatch/:userId/:userNative/:userTarget', matchingController.handleMatchingFriends)
     router.get('/api/getProfile/:userId', userController.handleGetProfile)

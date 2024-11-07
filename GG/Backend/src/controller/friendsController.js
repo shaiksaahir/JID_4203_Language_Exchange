@@ -37,10 +37,28 @@ let findFriend = async (req, res) => {
         chatsData: messageData.data? messageData.data : {}
     })
 }
-
+let addFriend = async (req, res) => {
+    const { user_id_1, user_1_first_name, user_1_last_name, user_id_2, user_2_first_name, user_2_last_name } = req.body;
+    console.log("Received addFriend request with data:", req.body);
+    try {
+        const response = await friendsService.createFriend(
+            user_id_1,
+            user_1_first_name,
+            user_1_last_name,
+            user_id_2,
+            user_2_first_name,
+            user_2_last_name
+        );
+        res.status(200).json({ message: 'Friend added successfully', data: response });
+    } catch (error) {
+        console.error('Error adding friend:', error);
+        res.status(500).json({ message: 'Error adding friend', error });
+    }
+};
 
 module.exports = {
     createFriends: createFriends,
     findFriends: findFriends,
-    findFriend: findFriend
+    findFriend: findFriend,
+    addFriend: addFriend
 }

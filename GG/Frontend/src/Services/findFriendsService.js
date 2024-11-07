@@ -32,5 +32,18 @@
     const handleGetUserNamesApi = () => {
         return axios.get('/api/v1/user-names'); // defines the API endpoint
     }
+     const handleAddFriendApi = (userId1, userId2, userInfo) => {
+        console.log("Adding friend:", {
+          user_id_2: userId2,
+          user_2_first_name: userInfo.firstName,
+          user_2_last_name: userInfo.lastName
+        });
+        
+        return axios.post('/api/addFriend', {
+          user_id_2: userId2,
+          user_2_first_name: userInfo.firstName,
+          user_2_last_name: userInfo.lastName
+        });
+      };
 
-    export {handleFindFriendsApi, handleCreateFriendsApi, handleGetUserNamesApi, handleGetUserPreferencesApi}
+    export {handleFindFriendsApi, handleAddFriendApi,handleCreateFriendsApi, handleGetUserNamesApi, handleGetUserPreferencesApi}
