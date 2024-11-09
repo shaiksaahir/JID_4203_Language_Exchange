@@ -35,6 +35,7 @@
 * Fixed Video Call page format issues
 * Fixed FriendsList backend database showing "Network Error"
 * Fixed FriendsList sorting by preferences
+* Fixed FriendsList Color Scheme
 ### Known Issues
 * Audio and Video features are not working from the previous iteration of the project
 * Several Node modules are not working properly
