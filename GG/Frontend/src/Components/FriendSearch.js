@@ -1,143 +1,146 @@
 import React, { useState, useEffect } from 'react';
-import { handleGetUserNamesApi, handleGetUserPreferencesApi } from '../Services/findFriendsService';
+import { handleGetUserNamesApi, handleGetUserPreferencesApi, handleGetUserProfileApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 import { handleAddFriendApi } from '../Services/findFriendsService';
-import { handleFindFriendsApi, handleCreateFriendsApi } from '../Services/findFriendsService';
-
-import { handleUserDashBoardApi } from '../Services/dashboardService';
-import { useLocation } from 'react-router-dom';
-
-
-
 import Button from 'react-bootstrap/Button';
+import { getUserData } from '../Utils/userData'; // Import to retrieve stored current user data
 
 const FriendSearch = () => {
-  
- // const [allUserNames, setAllUserNames] = useState([]); // Store all users for filtering
- 
-  const [filterInput, setFilterInput] = useState(''); // For name filtering
-  const [preferenceFilterInput, setPreferenceFilterInput] = useState(''); // For preference filtering
-  const [recentChatPartners, setRecentChatPartners] = useState([]); // State to manage recent chat partners
- 
-  
-  
-
- 
-  // Retrieve the user data from location.state
-  
-
-  // Now you can use id, FName, LName, and email in your component
-
- 
-  const location = useLocation();
-
-
-
-
-  //const [errMessage setErrMsg] = useState('');
-  const[search] = useSearchParams();
-
-  const { id } = location.state || {};
-
-
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [filterInput, setFilterInput] = useState('');
+  const [preferenceFilterInput, setPreferenceFilterInput] = useState('');
+  const [recentChatPartners, setRecentChatPartners] = useState([]);
   const [userNames, setUserNames] = useState([]);
   const [allUserNames, setAllUserNames] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Now you can use id, FName, LName, and email in your component
-  
-  const[friendids, setfriendids] = useState([]);
-  const[name, setName] = useState([]);
+  const [selectedUserProfile, setSelectedUserProfile] = useState(null);
+  const [compatibilityScore, setCompatibilityScore] = useState(null);
   const navigate = useNavigate();
-  // it should be coming from friend list database a list of id and names to show
-  
-  
-  
-  //let friendids = [];
-  //let name = ["prit","quyen","maisa","akshar","pratham"];
-  let names = [] 
-  let array = []
-
-  let videoCalls = []
-
-  let data;
-  
-  
-
-  
+  const [search] = useSearchParams();
+  const id = search.get("id");
 
   useEffect(() => {
-    
-    const fetchUserNames = async () => {
+    const fetchUserData = async () => {
       try {
-        const response = await handleGetUserNamesApi(); // Fetch all user names
-        setUserNames(response.data);
-        setAllUserNames(response.data); // Store original list
+        console.log("Fetching all user names and retrieving current user preferences...");
+
+        const userResponse = await handleGetUserNamesApi();
+        setUserNames(userResponse.data);
+        setAllUserNames(userResponse.data);
+
+        // Retrieve stored current user data from userData.js
+        const currentUserData = getUserData();
+        setCurrentUser(currentUserData);
+
+        console.log("Fetched user names:", userResponse.data);
+        console.log("Retrieved current user data:", currentUserData);
+
         setLoading(false);
       } catch (err) {
         setError(err);
+        console.error("Error in fetchUserData:", err);
         setLoading(false);
       }
     };
-    
-    
-      
-    
-    
-    
-    fetchUserNames();
+    fetchUserData();
   }, [id]);
 
-  // Filter by name or email
-  const handleNameFilter = () => {
-    const lowerCaseFilterInput = filterInput.trim().toLowerCase(); // Convert input to lowercase once
+  const fetchUserProfile = async (userId) => {
+    try {
+      console.log("Fetching profile for selected user with ID:", userId);
 
+      const response = await handleGetUserProfileApi(userId);
+      console.log("Fetched selected user profile:", response.data);
+
+      setSelectedUserProfile(response.data);
+
+      if (currentUser && response.data) {
+        calculateCompatibilityScore(response.data);
+      } else {
+        console.error("Current user data is missing during compatibility calculation.");
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
+
+  const calculateCompatibilityScore = (selectedProfile) => {
+    if (!currentUser || !selectedProfile) {
+      console.error('Selected user profile or current user is missing, skipping score calculation.');
+      return 0;
+    }
+
+    const genderScore = 6 * (selectedProfile.gender === currentUser.gender ? 1 : 0);
+    const professionScore = 5 * (selectedProfile.profession === currentUser.profession ? 1 : 0);
+    const hobbyScore = 5 * (selectedProfile.hobby === currentUser.hobby ? 1 : 0);
+    const ageDifferenceScore = -0.3 * Math.abs((selectedProfile.age || 0) - (currentUser.age || 0));
+
+    const totalScore = genderScore + professionScore + hobbyScore + ageDifferenceScore;
+    
+    console.log("Gender score:", genderScore);
+    console.log("Profession score:", professionScore);
+    console.log("Hobby score:", hobbyScore);
+    console.log("Age difference score:", ageDifferenceScore);
+    console.log("Total compatibility score:", totalScore);
+    
+    return totalScore;
+  };
+
+  const calculateAllCompatibilityScores = async () => {
+    const scoredUsers = await Promise.all(
+      userNames.map(async (user) => {
+        const profile = await handleGetUserProfileApi(user.id);
+        const score = calculateCompatibilityScore(profile.data);
+        return { ...user, score };
+      })
+    );
+
+    // Sort users by score in descending order
+    const sortedUsers = scoredUsers.sort((a, b) => b.score - a.score);
+    setUserNames(sortedUsers);
+  };
+
+  const handleNameFilter = () => {
+    const lowerCaseFilterInput = filterInput.trim().toLowerCase();
     if (lowerCaseFilterInput === "") {
-      setUserNames(allUserNames); // Reset to all users if input is empty
+      setUserNames(allUserNames);
     } else {
       const filteredNames = allUserNames.filter(user =>
         user.firstName.toLowerCase().includes(lowerCaseFilterInput) ||
         user.lastName.toLowerCase().includes(lowerCaseFilterInput) ||
         user.email.toLowerCase().includes(lowerCaseFilterInput)
       );
-      setUserNames(filteredNames.length > 0 ? filteredNames : allUserNames); // If no match, show all users
+      setUserNames(filteredNames.length > 0 ? filteredNames : allUserNames);
     }
   };
 
-  // Filter by preferences (using preference API)
   const handlePreferenceFilter = async () => {
-    const lowerCasePreferenceInput = preferenceFilterInput.trim().toLowerCase(); // Convert input to lowercase once
+    const lowerCasePreferenceInput = preferenceFilterInput.trim().toLowerCase();
 
     if (lowerCasePreferenceInput === "") {
-      setUserNames(allUserNames); // Reset to all users if input is empty
+      setUserNames(allUserNames);
     } else {
       try {
-        const preferencesResponse = await handleGetUserPreferencesApi(); // Fetch all preferences
+        console.log("Filtering users by preferences...");
+
+        const preferencesResponse = await handleGetUserPreferencesApi();
         const preferences = preferencesResponse.data;
 
-        // Filter preferences based on input value
+        console.log("Fetched preferences:", preferences);
+
         const filteredPreferences = preferences.filter(pref =>
           Object.values(pref).some(value =>
             String(value).toLowerCase().includes(lowerCasePreferenceInput)
           )
         );
 
-        // If no match, show all users
         if (filteredPreferences.length === 0) {
           setUserNames(allUserNames);
         } else {
-          // Extract matching user IDs from preferences
           const matchedUserIds = filteredPreferences.map(pref => pref.id);
-
-          // Filter usernames by matching IDs
           const filteredNamesByPreferences = allUserNames.filter(user => matchedUserIds.includes(user.id));
-
-          // If no match, show all users
           setUserNames(filteredNamesByPreferences.length > 0 ? filteredNamesByPreferences : allUserNames);
         }
       } catch (error) {
@@ -146,38 +149,25 @@ const FriendSearch = () => {
     }
   };
 
-  // Handle click to add a user to recent chat partners
-  const handleUserClick = async (user) => {
-    // Prevent duplicates in the recent chat partners list
+  const handleUserClick = (user) => {
+    console.log("User clicked:", user);
+    fetchUserProfile(user.id);
     if (!recentChatPartners.some(partner => partner.id === user.id)) {
       setRecentChatPartners([...recentChatPartners, user]);
     }
-    // Add the friendship to the FriendsList table in the database
-   // try {
-      //await handleAddFriendApi(id, user.id, { firstName: user.firstName, lastName: user.lastName });
-   //   console.log('Friend added to the database');
-  //  } catch (error) {
-   //   console.error('Error adding friend to the database:', error);
-  //  }
-  // Retrieve existing friends from localStorage or initialize an empty array
-  const storedFriends = JSON.parse(localStorage.getItem('friendsList')) || [];
-
-  // Check if the user is already in the friends list to avoid duplicates
-  if (!storedFriends.some(friend => friend.id === user.id)) {
-    const updatedFriends = [...storedFriends, user]; // Add the new friend
-    localStorage.setItem('friendsList', JSON.stringify(updatedFriends)); // Save updated list to localStorage
-    setRecentChatPartners(updatedFriends); // Update local component state if necessary
-  }
+    const storedFriends = JSON.parse(localStorage.getItem('friendsList')) || [];
+    if (!storedFriends.some(friend => friend.id === user.id)) {
+      const updatedFriends = [...storedFriends, user];
+      localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
+      setRecentChatPartners(updatedFriends);
+    }
   };
 
-  // Handle removing a user from recent chat partners
   const handleRemovePartner = (userId) => {
+    console.log("Removing recent chat partner with ID:", userId);
     const updatedPartners = recentChatPartners.filter(partner => partner.id !== userId);
     setRecentChatPartners(updatedPartners);
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
   const handleBack = async (e) => {
     navigate({
@@ -188,9 +178,11 @@ const FriendSearch = () => {
     });
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <div className="friend-search-container">
-      {/* Filter Sidebar */}
       <div className="filter-sidebar">
         <div className="filter-section">
           <h3>Filter Users by Name</h3>
@@ -203,7 +195,6 @@ const FriendSearch = () => {
           <button className="filter-btn" onClick={handleNameFilter}>Filter by Name</button>
         </div>
 
-        {/* Filter by Preferences Section */}
         <div className="filter-section">
           <h3>Filter Users by Preference</h3>
           <input
@@ -216,21 +207,21 @@ const FriendSearch = () => {
         </div>
       </div>
 
-      {/* Main Search Area */}
-<div className="friend-search">
-  <h1>User Names</h1>
-  <p>Here are Usernames from the Database:</p>
-  <ul className="user-list">
-    {userNames.map((user, index) => (
-      <li key={index}>
-        <button className="user-button" onClick={() => handleUserClick(user)}>
-          {user.firstName} {user.lastName}, ID: {user.id}
+      <div className="friend-search">
+        <h1>User Names</h1>
+        <button className="calculate-score-btn" onClick={calculateAllCompatibilityScores}>
+          Calculate Compatibility Scores
         </button>
-      </li>
-    ))}
-  </ul>
+        <ul className="user-list">
+          {userNames.map((user, index) => (
+            <li key={index}>
+              <button className="user-button" onClick={() => handleUserClick(user)}>
+                {user.firstName} {user.lastName} - ID: {user.id} - Score: {user.score || "N/A"}
+              </button>
+            </li>
+          ))}
+        </ul>
 
-        {/* Section for Recent Chat Partners */}
         <h2>Recent Chat Partners</h2>
         <ul className="recent-chat-list">
           {recentChatPartners.length === 0 ? (
@@ -246,13 +237,18 @@ const FriendSearch = () => {
             ))
           )}
         </ul>
+
+        {selectedUserProfile && (
+          <div className="compatibility-score">
+            <h3>Compatibility Score with {selectedUserProfile.firstName} {selectedUserProfile.lastName}:</h3>
+            <p>{compatibilityScore}</p>
+          </div>
+        )}
       </div>
-      <div>
+
       <Button className="btn-help" onClick={handleBack}>Back</Button>
-      </div>
     </div>
   );
 };
 
 export default FriendSearch;
-
