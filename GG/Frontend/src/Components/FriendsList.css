@@ -1,0 +1,53 @@
+.friends-list-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.friends-list-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.no-friends-message {
+    font-size: 16px;
+    color: #777;
+}
+
+.friends-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.friend-chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e0f7fa;
+    color: #00796b;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.friend-chip:hover {
+    background-color: #b2dfdb;
+}
+
+.remove-icon {
+    margin-left: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff5252;
+    cursor: pointer;
+}
