@@ -11,18 +11,30 @@ function Videocall() {
   const navigate = useNavigate();
   const[search] = useSearchParams();
   const id = search.get("id");
+
   const handleBack = async(e) => {
-    navigate({
-        pathname: "/Dashboard",
-        search: createSearchParams({
-            id: id
-        }).toString()
-    });
+    if (!joined) {
+        navigate({
+            pathname: "/Dashboard",
+            search: createSearchParams({
+                id: id
+            }).toString()
+        });
+        console.log("to dashboard from call");
+    } else {
+        navigate({
+            pathname: "/PostVideocall",
+            search: createSearchParams({
+                id: id
+            }).toString()
+        });
+        console.log("to post call page from call");
+    }
   }
 
-  const [age, setAge] = useState('');
+  const [partners, setPartners] = useState('');
   const handlePartners = (e) => {
-      setAge(e.target.value);
+      setPartners(e.target.value);
   };
 
   return (

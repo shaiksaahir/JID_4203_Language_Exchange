@@ -133,3 +133,27 @@ iframe
     justify-content: center;
     align-items: center;
 }
+
+.card {
+    max-width: 33rem;
+    background: #fff;
+    margin: 0 1rem;
+    padding: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-radius: 0.5rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.star {
+    font-size: 10vh;
+    cursor: pointer;
+}
+
+.star.selected {
+    color: gold;
+}
