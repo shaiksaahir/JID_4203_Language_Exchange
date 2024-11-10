@@ -10,6 +10,8 @@ function PostVideocall() {
     const [search] = useSearchParams();
     const id = search.get("id");
 
+    const [reportUserId, setReportUserId] = useState(''); // Store user ID for reports
+
     const [users, setUsers] = useState([]); 
     const [selectedUser, setSelectedUser] = useState(null); 
     const [rating, setRating] = useState(0);
@@ -45,7 +47,10 @@ function PostVideocall() {
             setSelectedUser(null);
         }
     };
-
+    const handleReportUserChange = (e) => {
+        setReportUserId(e.target.value); // Set report user ID directly
+    };
+    
     const handleAddFriend = () => {
         if (!selectedUser) return;
         const { firstName, lastName } = selectedUser;
@@ -102,11 +107,40 @@ function PostVideocall() {
 
             <div className="buttons-container">
                 <Button className="btn-help" onClick={() => navigate(`/Dashboard?id=${id}`)}>Back</Button>
-                <Button className="btn-add-friend" onClick={handleAddFriend} disabled={!selectedUser}>Add Friend</Button>
+              
+              
+              
+                <div className="user-report-selection" style={{ marginTop: '20px' }}>
+    <label htmlFor="reportUserDropdown" style={{ marginBottom: '10px', display: 'block' }}>User Report:</label>
+    <select
+        id="reportUserDropdown"
+        value={reportUserId}
+        onChange={handleReportUserChange}
+        style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
+    >
+        <option value="">-- Select a User for Report --</option>
+        {users.map((user) => (
+            <option key={user.id} value={user.id}>
+                {user.firstName} {user.lastName} - {user.email}
+            </option>
+        ))}
+    </select>
+</div>
+
+<Button className="btn-submit" style={{ marginTop: '20px' }}>
+    Submit
+</Button>
+
+              
+              
+                
             </div>
+            
+
+            
 
             <div className="user-selection">
-                <label>Select a User:</label>
+                <label>Select a User to Add as Friend:</label>
                 <select
                     className="user-dropdown"
                     value={selectedUser ? `${selectedUser.firstName} ${selectedUser.lastName}` : ''}
@@ -120,6 +154,7 @@ function PostVideocall() {
                     ))}
                 </select>
             </div>
+            <Button className="btn-add-friend" onClick={handleAddFriend} disabled={!selectedUser}>Add Friend</Button>
         </div>
     );
 }
