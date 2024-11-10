@@ -186,15 +186,16 @@ function Dashboard() {
                     {/* Removed the display of Age, Gender, Hobby, and Profession */}
 
                     <Button className="btn-Screen" onClick={friendSearch}>Find Friend</Button>
+                    <Button className="btn-Screen" onClick={handleChat}>Chat</Button>
+                    <Button className="btn-Screen" onClick={call}>Call</Button>
+                    <Button className="btn-Screen" onClick={Translator}>Translator</Button>
+
                     <Button className="btn-Screen" onClick={() => navigate({
                         pathname: "/FriendsList",
                         search: createSearchParams({ id: id }).toString()
                     })}>
                         Friends List
                     </Button>
-                    <Button className="btn-Screen" onClick={handleChat}>Chat</Button>
-                    <Button className="btn-Screen" onClick={call}>Call</Button>
-                    <Button className="btn-Screen" onClick={Translator}>Translator</Button>
                     <Button className="btn-Screen" onClick={() => navigate({
                         pathname: "/CreateProfile",
                         search: createSearchParams({ id: id }).toString()
@@ -204,16 +205,16 @@ function Dashboard() {
                     <Button className="btn-Screen" onClick={Logout}>
                         Logout
                     </Button>
-                    {/*<h2>Friends</h2>*/}
-                    {/*<div className="friendlist">*/}
-                    {/*    {array}*/}
-                    {/*    <ListGroup id="friendlist">*/}
-                    {/*        <ListGroup.Item id="friendheader" hidden variant="success">Add a match below:</ListGroup.Item>*/}
-                    {/*        <ListGroup.Item id="friend1" onClick={addFriend1} hidden variant="success" action>Friend 1</ListGroup.Item>*/}
-                    {/*        <ListGroup.Item id="friend2" hidden variant="success" action href="#friend2">Friend 2</ListGroup.Item>*/}
-                    {/*        <ListGroup.Item id="friend3" hidden variant="success" action href="#friend3">Friend 3</ListGroup.Item>*/}
-                    {/*    </ListGroup>*/}
-                    {/*</div>*/}
+                    <h2>Friends</h2>
+                    <div className="friendlist">
+                        {array}
+                        <ListGroup id="friendlist">
+                            <ListGroup.Item id="friendheader" hidden variant="success">Add a match below:</ListGroup.Item>
+                            <ListGroup.Item id="friend1" onClick={addFriend1} hidden variant="success" action>Friend 1</ListGroup.Item>
+                            <ListGroup.Item id="friend2" hidden variant="success" action href="#friend2">Friend 2</ListGroup.Item>
+                            <ListGroup.Item id="friend3" hidden variant="success" action href="#friend3">Friend 3</ListGroup.Item>
+                        </ListGroup>
+                    </div>
                 </div>
                 <Button className="btn-help" onClick={handleHelp}>?</Button>
             </div>
