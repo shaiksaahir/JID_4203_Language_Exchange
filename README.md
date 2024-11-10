@@ -4,13 +4,14 @@
 ## Version 2.4.0
 ### Features
 * Added a way to add other users to a friends list by selecting on them in the Find Friends page
-* Added a Friends List page where the users can view and remove other users
-* Added a "Friends Only" option to user visibility profile preference
-* Added a more robust and protective registration/password system
+* Added a way for users to add friends to their friends list after a video call
+* Added a Friends List page where users can view and remove other users from their friends list
+* Added a feature where users can select their profile visibility preference which either shows or hides their profile from the Find Friends page
+* Added a matchmaking system where users can view their compatability score with other users in the Find Friends page
 ### Bug Fixes
 * Video now connects with agora and shows live feed
-* The friends list database now correctly populates
-* Removed prevoius friends list from dashboard
+* Removed previous friends list from dashboard
+* Application no longer crashes after trying to log out and back in
 ### Known Issues
 * Unable to test video call with multiple users
 

@@ -27,8 +27,18 @@ const FriendSearch = () => {
         console.log("Fetching all user names and retrieving current user preferences...");
 
         const userResponse = await handleGetUserNamesApi();
-        setUserNames(userResponse.data);
-        setAllUserNames(userResponse.data);
+
+        const profilesResponse = await handleGetUserPreferencesApi();
+
+        const visibleUsers = userResponse.data.filter(user => {
+            const userProfile = profilesResponse.data.find(profile => profile.id === user.id);
+            return userProfile && userProfile.visibility === "Show";
+        });
+
+        console.log("Visible users:", visibleUsers);
+
+        setUserNames(visibleUsers);
+        setAllUserNames(visibleUsers);
 
         // Retrieve stored current user data from userData.js
         const currentUserData = getUserData();
