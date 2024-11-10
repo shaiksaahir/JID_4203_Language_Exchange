@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate, createSearchParams } from "react-router-dom";
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYGBeGlXoUBefk76joki2R36e2qKbphbOp9e0md7YzB7ztFKBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMVkr6dmekMgI8OeKZdZGRkgEMTnZshNLEnOyE3MzsxLZ2AAALj8IVw='; 
+const TOKEN = '007eJxTYNi59WSShqWkoppB9g0v/0/atl/5JoQfWXPz+4Kvevti/jxWYDA1SDQ3TDOwNEtKtDAxSTVOSjUxMEhJsUxOMzBPNU0x+aZgmN4QyMjA4nGUmZEBAkF8bobcxJLkjNzE7My8dAYGAGKRIsw='; 
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
