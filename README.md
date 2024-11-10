@@ -8,7 +8,7 @@
 * Added a "Friends Only" option to user visibility profile preference
 * Added a more robust and protective registration/password system
 ### Bug Fixes
-* Video now shows in the call
+* Video now connects with agora and shows live feed
 * The friends list database now correctly populates
 * Removed prevoius friends list from dashboard
 ### Known Issues
