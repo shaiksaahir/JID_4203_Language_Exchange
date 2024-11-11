@@ -4,7 +4,7 @@ import { createSearchParams, useSearchParams, useNavigate } from "react-router-d
 import Button from 'react-bootstrap/Button';
 import { handleGetAllUsersApi } from '../Services/findFriendsService';
 import Select from "react-select";
-import { handleUpdateRating } from '../Services/userService';
+import { handleUpdateRating, handleUpdateProficiency, handleAddComment } from '../Services/userService';
 
 
 function PostVideocall() {
@@ -50,11 +50,6 @@ function PostVideocall() {
         }
     };
 
-    const handleReportUserSelection = (user) => {
-        console.log("Selected report user:", user); // Log the selected user object
-        setReportUserId(user ? user.value : ""); // Set reportUserId to the selected user's ID
-    };
-
     const handleReportUserChange = (e) => {
         setReportUserId(e.target.value); // Set report user ID directly
     };
@@ -76,11 +71,22 @@ function PostVideocall() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Submitting rating:", rating, "for user ID:", reportUserId);
-            const response = await handleUpdateRating(reportUserId, rating);
-            console.log("Rating updated successfully:", response);
+            console.log("Submitting rating:", rating, "proficiency:", targetLanguageProficiency, "and comment:", comment, "for user ID:", reportUserId);
+            
+            // Update rating
+            await handleUpdateRating(reportUserId, rating);
+            console.log("Rating updated successfully.");
+
+            // Update proficiency
+            await handleUpdateProficiency(reportUserId, targetLanguageProficiency);
+            console.log("Proficiency updated successfully.");
+
+            // Add comment
+            await handleAddComment(reportUserId, comment);
+            console.log("Comment added successfully.");
+            
         } catch (error) {
-            console.error("Failed to update rating:", error);
+            console.error("Failed to update rating, proficiency, or add comment:", error);
         }
     };
   
