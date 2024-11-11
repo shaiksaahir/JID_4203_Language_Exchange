@@ -159,6 +159,38 @@ let updateRating = async (req, res) => {
     }
 };
 
+let updateProficiency = async (req, res) => {
+    const { proficiency, user_id } = req.body;
+
+    if (proficiency === undefined || user_id === undefined) {
+        return res.status(400).json({ message: 'Missing proficiency or user_id parameter' });
+    }
+
+    try {
+        const query = 'UPDATE UserProfile SET proficiency = ? WHERE id = ?';
+        await pool.execute(query, [proficiency, user_id]);
+        return res.status(200).json({ message: 'Proficiency updated successfully!' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Failed to update proficiency', error });
+    }
+};
+
+const addComment = async (req, res) => {
+    const { comment, user_id } = req.body;
+
+    if (!comment || !user_id) {
+        return res.status(400).json({ message: 'Missing comment or user_id parameter' });
+    }
+
+    try {
+        const query = 'UPDATE UserProfile SET comments = ? WHERE id = ?';
+        await pool.execute(query, [String(comment), user_id]);  // Explicitly cast comment to string
+        return res.status(200).json({ message: 'Comment added successfully!' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Failed to add comment', error });
+    }
+};
+
 module.exports = { 
-    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating // added getUserNames as an export
+    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating, updateProficiency, addComment // added getUserNames as an export
 }

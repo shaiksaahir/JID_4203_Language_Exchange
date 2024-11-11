@@ -53,8 +53,22 @@ const handleUpdateRating = (userId, rating) => {
         user_id: userId,
         rating: rating
     });
+}
+
+const handleUpdateProficiency = (userId, proficiency) => {
+    return axios.post('/api/v1/update-proficiency', {
+        user_id: userId,
+        proficiency: proficiency
+    });
+};
+
+const handleAddComment = (userId, comment) => {
+    return axios.post('/api/v1/add-comment', {
+        user_id: userId,
+        comment: comment
+    });
 };
 
 
 
-export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout, handleUpdateRating}
+export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout, handleUpdateRating, handleUpdateProficiency, handleAddComment}
