@@ -14,6 +14,7 @@
 * Application no longer crashes after trying to log out and back in
 ### Known Issues
 * Unable to test video call with multiple users
+* Reports are not being stored in backend correctly
 
 ## Version 2.3.0
 ### Features
