@@ -4,6 +4,8 @@ import { createSearchParams, useSearchParams, useNavigate } from "react-router-d
 import Button from 'react-bootstrap/Button';
 import { handleGetAllUsersApi } from '../Services/findFriendsService';
 import Select from "react-select";
+import { handleUpdateRating } from '../Services/userService';
+
 
 function PostVideocall() {
     const navigate = useNavigate();
@@ -71,25 +73,14 @@ function PostVideocall() {
         }
     };
 
-    const handleSubmit = async () => {
-        console.log("Report User ID:", reportUserId);
-        console.log("Rating:", rating);
-    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const response = await fetch('/api/v1/update-rating', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    rating: rating,
-                    user_id: reportUserId
-                })
-            });
-    
-            // Attempt to parse JSON response
-            const data = await response.json();
-            console.log(data.message); // Log success message from the server
+            console.log("Submitting rating:", rating, "for user ID:", reportUserId);
+            const response = await handleUpdateRating(reportUserId, rating);
+            console.log("Rating updated successfully:", response);
         } catch (error) {
-            console.error('Error updating rating:', error);
+            console.error("Failed to update rating:", error);
         }
     };
   

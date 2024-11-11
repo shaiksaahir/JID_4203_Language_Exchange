@@ -48,6 +48,13 @@ const handleDataPopulation = () => {
     return axios.get(`/populateData`)
 }
 
+const handleUpdateRating = (userId, rating) => {
+    return axios.post('/api/v1/update-rating', {
+        user_id: userId,
+        rating: rating
+    });
+};
 
 
-export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout}
+
+export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout, handleUpdateRating}
