@@ -26,11 +26,6 @@ function PostVideocall() {
         { value: "Fluent", label: "Fluent" },
     ];
 
-    const userOptions = users.map((user) => ({
-        value: user.id,
-        label: `${user.name} (ID: ${user.id})`
-    }));
-
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -97,7 +92,7 @@ function PostVideocall() {
             console.error('Error updating rating:', error);
         }
     };
-
+  
     return (
         <div className="videocall-container">
             <div className="form-container">

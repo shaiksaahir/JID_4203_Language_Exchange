@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
-import translate from 'translate'; // imports the translate package that accesses the four different translation services that can be used in our program
-
+import Button from 'react-bootstrap/Button';
+import { useNavigate, createSearchParams } from "react-router-dom";
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYNgj/M41byOfxmHOe09nzpl180iSjUD3riNdCql71p1y3/ZCgcHUINHcMM3A0iwp0cLEJNU4KdXEwCAlxTI5zcA81TTFZCULc3pDICPD7YvyLIwMEAjiczPkJpYkZ+QmZmfmpTMwAACobCN7';  // Agora token
+const TOKEN = '007eJxTYNi59WSShqWkoppB9g0v/0/atl/5JoQfWXPz+4Kvevti/jxWYDA1SDQ3TDOwNEtKtDAxSTVOSjUxMEhJsUxOMzBPNU0x+aZgmN4QyMjA4nGUmZEBAkF8bobcxJLkjNzE7My8dAYGAGKRIsw='; 
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
@@ -13,26 +13,23 @@ const client = AgoraRTC.createClient({
   codec: 'vp8',
 });
 
-export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
+export const VideoRoom = () => {
   const [users, setUsers] = useState([]);
   const [localTracks, setLocalTracks] = useState([]);
-  const [videoTrack, setVideoTrack] = useState(null);
-  const [inputText, setInputText] = useState(''); // For handling input text
-  const [savedText, setSavedText] = useState(''); // For saving the entered text
+  const [mute, setMute] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleUserJoined = async (user, mediaType) => {
-    if (partners === 0 || users.length < partners) {
-        await client.subscribe(user, mediaType);
+    await client.subscribe(user, mediaType);
 
-        if (mediaType === 'video') {
-            setUsers((previousUsers) => [...previousUsers, user]);
-        }
+    if (mediaType === 'video') {
+      setUsers((previousUsers) => [...previousUsers, user]);
+    }
 
-        if (mediaType === 'audio') {
-            user.audioTrack.play();
-        }
-    } else {
-          console.log("User limit reached. Cannot join new users.");
+    if (mediaType === 'audio') {
+      user.audioTrack.play();
     }
   };
 
@@ -40,66 +37,40 @@ export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
     setUsers((previousUsers) =>
       previousUsers.filter((u) => u.uid !== user.uid)
     );
-    if (user.videoTrack) {
-      user.videoTrack.stop();
-      user.videoTrack.close();
-    }
-    if (user.audioTrack) {
-      user.audioTrack.stop();
-      user.audioTrack.close();
+    if (user.videoTrack) user.videoTrack.close();
+    if (user.audioTrack) user.audioTrack.close();
+  };
+
+  const handleMute = async () => {
+    setMute((prevMute) => !prevMute);
+    if (localTracks[0]) {
+      await localTracks[0].setEnabled(!mute);
     }
   };
 
-    // Translation logic with language detection
-    const translateInput = async (text) => {
-      try {
-        // Detect if the text is in Korean or English based on character set
-        const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text);
-        
-        // Translate to English if it's in Korean, or to Korean if it's in English
-        const translatedText = isKorean 
-          ? await translate(text, { to: "en", from: "ko" }) 
-          : await translate(text, { to: "ko", from: "en" });
-  
-        return translatedText;
-      } catch (error) {
-        console.error("Translation failed", error);
-        return text; // Fallback to original text if translation fails
-      }
-    };
-  
-  const handleKeyPress = async (e) => {
-    if (e.key === 'Enter' && inputText.trim() !== '') {
-      // Translate the input before appending
-      const translatedText = await translateInput(inputText);
-
-      // Append the translated input to the conversationText with a newline character
-      setSavedText((prevText) => prevText + (prevText ? '\n' : '') + translatedText);
-      setInputText(''); // Clear the input field after saving
+  const toggleHideVideo = async () => {
+    setHidden((prevHidden) => !prevHidden);
+    if (localTracks[1]) {
+      await localTracks[1].setEnabled(!hidden);
     }
   };
 
-  // Manage video track based on "Show Video" or "Hide Video"
-  useEffect(() => {
-    const manageVideoTrack = async () => {
-      if (videoOption === 'Show Video') {
-        if (!videoTrack) {
-          const cameraVideoTrack = await AgoraRTC.createCameraVideoTrack();
-          setVideoTrack(cameraVideoTrack);
-          client.publish([cameraVideoTrack]);
-        }
-      } else if (videoOption === 'Hide Video') {
-        if (videoTrack) {
-          client.unpublish([videoTrack]);
-          videoTrack.stop();
-          videoTrack.close();
-          setVideoTrack(null);
-        }
-      }
-    };
+  const handleEndCall = () => {
+    // End call logic, if needed, such as stopping tracks or leaving the channel
+    for (let localTrack of localTracks) {
+      localTrack.stop();
+      localTrack.close();
+    }
+    client.unpublish().then(() => client.leave());
 
-    manageVideoTrack();
-  }, [videoOption]);  // Re-run when videoOption changes
+    // Navigate to PostVideocall page
+    navigate({
+      pathname: "/PostVideocall",
+      search: createSearchParams({
+        id: "user_id" // Replace "user_id" with the actual ID if needed
+      }).toString()
+    });
+  };
 
   useEffect(() => {
     client.on('user-published', handleUserJoined);
@@ -107,66 +78,53 @@ export const VideoRoom = ({ selectedMic, videoOption, partners }) => {
 
     client
       .join(APP_ID, CHANNEL, TOKEN, null)
-      .then((uid) => {
-        AgoraRTC.createMicrophoneAudioTrack({ microphoneId: selectedMic }).then((audioTrack) => {
-          client.publish([audioTrack]);
-          setLocalTracks((prev) => [...prev, audioTrack]);
-        });
+      .then((uid) =>
+        Promise.all([
+          AgoraRTC.createMicrophoneAndCameraTracks(),
+          uid,
+        ])
+      )
+      .then(([tracks, uid]) => {
+        const [audioTrack, videoTrack] = tracks;
+        setLocalTracks(tracks);
+        setUsers((previousUsers) => [
+          ...previousUsers,
+          {
+            uid,
+            videoTrack,
+            audioTrack,
+          },
+        ]);
+        client.publish(tracks);
       });
 
     return () => {
-      localTracks.forEach((track) => {
-        track.stop();
-        track.close();
-      });
-      client.leave();
+      for (let localTrack of localTracks) {
+        localTrack.stop();
+        localTrack.close();
+      }
+      client.off('user-published', handleUserJoined);
+      client.off('user-left', handleUserLeft);
+      client.unpublish().then(() => client.leave());
     };
-  }, [selectedMic, partners]);
+  }, [localTracks]);
 
   return (
-    <div style={{ display: 'grid', placeItems: 'center',  whiteSpace: 'pre-wrap' }}>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 200px)',
-          gap: '1rem',
-        }}
-      >
-        {users.map((user) => (
-          <VideoPlayer key={user.uid} user={user} />
-        ))}
+    <div className="video-room-container">
+      <div className="video-grid">
+        {users.map((user) =>
+          !hidden ? <VideoPlayer key={user.uid} user={user} /> : null
+        )}
       </div>
-
-       {/* Add the input box for typing a message */}
-       <input
-        type="text"
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-
-        onKeyPress={handleKeyPress}
-        placeholder="Type here and press Enter"
-        style={{ marginTop: '20px', padding: '10px', width: '300px' }}
-      />
-
-      {/* Display the conversation */}
-      <div
-        style={{
-          marginTop: '20px',
-          padding: '10px',
-          border: '1px solid black',
-          width: '300px',
-          height: '150px',
-          overflowY: 'auto',
-          whiteSpace: 'pre-wrap', // Ensure newlines are displayed
-          backgroundColor: '#f0f0f0',
-          justifyContent: 'center', // Horizontally center
-          alignItems: 'center',
-          display: 'flex',
-        }}
-      >
-        {savedText || 'No conversation yet...'}
-      </div>
-
+      <Button className="btn-mute" onClick={handleMute}>
+        {mute ? 'Unmute' : 'Mute'}
+      </Button>
+      <Button className="btn-hide" onClick={toggleHideVideo}>
+        {hidden ? 'Show Video' : 'Hide Video'}
+      </Button>
+      <Button className="btn-end-call" onClick={handleEndCall}>
+        End Call
+      </Button>
     </div>
   );
 };

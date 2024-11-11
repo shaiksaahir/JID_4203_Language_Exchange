@@ -1,74 +1,62 @@
-/* Preferences Wrapper fixed at bottom with margins */
-.preferences-wrapper-bottom {
+.leftpic {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  width: 50px;
+  height: 55px;
+  float: left;
+}
+.text{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: 30px;
+  height: 30px;
+  float: left;
+
+}
+.left {
+  background:linear-gradient(135deg, rgb(19, 206, 209) 0%,rgb(165, 136, 74) 100%);
   display: flex;
-  justify-content: space-between;
-  position: fixed;
-  bottom: 0;
-  left: 25%; /* 1/4th margin from the left */
-  right: 25%; /* 1/4th margin from the right */
-  padding: 1rem;
-  gap: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  flex-direction: row;
+  align-items: left;
 }
 
-.half-width {
-  flex: 1; /* Make both sections take up equal space */
+iframe
+{
+    display: none;
 }
 
-.audio-preferences, .video-preferences {
-  background-color: #FAFAFA;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 
-.audio-preferences h3, .video-preferences h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
 }
-
-.mic-selection select {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-}
-
-.mute-section {
-  display: flex;
-  justify-content: center;
-    align-items: center;
-}
-
-.mute-btn {
-  padding: 0.5rem 1rem;
-  width: 25%;
-  font-size: 1rem;
-  background-color: #ff6666;
-  color: white;
+.btn-chat{
+  background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+  width: 19%;
+  margin: 10px 0;
+  height: 35px;
+  border-radius: 15px;
+  outline: none;
   border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
+  color: white;
+  float: center;
 }
-
-.btn-help {
-    background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-    width: 15%;
-    margin: 10px 0;
-    height: 35px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    color: white;
-    float: right;
+.btn-help{
+  background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+  width: 15%;
+  margin: 10px 0;
+  height: 35px;
+  border-radius: 15px;
+  outline: none;
+  border: none;
+  color: white;
+  float: right;
 }
-
 .btn-join {
     background: linear-gradient(135deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
     width: 30%;
@@ -78,6 +66,61 @@
     outline: none;
     border: none;
     color: white;
+}
+
+.frientlist{
+  height: 200px;
+  overflow-y:scroll
+}
+
+.App {
+  text-align: center;
+  background-color:green;
+}
+ 
+.label{
+  display: block;
+  font-size: larger;
+  color: black;
+  padding: 5px;
+}
+ 
+.input{
+  font-size: larger;
+  padding: 5px;
+  margin: 2px;
+  
+}
+.btn{
+  color: white;
+  border-radius: 5px;
+  font-size: larger;
+  display: block;
+  padding: 5px;
+  margin: 10px auto;
+}
+ 
+.messages{
+  display: flex;
+  justify-content: center;
+}
+ 
+.error{
+  display: block;
+  background-color: red;
+  color: white;
+  width: fit-content;
+  height: 45px;
+  padding: 5px;
+}
+ 
+.success{
+  display: block;
+  background-color: lightblue;
+  color: black;
+  width: fit-content;
+  height: 50px;
+  padding: 5px;
 }
 
 .call-container {
@@ -91,12 +134,26 @@
     align-items: center;
 }
 
-.text {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    width: 30px;
-    height: 30px;
-    float: left;
+.card {
+    max-width: 33rem;
+    background: #fff;
+    margin: 0 1rem;
+    padding: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-radius: 0.5rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.star {
+    font-size: 10vh;
+    cursor: pointer;
+}
+
+.star.selected {
+    color: gold;
 }

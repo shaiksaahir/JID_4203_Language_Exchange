@@ -11,13 +11,10 @@ const initAPIRoute = (app) => {
     router.delete('/delete-user/:id', APIController.deleteUser); // method delete
     router.get('/user-names', APIController.getUserNames); // GET method to fetch user names
     router.get('/user-preferences', APIController.getUserPreferences);
-<<<<<<< Updated upstream
-=======
     router.post('/addFriend', APIController.addFriend);
     router.get('/getUserProfile/:userId', APIController.getUserProfile);
     router.post('/update-rating', APIController.updateRating);
-
->>>>>>> Stashed changes
+  
     return app.use('/api/v1/', router)
 }
 

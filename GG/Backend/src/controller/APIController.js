@@ -85,6 +85,63 @@ const getUserNames = async (req, res) => {
       });
     }
 };
+let addFriend = async (req, res) => {
+  const { user_id_2, user_2_first_name, user_2_last_name } = req.body;
+
+  // Validate that all necessary parameters are provided
+  if (!user_id_2 || !user_2_first_name || !user_2_last_name) {
+      return res.status(400).json({
+          message: 'Missing parameters'
+      });
+  }
+
+  try {
+      // Assuming you have an `id` auto-incremented field in your FriendsList table, and that user_id_1 is no longer required
+      const [result] = await pool.execute(
+          'INSERT INTO FriendsList (user_id_2, user_2_first_name, user_2_last_name) VALUES (?, ?, ?)',
+          [user_id_2, user_2_first_name, user_2_last_name]
+      );
+      
+      res.status(201).json({
+          message: 'Friend added successfully',
+          data: result
+      });
+  } catch (error) {
+      console.error('Error adding friend:', error);
+      res.status(500).json({
+          message: 'Error adding friend',
+          error: error.message
+      });
+  }
+};
+
+let getUserProfile = async (req, res) => {
+    const userId = req.params.userId;
+    if (!userId) {
+        return res.status(400).json({
+            message: 'Missing userId parameter'
+        });
+    }
+    try {
+        const [rows] = await pool.execute('SELECT * FROM UserProfile WHERE id = ?', [userId]);
+        if (rows.length > 0) {
+            return res.status(200).json({
+                message: 'ok',
+                data: rows[0]
+            });
+        } else {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+    } catch (error) {
+        console.error('Error retrieving user profile:', error);
+        return res.status(500).json({
+            message: 'Error retrieving user profile',
+            error: error.message
+        });
+    }
+};
 
 let updateRating = async (req, res) => {
     const { rating, user_id } = req.body;
@@ -103,9 +160,5 @@ let updateRating = async (req, res) => {
 };
 
 module.exports = { 
-<<<<<<< Updated upstream
-    getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences // added getUserNames as an export
-=======
     addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating // added getUserNames as an export
->>>>>>> Stashed changes
 }
