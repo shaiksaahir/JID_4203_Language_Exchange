@@ -86,6 +86,26 @@ const getUserNames = async (req, res) => {
     }
 };
 
+let updateRating = async (req, res) => {
+    const { rating, user_id } = req.body;
+
+    if (rating === undefined || user_id === undefined) {
+        return res.status(400).json({ message: 'Missing rating or user_id parameter' });
+    }
+
+    try {
+        const query = 'UPDATE UserProfile SET rating = ? WHERE id = ?';
+        await pool.execute(query, [rating, user_id]);
+        return res.status(200).json({ message: 'Rating updated successfully!' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Failed to update rating', error });
+    }
+};
+
 module.exports = { 
+<<<<<<< Updated upstream
     getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences // added getUserNames as an export
+=======
+    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating // added getUserNames as an export
+>>>>>>> Stashed changes
 }
