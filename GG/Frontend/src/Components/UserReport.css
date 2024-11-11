@@ -1,0 +1,86 @@
+.screen-Background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.screen-Container {
+    max-width: 400px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    padding-bottom: 60px; /* Extra padding at the bottom for button spacing */
+}
+
+.screen-Content {
+    text-align: center;
+    padding: 10px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.dropdown-container {
+    margin-bottom: 1.5rem; /* Extra space below the dropdown */
+}
+
+.user-report-dropdown {
+    width: 100%;
+}
+
+.textarea-container {
+    margin: 0; /* Ensure the textbox is aligned directly below */
+    display: flex;
+}
+
+.user-report-textarea {
+    width: 100%;
+    max-width: 360px;
+    height: 100px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.button-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    justify-content: flex-end;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.btn-submit-report {
+    background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+    width: 100px;
+    height: 35px;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-back {
+    background: #888;
+    width: 100px;
+    height: 35px;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
