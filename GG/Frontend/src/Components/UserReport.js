@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './UserReport.css'; // Updated CSS filename
+import './UserReport.css';
 import Select from 'react-select';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -10,18 +10,18 @@ function UserReport() {
     const navigate = useNavigate();
     const id = search.get("id");
 
-    const [users, setUsers] = useState([]); // State to store users
-    const [selectedUser, setSelectedUser] = useState(''); // State to store selected user
-    const [reportText, setReportText] = useState(''); // State for report text
+    const [users, setUsers] = useState([]); // Store user options
+    const [selectedUser, setSelectedUser] = useState(null); // Store selected user
+    const [reportText, setReportText] = useState(''); // Store report text
 
-    // Fetch all users on component mount
+    // Fetch users on component mount
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const userData = await handleGetAllUsersApi(); // Fetch user data
-                const userOptions = userData.data.map((user) => ({
+                const userOptions = userData.map((user) => ({
                     value: user.id,
-                    label: `${user.firstName} ${user.lastName}`
+                    label: `${user.firstName} ${user.lastName}`, // Match display structure
                 }));
                 setUsers(userOptions);
             } catch (error) {
@@ -32,9 +32,9 @@ function UserReport() {
         fetchUsers();
     }, []);
 
-    // Handle selection change
+    // Handle user selection
     const handleUserChange = (selectedOption) => {
-        setSelectedUser(selectedOption); // Set selected user
+        setSelectedUser(selectedOption);
         console.log("Selected user:", selectedOption);
     };
 
@@ -43,13 +43,11 @@ function UserReport() {
         setReportText(e.target.value);
     };
 
-    // Navigate back to the dashboard or another page
-    const handleBack = async (e) => {
+    // Navigate back to the dashboard
+    const handleBack = () => {
         navigate({
             pathname: "/Dashboard",
-            search: createSearchParams({
-                id: id
-            }).toString()
+            search: createSearchParams({ id: id }).toString(),
         });
     };
 
@@ -59,7 +57,7 @@ function UserReport() {
                 <div className="screen-Content">
                     <h2>User Report</h2>
                     
-                    {/* Dropdown */}
+                    {/* User dropdown */}
                     <div className="dropdown-container">
                         <Select
                             options={users}
@@ -70,7 +68,7 @@ function UserReport() {
                         />
                     </div>
                     
-                    {/* Textarea */}
+                    {/* Report textarea */}
                     <div className="textarea-container">
                         <textarea
                             placeholder="Enter your report or comments here..."
