@@ -13,7 +13,8 @@ const initAPIRoute = (app) => {
     router.get('/user-preferences', APIController.getUserPreferences);
     router.post('/addFriend', APIController.addFriend);
     router.get('/getUserProfile/:userId', APIController.getUserProfile);
-
+    router.post('/update-rating', APIController.updateRating);
+  
     return app.use('/api/v1/', router)
 }
 

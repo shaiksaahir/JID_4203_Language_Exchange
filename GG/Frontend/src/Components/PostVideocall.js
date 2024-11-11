@@ -47,6 +47,12 @@ function PostVideocall() {
             setSelectedUser(null);
         }
     };
+
+    const handleReportUserSelection = (user) => {
+        console.log("Selected report user:", user); // Log the selected user object
+        setReportUserId(user ? user.value : ""); // Set reportUserId to the selected user's ID
+    };
+
     const handleReportUserChange = (e) => {
         setReportUserId(e.target.value); // Set report user ID directly
     };
@@ -65,6 +71,28 @@ function PostVideocall() {
         }
     };
 
+    const handleSubmit = async () => {
+        console.log("Report User ID:", reportUserId);
+        console.log("Rating:", rating);
+    
+        try {
+            const response = await fetch('/api/v1/update-rating', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    rating: rating,
+                    user_id: reportUserId
+                })
+            });
+    
+            // Attempt to parse JSON response
+            const data = await response.json();
+            console.log(data.message); // Log success message from the server
+        } catch (error) {
+            console.error('Error updating rating:', error);
+        }
+    };
+  
     return (
         <div className="videocall-container">
             <div className="form-container">
@@ -127,7 +155,7 @@ function PostVideocall() {
     </select>
 </div>
 
-<Button className="btn-submit" style={{ marginTop: '20px' }}>
+<Button className="btn-submit" style={{ marginTop: '20px' }} onClick={handleSubmit}>
     Submit
 </Button>
 
