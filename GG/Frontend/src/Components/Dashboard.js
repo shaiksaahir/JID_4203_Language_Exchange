@@ -130,6 +130,15 @@ function Dashboard()  {
     });
   };
 
+  const goToUserReport = () => {
+    navigate({
+      pathname: "/UserReport", 
+      search: createSearchParams({
+        id: id, 
+      }).toString(),
+    });
+  };
+
   const friendSearch = () => {
     navigate('/FriendSearch', { state: { id: id } });
   };
@@ -195,6 +204,7 @@ function Dashboard()  {
           <Button className="btn-Screen" onClick={handleChat}>Chat</Button>
           <Button className="btn-Screen" onClick={call}>Call</Button>
           <Button className="btn-Screen" onClick={Translator}>Translator</Button>
+          <Button className="btn-Screen" onClick={goToUserReport}>User Report</Button>
           <Button className="btn-Screen" onClick={() => navigate({
                 pathname: "/CreateProfile",
                 search: createSearchParams({ id: id }).toString()

@@ -19,7 +19,7 @@ import Videocall from "../Components/Videocall";
 import PostVideocall from '../Components/PostVideocall';
 import FriendSearch from '../Components/FriendSearch';
 import FriendsList from '../Components/FriendsList';
-
+import UserReport from '../Components/UserReport';
 
 const App = () => {
 
@@ -36,6 +36,7 @@ const App = () => {
           <Route path ="/Dashboard" element ={<Dashboard />}/>
           <Route path ="/FriendSearch" element ={<FriendSearch />}/>
           <Route path ="/Translator" element = {<Translator />}/>
+          <Route path="/UserReport" element={<UserReport />} />
           <Route path ="/Videocall" element = {<Videocall />}/>
           <Route path ="/PostVideocall" element = {<PostVideocall />}/>
           <Route path ="/LogoutConfirmation" element ={<LogoutConfirmationPage />}/>
