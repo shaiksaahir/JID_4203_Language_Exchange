@@ -3,7 +3,7 @@ import './UserReport.css';
 import Select from 'react-select';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import { handleGetAllUsersApi } from '../Services/findFriendsService';
+import { handleGetAllUsersApi, handleGetUserProfileApi } from '../Services/findFriendsService';
 
 function UserReport() {
     const [search] = useSearchParams();
@@ -12,7 +12,8 @@ function UserReport() {
 
     const [users, setUsers] = useState([]); // Store user options
     const [selectedUser, setSelectedUser] = useState(null); // Store selected user
-    const [reportText, setReportText] = useState(''); // Store report text
+    const [userProficiency, setUserProficiency] = useState("N/A"); // Store user's proficiency
+    const [userRating, setUserRating] = useState("N/A"); // Store user's rating
 
     // Fetch users on component mount
     useEffect(() => {
@@ -21,9 +22,10 @@ function UserReport() {
                 const userData = await handleGetAllUsersApi(); // Fetch user data
                 const userOptions = userData.map((user) => ({
                     value: user.id,
-                    label: `${user.firstName} ${user.lastName}`, // Match display structure
+                    label: `${user.firstName} ${user.lastName}`,
                 }));
                 setUsers(userOptions);
+                console.log("User options for dropdown:", userOptions);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -38,9 +40,36 @@ function UserReport() {
         console.log("Selected user:", selectedOption);
     };
 
-    // Handle report text change
-    const handleReportTextChange = (e) => {
-        setReportText(e.target.value);
+    // Fetch proficiency and rating for the selected user
+    const fetchUserProficiencyAndRating = async () => {
+        if (!selectedUser) {
+            console.warn("No user selected.");
+            return;
+        }
+
+        console.log("Fetching proficiency and rating for user ID:", selectedUser.value);
+
+        try {
+            const response = await handleGetUserProfileApi(selectedUser.value);
+            const userProfile = response.data;
+
+            console.log("Complete fetched data structure:", userProfile);
+
+            // Validate and set proficiency and rating if available
+            if (userProfile && userProfile.proficiency && userProfile.rating) {
+                setUserProficiency(userProfile.proficiency);
+                setUserRating(userProfile.rating);
+                console.log("Proficiency:", userProfile.proficiency, "Rating:", userProfile.rating);
+            } else {
+                console.warn("Proficiency or rating data is missing.");
+                setUserProficiency("N/A");
+                setUserRating("N/A");
+            }
+        } catch (error) {
+            console.error("Error fetching user's proficiency and rating:", error);
+            setUserProficiency("N/A");
+            setUserRating("N/A");
+        }
     };
 
     // Navigate back to the dashboard
@@ -68,19 +97,15 @@ function UserReport() {
                         />
                     </div>
                     
-                    {/* Report textarea */}
-                    <div className="textarea-container">
-                        <textarea
-                            placeholder="Enter your report or comments here..."
-                            value={reportText}
-                            onChange={handleReportTextChange}
-                            className="user-report-textarea"
-                        />
+                    {/* Display proficiency and rating */}
+                    <div className="user-info">
+                        <p><strong>Proficiency:</strong> {userProficiency}</p>
+                        <p><strong>Rating:</strong> {userRating}</p>
                     </div>
                     
                     {/* Buttons */}
                     <div className="button-container">
-                        <Button className="btn-submit-report">Submit</Button>
+                        <Button className="btn-fetch-user" onClick={fetchUserProficiencyAndRating}>Fetch User</Button>
                         <Button className="btn-back" onClick={handleBack}>Back</Button>
                     </div>
                 </div>
