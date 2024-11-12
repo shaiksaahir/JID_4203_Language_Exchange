@@ -191,6 +191,34 @@ const addComment = async (req, res) => {
     }
 };
 
+let getUserProficiencyAndRating = async (req, res) => {
+    const userId = req.params.userId;
+    if (!userId) {
+        return res.status(400).json({
+            message: 'Missing userId parameter'
+        });
+    }
+    try {
+        const [rows] = await pool.execute('SELECT proficiency, rating FROM UserProfile WHERE id = ?', [userId]);
+        if (rows.length > 0) {
+            return res.status(200).json({
+                message: 'ok',
+                data: rows[0]
+            });
+        } else {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+    } catch (error) {
+        console.error('Error retrieving user proficiency and rating:', error);
+        return res.status(500).json({
+            message: 'Error retrieving user proficiency and rating',
+            error: error.message
+        });
+    }
+};
+
 module.exports = { 
-    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating, updateProficiency, addComment // added getUserNames as an export
+    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating, updateProficiency, addComment, getUserProficiencyAndRating // added getUserNames as an export
 }

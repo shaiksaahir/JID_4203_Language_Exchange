@@ -69,6 +69,15 @@ const handleAddComment = (userId, comment) => {
     });
 };
 
+export const handleGetUserProficiencyAndRating = async (userId) => {
+    try {
+        const response = await axios.get(`/api/v1/getUserProfile/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user proficiency and rating:', error);
+        throw error;
+    }
+};
 
 
 export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout, handleUpdateRating, handleUpdateProficiency, handleAddComment}
