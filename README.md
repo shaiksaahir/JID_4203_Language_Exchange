@@ -1,6 +1,14 @@
 # JDA-4203 | Language Exchange Matchmaker
 
 # Release Notes
+## Version 3.0.0
+### Features
+* Added a way to select multiple chat rooms in video call
+### Bug Fixes
+* Can now test video call with multiple users
+### Known Issues
+* Unable to get a chat partner's ID
+
 ## Version 2.4.0
 ### Features
 * Added a way to add other users to a friends list by selecting on them in the Find Friends page
