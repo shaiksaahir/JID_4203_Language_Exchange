@@ -22,6 +22,13 @@ export const VideoRoom = ({ room }) => {
     const navigate = useNavigate();
 
     const handleUserJoined = async (user, mediaType) => {
+        console.log("client.remoteUsers.length in handleUserJoined: ", client.remoteUsers.length);
+
+        // Check the number of users before joining
+        if (client.remoteUsers.length >= 2) {
+            return;
+        }
+
         await client.subscribe(user, mediaType);
 
         if (mediaType === 'video') {
@@ -96,6 +103,7 @@ export const VideoRoom = ({ room }) => {
         console.log("room:", room);
         console.log("roomChannel:", roomChannel);
         console.log("Users in call: ", users);
+        console.log("client.remoteUsers: ", client.remoteUsers);
 
         client
             .join(APP_ID, roomChannel, roomToken, null)

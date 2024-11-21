@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import React from "react";
 import './Videocall.css';
-import { VideoRoom } from './VideoRoom';
+import { VideoRoom, client } from './VideoRoom';
 import Button from 'react-bootstrap/Button';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 
