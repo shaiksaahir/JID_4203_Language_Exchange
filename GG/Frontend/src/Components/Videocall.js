@@ -37,10 +37,20 @@ function Videocall() {
         setRoom(e.target.value);
     };
 
+    function addParticipantToLocalStorage(participantId, roomName) {
+        // Retrieve current data from local storage
+        let participants = JSON.parse(localStorage.getItem('participantData')) || {};
+
+        // Add or update participant's room information
+        participants[participantId] = roomName;
+        localStorage.setItem('participantData', JSON.stringify(participants));
+    }
+
     const handleJoinRoom = () => {
-        const selectedRoom = room.trim() || 'matchmaking'; // Default to "general" if no input
+        const selectedRoom = room.trim() || 'matchmaking'; // Default to 'matchmaking' if no input
         console.log("Selected Room:", selectedRoom);
         setRoom(selectedRoom);
+        addParticipantToLocalStorage(id, selectedRoom);
         setJoined(true);
     };
 
@@ -65,13 +75,6 @@ function Videocall() {
                     )}
                     {joined && <VideoRoom room={room} />}
                 </div>
-                {/*<div className="screen-Content">*/}
-                {/*    <h5>Enter Room Number 1-4</h5>*/}
-                {/*    <input*/}
-                {/*        placeholder="Enter"*/}
-                {/*        onChange={handleRoom} className="input"*/}
-                {/*        type="text" />*/}
-                {/*</div>*/}
                 <Button className="btn-help" onClick={handleBack} >back</Button>
             </div>
         </div>
