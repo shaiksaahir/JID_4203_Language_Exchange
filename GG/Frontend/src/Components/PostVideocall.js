@@ -12,10 +12,8 @@ function PostVideocall() {
     const [search] = useSearchParams();
     const id = search.get("id");
 
-    const [reportUserId, setReportUserId] = useState(''); // Store user ID for reports
-
-    const [users, setUsers] = useState([]); 
-    const [selectedUser, setSelectedUser] = useState(null); 
+    const [users, setUsers] = useState([]);
+    const [chatPartnerId, setPartner] = useState(0);
     const [rating, setRating] = useState(0);
     const [targetLanguageProficiency, setTargetLanguageProficiency] = useState('');
     const [comment, setComment] = useState('');
@@ -29,6 +27,18 @@ function PostVideocall() {
     ];
 
     useEffect(() => {
+        const participants = JSON.parse(localStorage.getItem('participantData')) || {};
+        console.log("Participants in the call:", participants);
+
+        // Find the chat partner in the same room as the current user
+        const currentRoom = participants[id];
+        const chatPartnerId = Object.keys(participants).find(
+            (key) => participants[key] === currentRoom && key !== id
+        );
+
+        setPartner(chatPartnerId || null); // Update state with chat partner's ID
+        console.log("Chat Partner ID:", chatPartnerId);
+
         const fetchUsers = async () => {
             try {
                 const userData = await handleGetAllUsersApi();
@@ -38,56 +48,61 @@ function PostVideocall() {
             }
         };
         fetchUsers();
-    }, []);
-
-    const handleUserChange = (e) => {
-        const userId = e.target.value;
-        const user = users.find((user) => String(user.id) === String(userId));
-        if (user) {
-            setSelectedUser({ firstName: user.firstName, lastName: user.lastName });
-        } else {
-            setSelectedUser(null);
-        }
-    };
-
-    const handleReportUserChange = (e) => {
-        setReportUserId(e.target.value); // Set report user ID directly
-    };
+    }, [id]);
     
     const handleAddFriend = () => {
-        if (!selectedUser) return;
-        const { firstName, lastName } = selectedUser;
-        const friend = { firstName, lastName };
+        const friend = users.find(user => String(user.id) === String(chatPartnerId));
+        if (!friend) {
+            console.error("No user found with chatPartnerId:", chatPartnerId);
+            return;
+        }
+
+        const firstName = friend.firstName;
+        const lastName = friend.lastName;
+
         const storedFriends = JSON.parse(localStorage.getItem('friendsList')) || [];
         const friendExists = storedFriends.some(
-            f => f.firstName === friend.firstName && f.lastName === friend.lastName
+            f => f.firstName === firstName && f.lastName === lastName
         );
+
         if (!friendExists) {
-            const updatedFriends = [...storedFriends, friend];
+            const updatedFriends = [...storedFriends, { firstName, lastName }];
             localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
+            console.log(`${firstName} ${lastName} added to friends list.`);
+        } else {
+            console.log(`${firstName} ${lastName} is already in your friends list.`);
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("Submitting rating:", rating, "proficiency:", targetLanguageProficiency, "and comment:", comment, "for user ID:", reportUserId);
+            console.log("Submitting rating:", rating, "proficiency:", targetLanguageProficiency, "and comment:", comment, "for user ID:", chatPartnerId);
             
             // Update rating
-            await handleUpdateRating(reportUserId, rating);
+            await handleUpdateRating(chatPartnerId, rating);
             console.log("Rating updated successfully.");
 
             // Update proficiency
-            await handleUpdateProficiency(reportUserId, targetLanguageProficiency);
+            await handleUpdateProficiency(chatPartnerId, targetLanguageProficiency);
             console.log("Proficiency updated successfully.");
 
             // Add comment
-            await handleAddComment(reportUserId, comment);
+            await handleAddComment(chatPartnerId, comment);
             console.log("Comment added successfully.");
             
         } catch (error) {
             console.error("Failed to update rating, proficiency, or add comment:", error);
         }
+    };
+
+    const handleBack = async (e) => {
+        navigate({
+            pathname: "/Dashboard",
+            search: createSearchParams({
+                id: id
+            }).toString()
+        });
     };
   
     return (
@@ -131,55 +146,14 @@ function PostVideocall() {
             </div>
 
             <div className="buttons-container">
-                <Button className="btn-help" onClick={() => navigate(`/Dashboard?id=${id}`)}>Back</Button>
-              
-              
-              
-                <div className="user-report-selection" style={{ marginTop: '20px' }}>
-    <label htmlFor="reportUserDropdown" style={{ marginBottom: '10px', display: 'block' }}>User Report:</label>
-    <select
-        id="reportUserDropdown"
-        value={reportUserId}
-        onChange={handleReportUserChange}
-        style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
-    >
-        <option value="">-- Select a User for Report --</option>
-        {users.map((user) => (
-            <option key={user.id} value={user.id}>
-                {user.firstName} {user.lastName} - {user.email}
-            </option>
-        ))}
-    </select>
-</div>
+                <Button className="btn-help" onClick={handleBack}>Back</Button>
 
-<Button className="btn-submit" style={{ marginTop: '20px' }} onClick={handleSubmit}>
-    Submit
-</Button>
-
-              
-              
-                
+                <Button className="btn-submit" style={{ marginTop: '20px' }} onClick={handleSubmit}>
+                    Submit
+                </Button> 
             </div>
-            
-
-            
-
-            <div className="user-selection">
-                <label>Select a User to Add as Friend:</label>
-                <select
-                    className="user-dropdown"
-                    value={selectedUser ? `${selectedUser.firstName} ${selectedUser.lastName}` : ''}
-                    onChange={handleUserChange}
-                >
-                    <option value="">-- YOUR SELECTED USER -- </option>
-                    {users.map((user) => (
-                        <option key={user.id} value={user.id}>
-                            {user.firstName} {user.lastName} - {user.email}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <Button className="btn-add-friend" onClick={handleAddFriend} disabled={!selectedUser}>Add Friend</Button>
+   
+            <Button className="btn-add-friend" onClick={handleAddFriend}>Add Friend</Button>
         </div>
     );
 }

@@ -29,13 +29,14 @@
 ### Bug Fixes
 * Made the application clonable from GitHub.
 * Updated overall UI.
-* Added back buttons to pages where one was missing.
+* Added or fixed back buttons to pages where one was missing or faulty.
 * Application no longer crashes after trying to log out and back in.
 * Searching for friends in the Find Friends page is now case insensitive.
 * Removed previous friends list and its functionality from dashboard.
 * Users' friends lists are now represented by a database in MySQL.
 * Fixed video display and audio not working during a call.
 * Can now test video call with multiple users.
+* Post Video Call page now automatically fetches your recent chat partner.
 ### Known Issues
 * Missing AI-enhanced speaking and listening games.
 

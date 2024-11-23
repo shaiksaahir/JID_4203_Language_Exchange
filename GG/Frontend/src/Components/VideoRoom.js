@@ -22,6 +22,7 @@ export const VideoRoom = ({ room }) => {
     const navigate = useNavigate();
 
     const handleUserJoined = async (user, mediaType) => {
+        console.log("Remote user joined:", user);
         console.log("client.remoteUsers.length in handleUserJoined: ", client.remoteUsers.length);
 
         // Check the number of users before joining
