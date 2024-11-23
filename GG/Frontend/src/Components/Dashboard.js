@@ -57,7 +57,7 @@ function Dashboard()  {
       let lists = await handleFindFriendsApi(id);
       setfriendids(lists.chatsData);
 
-      for(let i = 0; i < friendids.length; i++) {
+      for (let i = 0; i < friendids.length; i++) {
         let friend = await handleUserDashBoardApi(friendids[i].user2_ID);
         let friendName = friend.user.firstName + ' ' + friend.user.lastName;
         names.push(friendName);
@@ -68,37 +68,24 @@ function Dashboard()  {
     }
   };
 
-  const setup = () => {
-    for(let i = 0; i < friendids.length; i++) {
-      console.log('name-i ' + name[i].name);
-      console.log('logged in ' + name[i].loggedIn);
-      if (name[i].loggedIn) {
-        array.push(
-          <div className='leftOnline'>
-            <img src={profile} alt="DP" className="leftpic" />
-            <text className='text'>{name[i]}</text>
-          </div>
-        );
-      } else {
-        array.push(
-          <div className='leftOffline'>
-            <img src={profile} alt="DP" className="leftpic" />
-            <text className='text'>{name[i]}</text>
-          </div>
-        );
-      }
-    }
-  };
-
   useEffect(() => {
     getInfo();
   }, []);
+
+  const friendSearch = () => {
+    navigate({
+      pathname: "/FriendSearch",
+      search: createSearchParams({
+        id: id,
+      }).toString(),
+    });
+  };
 
   const Logout = async (e) => {
     navigate({
       pathname: "/LogoutConfirmation",
       search: createSearchParams({
-          id: id
+        id: id
       }).toString()
     });
   };
@@ -107,7 +94,7 @@ function Dashboard()  {
     navigate({
       pathname: "/Translator",
       search: createSearchParams({
-          id: id
+        id: id
       }).toString()
     });
   };
@@ -116,7 +103,7 @@ function Dashboard()  {
     navigate({
       pathname: "/Videocall",
       search: createSearchParams({
-          id: id
+        id: id
       }).toString()
     });
   };
@@ -125,7 +112,7 @@ function Dashboard()  {
     navigate({
       pathname: "/Chat",
       search: createSearchParams({
-          senderid: id
+        senderid: id
       }).toString()
     });
   };
@@ -137,10 +124,6 @@ function Dashboard()  {
         id: id, 
       }).toString(),
     });
-  };
-
-  const friendSearch = () => {
-    navigate('/FriendSearch', { state: { id: id } });
   };
 
   const createVideoCall = () => {
@@ -169,12 +152,12 @@ function Dashboard()  {
     navigate({
       pathname: "/HelpPage",
       search: createSearchParams({
-          id: id
+        id: id
       }).toString()
     });
   };
 
-  for(let i = 0; i < friendids.length; i++) {
+  for (let i = 0; i < friendids.length; i++) {
     array.push(
       <div className='left'>
         <img src={profile} alt="DP" className="leftpic" />
@@ -192,8 +175,6 @@ function Dashboard()  {
           <img src={profile} alt="logo" className="center" />
           <h1>{FName} {LName}</h1>
           <h2>{email}</h2>
-          {/* Removed the display of Age, Gender, Hobby, and Profession */}
-          
           <Button className="btn-Screen" onClick={friendSearch}>Find Friend</Button>
           <Button className="btn-Screen" onClick={() => navigate({
                 pathname: "/FriendsList",
@@ -214,16 +195,6 @@ function Dashboard()  {
           <Button className="btn-Screen" onClick={Logout}>
             Logout
           </Button>
-          {/*<h2>Friends</h2>*/}
-          {/*<div className="friendlist">*/}
-          {/*  {array}*/}
-          {/*  <ListGroup id="friendlist">*/}
-          {/*    <ListGroup.Item id="friendheader" hidden variant="success">Add a match below:</ListGroup.Item>*/}
-          {/*    <ListGroup.Item id="friend1" onClick={addFriend1} hidden variant="success" action>Friend 1</ListGroup.Item>*/}
-          {/*    <ListGroup.Item id="friend2" hidden variant="success" action href="#friend2">Friend 2</ListGroup.Item>*/}
-          {/*    <ListGroup.Item id="friend3" hidden variant="success" action href="#friend3">Friend 3</ListGroup.Item>*/}
-          {/*  </ListGroup>*/}
-          {/*</div>*/}
         </div>
         <Button className="btn-help" onClick={handleHelp}>?</Button>
       </div>

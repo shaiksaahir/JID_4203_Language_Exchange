@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { handleGetUserNamesApi, handleGetUserPreferencesApi, handleGetUserProfileApi } from '../Services/findFriendsService';
 import './FriendSearch.css';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
-import { handleAddFriendApi } from '../Services/findFriendsService';
 import Button from 'react-bootstrap/Button';
 import { getUserData } from '../Utils/userData'; // Import to retrieve stored current user data
 
@@ -27,12 +26,11 @@ const FriendSearch = () => {
         console.log("Fetching all user names and retrieving current user preferences...");
 
         const userResponse = await handleGetUserNamesApi();
-
         const profilesResponse = await handleGetUserPreferencesApi();
 
         const visibleUsers = userResponse.data.filter(user => {
-            const userProfile = profilesResponse.data.find(profile => profile.id === user.id);
-            return userProfile && userProfile.visibility === "Show";
+          const userProfile = profilesResponse.data.find(profile => profile.id === user.id);
+          return userProfile && userProfile.visibility === "Show";
         });
 
         console.log("Visible users:", visibleUsers);
@@ -88,14 +86,14 @@ const FriendSearch = () => {
     const ageDifferenceScore = -0.3 * Math.abs((selectedProfile.age || 0) - (currentUser.age || 0));
 
     const totalScore = genderScore + professionScore + hobbyScore + ageDifferenceScore;
-    
+
     console.log("Gender score:", genderScore);
     console.log("Profession score:", professionScore);
     console.log("Hobby score:", hobbyScore);
     console.log("Age difference score:", ageDifferenceScore);
     console.log("Total compatibility score:", totalScore);
-    
-    return totalScore;
+
+    return parseFloat(totalScore.toFixed(2));
   };
 
   const calculateAllCompatibilityScores = async () => {
@@ -179,7 +177,7 @@ const FriendSearch = () => {
     setRecentChatPartners(updatedPartners);
   };
 
-  const handleBack = async (e) => {
+  const handleBack = () => {
     navigate({
       pathname: "/Dashboard",
       search: createSearchParams({
@@ -256,7 +254,7 @@ const FriendSearch = () => {
         )}
       </div>
 
-      <Button className="btn-help" onClick={handleBack}>Back</Button>
+      <Button className="btn-back" onClick={handleBack}>Back</Button>
     </div>
   );
 };
