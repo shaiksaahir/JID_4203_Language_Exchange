@@ -140,7 +140,12 @@ function Dashboard()  {
   };
 
   const friendSearch = () => {
-    navigate('/FriendSearch', { state: { id: id } });
+    navigate({
+      pathname: "/FriendSearch",
+      search: createSearchParams({
+        id: id,
+      }).toString(),
+    });
   };
 
   const createVideoCall = () => {

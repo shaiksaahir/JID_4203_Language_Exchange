@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
 import Button from 'react-bootstrap/Button';
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"; // Added useSearchParams
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYHAvnsHy/o3/iukFLVElUaIv22+mXGhNmSr95+C2c3cjusMUGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMJr+2TW8IZGSYxLaXmZEBAkF8bobcxJLkjNzE7My8dAYGANE0JDs=';
+const TOKEN = '007eJxTYHAvnsHy/o3/iukFLVElUaIv22+mXGhNmSr95+C2cjusMUGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMJr+2TW8IZGSYxLaXmZEBAkF8bobcxJLkjNzE7My8dAYGANE0JDs=';
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
@@ -20,9 +20,10 @@ export const VideoRoom = ({ room }) => {
     const [hidden, setHidden] = useState(false);
 
     const navigate = useNavigate();
+    const [search] = useSearchParams(); // Added useSearchParams
+    const id = search.get("id"); // Extracted the user ID from the query parameters
 
     const handleUserJoined = async (user, mediaType) => {
-        console.log("Remote user joined:", user);
         console.log("client.remoteUsers.length in handleUserJoined: ", client.remoteUsers.length);
 
         // Check the number of users before joining
@@ -70,12 +71,12 @@ export const VideoRoom = ({ room }) => {
             localTrack.close();
         }
         client.unpublish().then(() => client.leave());
-
-        // Navigate to PostVideocall page
+    
+        // Navigate to PostVideocall page with the user ID
         navigate({
             pathname: "/PostVideocall",
             search: createSearchParams({
-                id: "user_id" // Replace "user_id" with the actual ID if needed
+                id: id // Pass the user ID from URL query parameters
             }).toString()
         });
     };
