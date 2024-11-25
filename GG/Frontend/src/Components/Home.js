@@ -1,46 +1,55 @@
 import React from "react";
-import { useState, useEffect } from 'react';
-import '../Styles/Common.css'; 
 import { useNavigate } from "react-router-dom";
+import "./Login.scss"; // Reuse styles from Login.js for consistency
 import logo from "../Styles/logo.png";
-import Button from 'react-bootstrap/Button';
-import { handleDataPopulation } from '../Services/userService';
-
-
 
 function Home() {
-    const navigate = useNavigate();
-    
-    const getInfo = async(e) => {
-        try{
-          await handleDataPopulation()
-          }
-      catch(error){
-        console.log(error);
-      }
-    }
-  
-    useEffect(() => {
-      //getInfo()
-    });
+  const navigate = useNavigate();
 
-    return (
-        <div className="screen-Background">
-            <div className="screen-Container">
-                <div className="screen-Content">
-                <h1>Language Exchange Matchmaker</h1>
-                <div className="d-grid gap-2">
-                    <img src={logo} alt="logo" class="center" />
-                        <div className='col-12'>
-                            <Button  className="btn-Screen"onClick={() => {navigate("/login");}}>Login</Button>
-                        </div>
-                        <div className='col-12'>
-                            <Button className="btn-Screen" onClick={() => {navigate("/register");}}>Register</Button>
-                        </div>
-                </div>
-            </div>
-            </div>
+  return (
+    <div className="login-background">
+      {/* Left section */}
+      <div className="visual-section">
+        <img
+          src={logo}
+          alt="Language Exchange Logo"
+          style={{ maxWidth: "70%", height: "auto", marginBottom: "20px" }}
+        />
+      </div>
+
+      {/* Right section */}
+      <div className="login-container">
+        <div className="login-content">
+          <div className="text-login">Language Exchange Matchmaker</div>
+          <div className="text-subtitle">
+            Connect with people around the world to learn and practice new languages.
+          </div>
+
+          {/* Login Button Section */}
+          <div className="col-12">
+            <div className="button-header">Continuing your learning?</div>
+            <button className="btn-login" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          </div>
+
+          {/* Register Button Section */}
+          <div className="col-12">
+            <div className="button-header">Ready to get started?</div>
+            <button className="btn-login" onClick={() => navigate("/register")}>
+              Register
+            </button>
+          </div>
+
+          {/* Statistics or additional info */}
+          <div className="home-stats">
+            <p>🌍 Develop friendships with users all over the world!</p>
+            <p>📚 Supporting English and Korean, with more languages to come!</p>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
+
 export default Home;

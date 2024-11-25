@@ -33,7 +33,7 @@ function LogoutConfirmationPage() {
             if (data.errorCode === 0) {
                 // todo when logout successful!
                 navigate({
-                    pathname: "/Login",
+                    pathname: "/",
                 });
             }
         } catch (error) {
