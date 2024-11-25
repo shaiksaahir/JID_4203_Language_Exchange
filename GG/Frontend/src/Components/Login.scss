@@ -1,55 +1,127 @@
-.login-background{
-    height: 100vh;
-    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-
-    .login-container{
-        width: 30%;
-        height: 100%;
-        margin: 0 auto;
-        border-radius: 10px;
-        background-color: white;
-
-        .login-content{
-            padding: 10px;
-
-            .text-login{
-                text-align: center;
-                font-weight: 600;
-                font-size: 24px;
-                padding-top: 10px;
-            }
-
-            .login-input{
-                margin: 6px 0;
-                .user-text{
-                    text-align: left;
-                    display: block;
-                }
-
-                .password-text{
-                    text-align: left;
-                    display: block;
-                }
-            }
-
-            .btn-login{
-                background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-                width: 100%;
-                margin: 10px 0;
-                height: 30px;
-                border-radius: 15px;
-                outline: none;
-                border: none;
-                color: white;
-            }
-
-            .forgot-password{
-            font-size: 12px;
-            text-align: center;
-
-            }
+// Variables for colors and styles
+$primary-gradient: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+$text-color: #333;
+$error-color: #e74c3c;
+$input-border-color: #ccc;
+$dark-color: #364659;
 
 
+.text-login {
+  font-family: 'DM Serif Display', serif;
+}
+
+.login-background {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background: #6344A6;
+
+  // Left side for visuals or branding (optional)
+  .visual-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  // Login form occupying half the viewport
+  .login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+
+    .login-content {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+
+      .text-login {
+        text-align: center;
+        font-weight: 600;
+        font-size: 24px;
+        color: $dark-color;
+        margin-bottom: 20px;
+      }
+
+      .login-input {
+        margin-bottom: 15px;
+
+        label {
+          display: block;
+          margin-bottom: 5px;
+          font-size: 14px;
+          color: $dark-color;
         }
+
+        input {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid $input-border-color;
+          border-radius: 5px;
+          font-size: 14px;
+
+          &:focus {
+            border-color: darken($input-border-color, 10%);
+            outline: none;
+          }
+        }
+      }
+
+      .error-message {
+        color: $error-color;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .btn-login {
+        background: #6344A6;
+        width: 100%;
+        padding: 12px; // Increased padding for better clickability
+        font-size: 16px; // Larger text for modern design
+        font-weight: bold;
+        border-radius: 8px; // Subtle corner rounding
+        border: none;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Simple drop shadow
+        transition: transform 0.2s ease, box-shadow 0.2s ease; // Smooth interaction effects
+      
+        &:hover {
+          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); // Slightly stronger shadow on hover
+          transform: translateY(-2px); // Subtle "lift" effect
+        }
+      
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(34, 193, 195, 0.3); // Accessible focus ring
+        }
+      
+        &:active {
+          transform: translateY(0); // Reset lift on click
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle pressed effect
+        }
+      }
+
+      .forgot-password {
+        text-align: center;
+        font-size: 12px;
+        color: $dark-color;
+        margin-top: 10px;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
+  }
 }

@@ -61,50 +61,45 @@ function Login (){
         }
     }
 
-        return (
-        <div>
-            <div className= 'login-background'>
-                <div className= 'login-container'>
-                    <div className= 'login-content '>
-                        <div className= 'col-12 text-login'> Login</div>
-                            <div className='col-12 form-group login-input' >
-                                <label className="user-text">Username: </label>
-                                <input
-                                    type='text'
-                                    className='form-control'
-                                    placeholder='Enter your username'
-                                    value = {username}
-                                    onChange = {handleOnChangeUserInput}
-                                />
-                            </div>
-                        <div className='col-12 form-group login-input'>
-                            <label className="password-text">Password: </label>
-                            <input
-                                type='password'
-                                className='form-control'
-                                placeholder='Enter your password'
-                                value = {password}
-                                onChange = {handleOnChangePassword}
-                                />
-                        </div>
-                        <div className='col-12'>
-                            <div className='col-12' style= {{color: 'red'}}>
-                                {errMsg}
-                            </div>
-                            <button
-                                className='btn-login'
-                                onClick = {handleOnClick}
-                                >Login</button>
-                        </div>
-                        <div className='col-12'>
-                            <span className='forgot-password'>Forgot your password?</span>
-                        </div>
-
-                    </div>
-                </div>
+    return (
+        <div className="login-background">
+          <div className="visual-section">
+            {/* Add optional branding or visuals here */}
+            Welcome Back!
+          </div>
+          <div className="login-container">
+            <div className="login-content">
+              <div className="text-login">Login</div>
+              <div className="login-input">
+                <label className="user-text">Username:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={handleOnChangeUserInput}
+                />
+              </div>
+              <div className="login-input">
+                <label className="password-text">Password:</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={handleOnChangePassword}
+                />
+              </div>
+              <div className="error-message">{errMsg}</div>
+              <button className="btn-login" onClick={handleOnClick}>
+                Login
+              </button>
+              <div className="forgot-password">Forgot your password?</div>
             </div>
+          </div>
         </div>
-        );
+      );
+      
 
 }
 
