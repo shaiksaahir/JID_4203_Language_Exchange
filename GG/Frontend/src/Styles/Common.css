@@ -1,44 +1,106 @@
-.btn-group{
-    background-color: #64c4a1; /* Green background */
-    border: 1px solid green; /* Green border */
-    color: white; /* White text */
-    padding: 10px 24px; /* Some padding */
-    cursor: pointer; /* Pointer/hand icon */
-    width: 50%; /* Set a width if needed */
-     /* Make the buttons appear below each other */
-    
-  }
-  
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
-  .screen-Background {
-    height: 100vh;
-    background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-  }
-
-  .screen-Container {
-    width: 30%;
-    height: 100%;
-    margin: 0 auto;
-    border-radius: 10px;
-    background-color: white;
-    padding: 15px;
-  }
-  .btn-Screen{
-    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-    width: 100%;
-    margin: 10px 0;
-    height: 30px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    color: white;
+.btn-group {
+  display: flex; /* Align buttons in a row */
+  justify-content: space-between; /* Space between buttons */
+  gap: 10px; /* Consistent spacing */
+  width: 100%; /* Take full width of the container */
 }
 
+.btn-group button {
+  background-color: #6344A6; /* Solid color */
+  padding: 12px 20px; /* Comfortable padding */
+  font-size: 16px; /* Modern text size */
+  font-weight: bold;
+  border-radius: 8px; /* Slightly rounded corners */
+  border: none;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Depth with shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: calc(50% - 5px); /* Adjust button width for spacing */
+}
+
+.btn-group button:hover {
+  background-color: darken(#6344A6, 10%);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-group button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
+}
+
+.btn-group button:active {
+  background-color: lighten(#6344A6, 10%);
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+/* Centering image or other content */
+.center {
+  display: block;
+  margin: 20px auto;
+  max-width: 150px;
+  height: auto;
+}
+  .screen-Background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+  }
+
+  /* Container styling similar to Login page */
+.screen-Container {
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Button styling updated to match global styles */
+.btn-Screen {
+  background-color: #6344A6;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-Screen:hover {
+  background-color: darken(#6344A6, 10%);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-Screen:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
+}
+
+.btn-Screen:active {
+  background-color: lighten(#6344A6, 10%);
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Content layout */
 .screen-Content {
-  padding: 15px;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
 }

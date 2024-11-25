@@ -16,15 +16,15 @@ $dark-color: #364659;
   height: 100vh;
   background: #6344A6;
 
-  // Left side for visuals or branding (optional)
+  /* Left section with purple background and centered logo */
   .visual-section {
-    flex: 1;
+    flex: 1; /* Takes up half the viewport */
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #6344A6; /* Purple background */
     color: white;
-    font-size: 24px;
-    font-weight: bold;
+    text-align: center;
   }
 
   // Login form occupying half the viewport
@@ -45,11 +45,11 @@ $dark-color: #364659;
       flex-direction: column;
 
       .text-login {
-        text-align: center;
-        font-weight: 600;
         font-size: 24px;
-        color: $dark-color;
-        margin-bottom: 20px;
+        font-weight: 600;
+        margin-bottom: 20px; /* Add space below the main title */
+        text-align: center;
+        color: #364659; /* Dark text for readability */
       }
 
       .login-input {
@@ -83,31 +83,35 @@ $dark-color: #364659;
       }
 
       .btn-login {
-        background: #6344A6;
+        background-color: #6344A6; /* Solid color */
         width: 100%;
-        padding: 12px; // Increased padding for better clickability
-        font-size: 16px; // Larger text for modern design
+        margin-top: 10px;
+        margin-bottom: 20px; /* Add extra separation from adjacent elements */
+        padding: 14px 20px; /* Increased padding for a more natural feel */
+        font-size: 18px; /* Slightly larger text */
         font-weight: bold;
-        border-radius: 8px; // Subtle corner rounding
+        border-radius: 8px; /* Rounded corners */
         border: none;
         color: white;
         cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Simple drop shadow
-        transition: transform 0.2s ease, box-shadow 0.2s ease; // Smooth interaction effects
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       
         &:hover {
-          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); // Slightly stronger shadow on hover
-          transform: translateY(-2px); // Subtle "lift" effect
+          background-color: darken(#6344A6, 10%);
+          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+          transform: translateY(-2px);
         }
       
         &:focus {
           outline: none;
-          box-shadow: 0 0 0 3px rgba(34, 193, 195, 0.3); // Accessible focus ring
+          box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
         }
       
         &:active {
-          transform: translateY(0); // Reset lift on click
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle pressed effect
+          background-color: lighten(#6344A6, 10%);
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
       }
 
@@ -123,5 +127,84 @@ $dark-color: #364659;
         }
       }
     }
+  }
+}
+
+.cta-section {
+  text-align: center;
+  margin-top: 30px;
+
+  h2 {
+    font-size: 20px;
+    color: #364659;
+    margin-bottom: 15px;
+  }
+
+  .btn-cta {
+    background-color: #6344A6;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: darken(#6344A6, 10%);
+    }
+  }
+}
+
+.home-stats {
+  margin-top: 30px; /* Separate from the buttons above */
+  font-size: 14px;
+  color: #6344A6;
+  text-align: center;
+
+  p {
+    margin: 5px 0; /* Add space between each line of text */
+  }
+}
+
+.text-subtitle {
+  font-size: 16px;
+  margin-bottom: 30px; /* Create separation from buttons */
+  line-height: 1.5; /* Improve readability */
+  color: #364659;
+  text-align: center;
+}
+
+.button-header {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px; /* Add a small gap below headers */
+  color: #364659;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-content, .visual-section {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .visual-section, .login-container {
+    flex: 1 0 100%;
+  }
+
+  .btn-login {
+    font-size: 14px;
+    padding: 10px;
   }
 }
