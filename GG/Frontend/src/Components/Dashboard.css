@@ -1,66 +1,141 @@
-.leftpic {
-    display: block;
-    margin-left: 0;
-    margin-right: 0;
-    width: 50px;
-    height: 55px;
-    float: left;
-  }
-  .text{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    width: 30px;
-    height: 30px;
-    float: left;
+/* Container setup */
+.dashboard-container {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  height: 100vh;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+}
 
-  }
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: flex-start; /* Align items to the left */
+  width: 20%; /* Adjust the width of the sidebar */
+  height: 100vh; /* Full viewport height */
+  background-color: #f5f5f5; /* Sidebar background color */
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed; /* Ensure it stays in place */
+  left: 0; /* Stick to the left edge */
+  top: 0; /* Stick to the top edge */
+}
 
-  .left {
-    background:linear-gradient(135deg, rgb(19, 206, 209) 0%,rgb(165, 136, 74) 100%);
-  }
+/* Top section for dashboard information */
+.dashboard-info {
+  display: flex;
+  justify-content: space-between; /* Space between each item */
+  align-items: center; /* Align items vertically in the center */
+  width: 100vw; /* Matches the viewport width */
+  max-width: 100%; /* Prevents unintended shrinking */
+  padding: 10px 20px;
+  background-color: #f5f5f5; /* Light gray for separation */
+  border-bottom: 2px solid #e0e0e0;
+  font-size: 18px;
+  color: #364659; /* Dark text color for readability */
+  box-sizing: border-box; /* Include padding in the element’s dimensions */
+}
 
-  .leftOnline {
-    background:lightgreen;
-    display: flex;
-    margin-top: 20px;
-    flex-direction: row;
-    align-items: left;
-  
-  }
-  .leftOffline {
-    background:lightpink;
-    display: flex;
-    margin-top: 20px;
-    flex-direction: row;
-    align-items: left;
-  }
-  .btn-chat{
-    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-    width: 15%;
-    margin: 10px 0;
-    height: 35px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    color: white;
-    float: center;
-  }
-  
-  .btn-help{
-    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-    width: 35px;
-    margin: 10px 0;
-    height: 35px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    color: white;
-    float: right;
-  }
+/* Individual info items */
+.dashboard-info p {
+  margin: 0 10px; /* Add horizontal spacing between items */
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  flex-shrink: 0; /* Prevent items from shrinking */
+}
 
-  .frientlist{
-    height: 200px;
-    overflow-y:scroll
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 30px; /* More space between buttons */
+  flex-grow: 1;
+  padding: 40px; /* Increase padding around the grid */
+  margin-left: 20%; /* Account for the sidebar */
+  box-sizing: border-box;
+}
+
+.dashboard-button {
+  width: 100%; /* Full width of the grid cell */
+  height: 0; /* Reset height */
+  padding-top: 75%; /* Smaller proportional size for buttons */
+  position: relative;
+  background-color: #6344A6; /* Purple background */
+  color: white;
+  font-size: 16px; /* Smaller font size */
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex; /* Center content */
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Ensure text is centered */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-button:hover {
+  background-color: darken(#6344A6, 10%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-button:active {
+  background-color: lighten(#6344A6, 10%);
+  transform: translateY(0);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
+}
+
+.logout-button,
+.help-button {
+  margin-top: 10px;
+  width: 100%; /* Match sidebar width */
+  background-color: #6344A6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.logout-button:hover,
+.help-button:hover {
+  background-color: darken(#6344A6, 10%);
+}
+
+.logout-button:active,
+.help-button:active {
+  background-color: lighten(#6344A6, 10%);
+}

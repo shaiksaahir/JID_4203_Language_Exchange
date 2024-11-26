@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import React from "react";
-import './Registration.css'; 
-import './Dashboard.css'; 
+import './Dashboard.css';
+import "../Styles/global.scss"; 
 import profile from "../Styles/profilepic.jpg";
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { handleUserDashBoardApi } from '../Services/dashboardService';
 import { handleFindFriendsApi, handleCreateFriendsApi } from '../Services/findFriendsService';
 import { handleGetProfile, handleGetUser, handleMatch } from '../Services/userService';
@@ -176,10 +173,11 @@ function Dashboard()  {
   }
 
   return (
-    <div className="screen-Background">
-      <div className="screen-Container">
-        <div className="screen-Content">
+    <div className="dashboard-container">
+      <div className="dashboard-sidebar">
+        <div classname="dashboard-info">
           <h1>Dashboard</h1>
+<<<<<<< Updated upstream
           <img src={profile} alt="logo" className="center" />
           <h1>{FName} {LName}</h1>
           <h2>{email}</h2>
@@ -214,8 +212,33 @@ function Dashboard()  {
           {/*    <ListGroup.Item id="friend3" hidden variant="success" action href="#friend3">Friend 3</ListGroup.Item>*/}
           {/*  </ListGroup>*/}
           {/*</div>*/}
+=======
+            <img src={profile} alt="logo" className="center" />
+            <h2>{FName} {LName}</h2>
+            <h2>{email}</h2>
+            {/* Removed the display of Age, Gender, Hobby, and Profession */}
+>>>>>>> Stashed changes
         </div>
-        <Button className="btn-help" onClick={handleHelp}>?</Button>
+        <button className="logout-button" onClick={Logout}>Logout</button>
+        <button className="help-button" onClick={handleHelp}>?</button>
+      </div>
+      <div className="dashboard-grid">
+        <button className="dashboard-button" onClick={friendSearch}>Find Friend</button>
+        <button className="dashboard-button" onClick={() => navigate({
+              pathname: "/FriendsList",
+              search: createSearchParams({ id: id }).toString()
+            })}>
+            Friends List
+        </button>
+        <button className="dashboard-button" onClick={handleChat}>Chat</button>
+        <button className="dashboard-button" onClick={call}>Call</button>
+        <button className="dashboard-button" onClick={Translator}>Translator</button>
+        <button className="dashboard-button" onClick={() => navigate({
+              pathname: "/CreateProfile",
+              search: createSearchParams({ id: id }).toString()
+            })}>
+            Set Profile
+        </button>
       </div>
     </div>
   );
