@@ -69,22 +69,18 @@ function Login (){
           </div>
           <div className="login-container">
             <div className="login-content">
-              <div className="text-login">Login</div>
+              <div className="text-login"><h1>Login</h1></div>
               <div className="login-input">
-                <label className="user-text">Username:</label>
+                <label>Username:</label>
                 <input
-                  type="text"
-                  className="form-control"
                   placeholder="Enter your username"
                   value={username}
                   onChange={handleOnChangeUserInput}
                 />
               </div>
               <div className="login-input">
-                <label className="password-text">Password:</label>
+                <label>Password:</label>
                 <input
-                  type="password"
-                  className="form-control"
                   placeholder="Enter your password"
                   value={password}
                   onChange={handleOnChangePassword}

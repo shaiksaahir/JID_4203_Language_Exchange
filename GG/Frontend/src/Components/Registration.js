@@ -105,57 +105,60 @@ function Registration() {
   };
  
   return (
-    <div>
-    <div className="screen-Background">
-      <div className="screen-Container">
-        <div className="screen-Content">
-        <h1>User Registration</h1>
-        
-      {/* Calling to the methods */}
-      <div className="messages">
-        {errorMessage()}
+    <div className="login-background">
+      <div className="visual-section">
+              {/* Add optional branding or visuals here */}
+              Welcome Back!
       </div>
-      <form>
-        <div className="d-grid gap-2">
-        {/* Labels and inputs for form data */}
+      <div className="login-container">
+        <div className="login-content">
+          <div classname="text-login"><h1>Registration</h1></div>
+          <div>
+            {errorMessage()}
+          </div>
+          <form>
+            <div className="login-content">
+            {/* Labels and inputs for form data */}
 
-        <div className='form-group'>
+            <div>  {/*/First Name Input */}
+            <label className="button-header">First Name:</label>
+            <input 
+            placeholder ="Enter First Name.." 
+            onChange={handleFirstName}
+              value={firstName} type="text" />
+            </div>
 
-        <label className="label">First Name</label>
-        <input onChange={handleFirstName} className="input"
-          value={firstName} type="text" />
+            <div>
+            <label className="button-header">Last Name:</label>
+            <input 
+            placeholder ="Enter Last Name.." 
+            onChange={handleLastName}
+              value={lastName} type="text"/>
+            </div>
+
+            <div>
+            <label className="button-header">Email:</label>
+            <input
+            placeholder ="Enter Email.." 
+            onChange={handleEmail}
+              value={email} type="text"/>
+            </div>
+
+            <div>
+            <label className="button-header">Password:</label>
+            <input
+            placeholder ="Enter Password.." 
+            onChange={handlePassword}
+              value={password} type="text"/>
+            </div>
+
+            <button className="btn-login"  onClick={handleSubmit}>
+              Create Profile
+            </button>
+            </div>
+          </form>
         </div>
-
-        <div className='form-group'>
-        <label className="label">Last Name</label>
-        <input onChange={handleLastName} className="input"
-          value={lastName} type="text" />
-        </div>
-
-        <div className='form-group'>
-        <label className="label">Email</label>
-        <input
-        placeholder ="Enter Email.." 
-        onChange={handleEmail} className="input"
-          value={email} type="email" />
-        </div>
-
-        <div className='form-group'>
-        <label className="label">Password</label>
-        <input
-        placeholder ="Enter Password.." 
-        onChange={handlePassword} className="input"
-          value={password} type="password" />
-        </div>
-
-        <Button className="btn-Screen"  onClick={handleSubmit}>
-          Create Profile
-        </Button>
-        </div>
-      </form>
       </div>
-      </div>
-    </div>
     </div>
   );
     
