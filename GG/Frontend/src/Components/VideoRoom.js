@@ -51,17 +51,57 @@ export const VideoRoom = ({ room }) => {
     };
 
     const handleMute = async () => {
-        setMute((prevMute) => !prevMute);
-        if (localTracks[0]) {
-            await localTracks[0].setEnabled(!mute);
-        }
+        setMute((prevMute) => {
+            const newMute = !prevMute; // Toggle the mute state
+            if (localTracks[0]) {
+                if (newMute) {
+                    client.unpublish(localTracks[0]).catch((error) => {
+                        console.error("Error unpublishing audio track:", error);
+                    });
+                } else {
+                    client.publish(localTracks[0]).catch((error) => {
+                        console.error("Error publishing audio track:", error);
+                    });
+                }
+            }
+            return newMute; // Update the state
+        });
     };
-
+    
     const toggleHideVideo = async () => {
-        setHidden((prevHidden) => !prevHidden);
-        if (localTracks[1]) {
-            await localTracks[1].setEnabled(!hidden);
+        if (!localTracks[1]) {
+            console.error("Video track not initialized");
+            return;
         }
+    
+        const newHidden = !hidden;
+    
+        if (newHidden) {
+            // Stop publishing the video track (remove it for other users)
+            await client.unpublish(localTracks[1]).catch((error) => {
+                console.error("Error unpublishing video track:", error);
+            });
+    
+            // Remove this user from the `users` list
+            setUsers((prevUsers) => prevUsers.filter((user) => user.uid !== client.uid));
+        } else {
+            // Start publishing the video track (re-add it for other users)
+            await client.publish(localTracks[1]).catch((error) => {
+                console.error("Error publishing video track:", error);
+            });
+    
+            // Re-add this user to the `users` list
+            setUsers((prevUsers) => [
+                ...prevUsers,
+                {
+                    uid: client.uid,
+                    videoTrack: localTracks[1],
+                    audioTrack: localTracks[0],
+                },
+            ]);
+        }
+    
+        setHidden(newHidden); // Update the `hidden` state
     };
 
     const handleEndCall = () => {
@@ -84,6 +124,13 @@ export const VideoRoom = ({ room }) => {
     useEffect(() => {
         client.on('user-published', handleUserJoined);
         client.on('user-left', handleUserLeft);
+        client.on('user-unpublished', (user, mediaType) => {
+            if (mediaType === 'video') {
+                setUsers((prevUsers) =>
+                    prevUsers.filter((u) => u.uid !== user.uid)
+                );
+            }
+        });
 
         var roomChannel = CHANNEL;
         var roomToken = TOKEN;
@@ -142,11 +189,16 @@ export const VideoRoom = ({ room }) => {
 
     return (
         <div className="video-room-container">
+            {/* Video Grid */}
             <div className="video-grid">
-                {users.map((user) =>
-                    !hidden ? <VideoPlayer key={user.uid} user={user} /> : null
-                )}
-            </div>
+    {users.map((user) => (
+        <div key={user.uid} className="video-box">
+            <VideoPlayer user={user} />
+        </div>
+    ))}
+</div>
+    
+            {/* Controls */}
             <Button className="btn-mute" onClick={handleMute}>
                 {mute ? 'Unmute' : 'Mute'}
             </Button>
