@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Videocall.css';
+import './Postvideocall.css';
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { handleGetAllUsersApi } from '../Services/findFriendsService';
@@ -106,56 +106,57 @@ function PostVideocall() {
     };
   
     return (
-        <div className="videocall-container">
-            <div className="form-container">
-                <form className="videocall-form">
-                    <div className="form-group">
-                        <label>Leave comment for chat partner</label>
-                        <input
-                            placeholder="Enter Comment"
-                            onChange={(e) => setComment(e.target.value)}
-                            className="input"
-                            type="text"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Rank chat partner's proficiency in their target language</label>
-                        <Select 
-                            options={TargetLanguageProficiency} 
-                            onChange={(selectedOption) => setTargetLanguageProficiency(selectedOption.value)} 
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Rate chat partner's ability as a study partner</label>
-                        <div className="stars">
-                            {[1, 2, 3, 4, 5].map((num) => (
-                                <span
-                                    key={num}
-                                    onClick={() => setRating(num)}
-                                    className={`star ${rating >= num ? 'selected' : ''}`}
-                                >
-                                    &#9733;
-                                </span>
-                            ))}
+        <div className="videocall-Background">
+            <div className="videocall-container">
+                <h2 className="feedback-title">Please Provide your Feedback!</h2> {/* Add this title */}
+                <div className="form-container">
+                    <form className="videocall-form">
+                        <div className="form-group">
+                            <label>Leave comment for chat partner</label>
+                            <input
+                                placeholder="Enter Comment"
+                                onChange={(e) => setComment(e.target.value)}
+                                className="input"
+                                type="text"
+                            />
                         </div>
-                        <p className="rating-output">Rating is: {rating}/5</p>
-                    </div>
-                </form>
-            </div>
 
-            <div className="buttons-container">
-                <Button className="btn-help" onClick={handleBack}>Back</Button>
+                        <div className="form-group">
+                            <label>Rank chat partner's proficiency in their target language</label>
+                            <Select 
+                                options={TargetLanguageProficiency} 
+                                onChange={(selectedOption) => setTargetLanguageProficiency(selectedOption.value)} 
+                            />
+                        </div>
 
-                <Button className="btn-submit" style={{ marginTop: '20px' }} onClick={handleSubmit}>
-                    Submit
-                </Button> 
+                        <div className="form-group">
+                            <label>Rate chat partner's ability as a study partner</label>
+                            <div className="stars">
+                                {[1, 2, 3, 4, 5].map((num) => (
+                                    <span
+                                        key={num}
+                                        onClick={() => setRating(num)}
+                                        className={`star ${rating >= num ? 'selected' : ''}`}
+                                    >
+                                        &#9733;
+                                    </span>
+                                ))}
+                            </div>
+                            <p className="rating-output">Rating is: {rating}/5</p>
+                        </div>
+                    </form>
+                </div>
+
+                <div className="buttons-container">
+                    <Button className="btn-back" onClick={handleBack}>Back</Button>
+                    <Button className="btn-submit" onClick={handleSubmit}>
+                        Submit
+                    </Button>
+                    <Button className="btn-add-friend" onClick={handleAddFriend}>Add Friend</Button>
+                </div>
             </div>
-   
-            <Button className="btn-add-friend" onClick={handleAddFriend}>Add Friend</Button>
         </div>
-    );
+    );    
 }
 
 export default PostVideocall;
