@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
-import React from "react";
-import './Registration.css'; 
-import './Dashboard.css'; 
+import React from "react"; 
+import './Dashboard.css';
 import profile from "../Styles/profilepic.jpg";
 import { createSearchParams, useSearchParams, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { handleUserDashBoardApi } from '../Services/dashboardService';
 import { handleFindFriendsApi, handleCreateFriendsApi } from '../Services/findFriendsService';
 import { handleGetProfile, handleGetUser, handleMatch } from '../Services/userService';
@@ -184,54 +179,44 @@ function Dashboard()  {
       <div className='left'>
         <img src={profile} alt="DP" className="leftpic" />
         <text className='text'>{name[i]}</text>
-        <Button className="btn-help" onClick={createVideoCall}>📞</Button>
+        <button onClick={createVideoCall}>📞</button>
       </div>
     );
   }
 
   return (
-    <div className="screen-Background">
-      <div className="screen-Container">
-        <div className="screen-Content">
-          <h1>Dashboard</h1>
-          <img src={profile} alt="logo" className="center" />
-          <h1>{FName} {LName}</h1>
-          <h2>{email}</h2>
-          {/* Removed the display of Age, Gender, Hobby, and Profession */}
-          
-          <Button className="btn-Screen" onClick={friendSearch}>Find Friend</Button>
-          <Button className="btn-Screen" onClick={() => navigate({
-                pathname: "/FriendsList",
-                search: createSearchParams({ id: id }).toString()
-              })}>
-              Friends List
-          </Button>
-          <Button className="btn-Screen" onClick={handleChat}>Chat</Button>
-          <Button className="btn-Screen" onClick={call}>Call</Button>
-          <Button className="btn-Screen" onClick={Translator}>Translator</Button>
-          <Button className="btn-Screen" onClick={goToUserReport}>User Report</Button>
-          <Button className="btn-Screen" onClick={() => navigate({
+    <div className="dashboard-container">
+
+      <div className="dashboard-left">
+        <h1>Dashboard</h1>
+        <img src={profile} alt="logo" className="center" />
+        <h1>{FName} {LName}</h1>
+        <h2>{email}</h2>
+        <div classname="dashboard-left-buttons">
+          <button className="btn-questions" onClick={handleHelp}>?</button>
+          <button className="btn-logout" onClick={Logout}>Logout</button>
+        </div>
+      </div>
+
+      <div className="dashboard-right">
+      <button className="btn-action" onClick={() => navigate({
                 pathname: "/CreateProfile",
                 search: createSearchParams({ id: id }).toString()
               })}>
               Set Profile
-          </Button>
-          <Button className="btn-Screen" onClick={Logout}>
-            Logout
-          </Button>
-          {/*<h2>Friends</h2>*/}
-          {/*<div className="friendlist">*/}
-          {/*  {array}*/}
-          {/*  <ListGroup id="friendlist">*/}
-          {/*    <ListGroup.Item id="friendheader" hidden variant="success">Add a match below:</ListGroup.Item>*/}
-          {/*    <ListGroup.Item id="friend1" onClick={addFriend1} hidden variant="success" action>Friend 1</ListGroup.Item>*/}
-          {/*    <ListGroup.Item id="friend2" hidden variant="success" action href="#friend2">Friend 2</ListGroup.Item>*/}
-          {/*    <ListGroup.Item id="friend3" hidden variant="success" action href="#friend3">Friend 3</ListGroup.Item>*/}
-          {/*  </ListGroup>*/}
-          {/*</div>*/}
-        </div>
-        <Button className="btn-help" onClick={handleHelp}>?</Button>
+          </button>
+        <button className="btn-action" onClick={friendSearch}>Find Friend</button>
+          <button className="btn-action" onClick={() => navigate({
+                pathname: "/FriendsList",
+                search: createSearchParams({ id: id }).toString()
+              })}>
+              Friends List
+          </button>
+          <button className="btn-action" onClick={call}>Call</button>
+          <button className="btn-action" onClick={Translator}>Translator</button>
+          <button className="btn-action" onClick={goToUserReport}>User Report</button>
       </div>
+
     </div>
   );
 }
