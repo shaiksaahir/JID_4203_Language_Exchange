@@ -6,7 +6,6 @@ import { handleGetAllUsersApi } from '../Services/findFriendsService';
 import Select from "react-select";
 import { handleUpdateRating, handleUpdateProficiency, handleAddComment } from '../Services/userService';
 
-
 function PostVideocall() {
     const navigate = useNavigate();
     const [search] = useSearchParams();
@@ -108,7 +107,7 @@ function PostVideocall() {
     return (
         <div className="videocall-Background">
             <div className="videocall-container">
-                <h2 className="feedback-title">Please Provide your Feedback!</h2> {/* Add this title */}
+                <h2 className="feedback-title">Please Provide your Feedback!</h2>
                 <div className="form-container">
                     <form className="videocall-form">
                         <div className="form-group">
@@ -124,6 +123,8 @@ function PostVideocall() {
                         <div className="form-group">
                             <label>Rank chat partner's proficiency in their target language</label>
                             <Select 
+                                className="form-group"
+                                classNamePrefix="react-select"
                                 options={TargetLanguageProficiency} 
                                 onChange={(selectedOption) => setTargetLanguageProficiency(selectedOption.value)} 
                             />
