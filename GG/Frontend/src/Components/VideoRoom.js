@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"; // Added useSearchParams
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYBBZtHBJlGlLn0j3x80P/ylMucl+alOUfcuNQNu8aRNePv2rwGBqkGhumGZgaZaUaGFikmqclGpiYJCSYpmcZmCeappi4p/pld4QyMiwUG0lKyMDBIL43Ay5iSXJGbmJ2Zl56QwMAM5aI/I=';
+const TOKEN = '007eJxTYNAWDBERru4St+eKNtiq42z9nynQpfKaCPexXo47BXPL3igwmBokmhumGViaJSVamJikGielmhgYpKRYJqcZmKeapph0ffBJbwhkZHjDasrCyACBID43Q25iSXJGbmJ2Zl46AwMAuSseaw==';
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
@@ -137,16 +137,16 @@ export const VideoRoom = ({ room }) => {
 
         if (room === '1') {
             roomChannel = 'Room A';
-            roomToken = '007eJxTYBDKWfVs3lc3/SuS8Y9das/OFZZa9T7mYfma5a/L7wo+O8qvwGBqkGhumGZgaZaUaGFikmqclGpiYJCSYpmcZmCeappikp/pld4QyMiw791LVkYGCATx2RiC8vNzFRwZGAAiKCJD';
+            roomToken = '007eJxTYNjg/cbktOOB7d7CfnO9PEo/MwV+7Xjypajt7WJ9xhidrQsVGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMln/1SW8IZGQw71dkYWSAQBCfjSEoPz9XwZGBAQC6JiAy';
         } else if (room === '2') {
             roomChannel = 'Room 2';
-            roomToken = '007eJxTYGhcsSHzxFslc5l9KZFGEc1syV0z48VNzmtWv3EuXB7gVq3AYGqQaG6YZmBplpRoYWKSapyUamJgkJJimZxmYJ5qmmLSkumV3hDIyLCH4TQLIwMEgvhsDEH5+bkKRgwMAANEHeg=';
+            roomToken = '007eJxTYODd1C2nx9Ef9S9rgv7k39pTfnk6bjz7hI312utFXivzpycrMJgaJJobphlYmiUlWpiYpBonpZoYGKSkWCanGZinmqaYrPzgk94QyMiwIuEKIyMDBIL4bAxB+fm5CkYMDACXiCCe';
         } else if (room === '3') {
             roomChannel = 'Room 3';
-            roomToken = '007eJxTYFDsv+LMF/97evdf79a6xBdcBtP1jrqG5ZoIP8wJeeXIdkOBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMVkfqZXekMgI4OC/BcWRgYIBPHZGILy83MVjBkYADL7Hl0=';
+            roomToken = '007eJxTYPh6eW3PfVZTDxO2VYe0Tr/m+n1P9H0NR2Ch9Q3n0xMroyoVGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNM9n/1SW8IZGS4yj+RiZEBAkF8Noag/PxcBWMGBgDPBiC8';
         } else if (room === '4') {
             roomChannel = 'Room 4';
-            roomToken = '007eJxTYAiavsWaydM28vXUJOO8iB/ujmYxn0tOb913Vrg0JU7JoVKBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMXkYKZXekMgI8OU6T2sjAwQCOKzMQTl5+cqmDAwAAAbfx6g';
+            roomToken = '007eJxTYNBU4fq27nfw40qpn69iBboei2VznGVfb8LNk9WlLP1DnkWBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMXkylef9IZARoZw7/dMjAwQCOKzMQTl5+cqmDAwAADqOh37';
         }
 
         console.log("room:", room);
