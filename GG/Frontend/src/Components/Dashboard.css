@@ -1,66 +1,104 @@
-.leftpic {
-    display: block;
-    margin-left: 0;
-    margin-right: 0;
-    width: 50px;
-    height: 55px;
-    float: left;
-  }
-  .text{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    width: 30px;
-    height: 30px;
-    float: left;
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background-color: white;
+}
 
+.dashboard-left {
+  width: 20%;
+  background-color: #364659; /* Replace with $dark-color from Login.scss */
+  color: white; /* Ensure text is readable on the dark background */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-left-buttons {
+  width: 100%; /* Ensure the button group spans the container */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between the buttons */
+  align-items: center;
+}
+
+.dashboard-right {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 buttons per row */
+  grid-gap: 60px; /* Increased spacing between buttons */
+  width: 80%;
+  margin: auto;
+  justify-items: center; /* Center grid items */
+  align-items: center;
+}
+
+.user-info {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.btn-questions, .btn-logout {
+  background-color: #6344A6; /* Solid color */
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 20px; /* Add extra separation from adjacent elements */
+        padding: 14px 20px; /* Increased padding for a more natural feel */
+        font-size: 18px; /* Slightly larger text */
+        font-weight: bold;
+        border-radius: 8px; /* Rounded corners */
+        border: none;
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      
+        &:hover {
+          background-color: darken(#6344A6, 10%);
+          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+          transform: translateY(-2px);
+        }
+      
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
+        }
+      
+        &:active {
+          background-color: lighten(#6344A6, 10%);
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+}
+
+.btn-action {
+  width: 200px; /* Square button dimensions */
+  height: 200px;
+  border-radius: 15px; /* Slightly rounded corners */
+  border: none;
+  color: white;
+  background-color: #6344A6; /* Solid purple */
+  font-size: 18px; /* Adjust text size */
+  text-align: center;
+  cursor: pointer;
+  display: flex; /* Center text inside the button */
+  align-items: center; /* Vertical alignment */
+  justify-content: center; /* Horizontal alignment */
+
+  &:hover {
+    background-color: darken(#6344A6, 10%);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
   }
 
-  .left {
-    background:linear-gradient(135deg, rgb(19, 206, 209) 0%,rgb(165, 136, 74) 100%);
-  }
-
-  .leftOnline {
-    background:lightgreen;
-    display: flex;
-    margin-top: 20px;
-    flex-direction: row;
-    align-items: left;
-  
-  }
-  .leftOffline {
-    background:lightpink;
-    display: flex;
-    margin-top: 20px;
-    flex-direction: row;
-    align-items: left;
-  }
-  .btn-chat{
-    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-    width: 15%;
-    margin: 10px 0;
-    height: 35px;
-    border-radius: 15px;
+  &:focus {
     outline: none;
-    border: none;
-    color: white;
-    float: center;
-  }
-  
-  .btn-help{
-    background:linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
-    width: 35px;
-    margin: 10px 0;
-    height: 35px;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    color: white;
-    float: right;
+    box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
   }
 
-  .frientlist{
-    height: 200px;
-    overflow-y:scroll
+  &:active {
+    background-color: lighten(#6344A6, 10%);
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+}
