@@ -6,12 +6,18 @@
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  background: linear-gradient(
-    135deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  );
+  background: #6344A6;
   min-height: 100vh;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.filter-sidebar, .friend-search {
+  flex: 1; /* Allow these to stretch equally */
+  animation: fadeIn 0.5s ease-in;
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -56,7 +62,7 @@
 }
 
 .user-table th {
-  background-color: #22c0c3;
+  background-color: #6344A6;
   color: #fff;
   font-weight: bold;
 }
@@ -86,6 +92,9 @@
 
 /* Sidebar filter adjustments */
 .filter-sidebar {
+  display: flex; /* Ensure flex or grid layout is active */
+  flex-direction: column; /* Stack items vertically */
+  gap: 40px; /* Increase spacing between items */
   width: 300px;
   padding: 20px;
   background-color: #f4f6f8;
@@ -98,8 +107,8 @@
 }
 
 .filter-sidebar h3 {
-  font-size: 1.1rem;
-  color: #333;
+  font-size: 1.6rem;
+  color: #364659;
   margin-bottom: 10px;
 }
 
@@ -115,8 +124,9 @@
 
 .filter-sidebar button {
   width: 100%;
+  height: 100%;
   padding: 10px;
-  background-color: #22c0c3;
+  background-color: #6344A6;
   color: white;
   border: none;
   border-radius: 5px;
@@ -126,7 +136,9 @@
 }
 
 .filter-sidebar button:hover {
-  background-color: #1eb0b3;
+  background-color: darken(#6344A6, 10%);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Compatibility button styling */
@@ -136,7 +148,7 @@
   display: block;
   border-radius: 5px;
   border: none;
-  background-color: #339b31;
+  background-color: #6344A6;
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -145,7 +157,9 @@
 }
 
 .calculate-score-btn:hover {
-  background-color: #2a7a28;
+  background-color: darken(#6344A6, 10%);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Recent Chat Partners List */
@@ -163,7 +177,7 @@
 }
 
 .user-button {
-  background-color: #22c0c3;
+  background-color: #6344A6;
   color: white;
   border: none;
   border-radius: 5px;
@@ -216,17 +230,33 @@
 /* Back Button Styling */
 .btn-back {
   margin-top: 20px;
+  margin-left: 25%;
   padding: 10px 20px;
   background-color: #555;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  max-width: 50%;
+  min-height: 100%;
   transition: background-color 0.3s ease;
 }
 
 .btn-back:hover {
-  background-color: #333;
+  background-color: darken(#6344A6, 10%);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive adjustments */

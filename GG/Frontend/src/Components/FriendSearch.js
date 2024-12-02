@@ -11,7 +11,6 @@ import {
   useSearchParams,
   useNavigate,
 } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import { getUserData } from '../Utils/userData'; // Import to retrieve stored current user data
 
 const FriendSearch = () => {
@@ -267,6 +266,9 @@ const FriendSearch = () => {
             Filter by Preference
           </button>
         </div>
+        <button className="btn-back" onClick={handleBack}>
+          Back
+        </button>
       </div>
 
       <div className="friend-search">
@@ -322,10 +324,6 @@ const FriendSearch = () => {
           </table>
         </div>
       </div>
-
-      <Button className="btn-back" onClick={handleBack}>
-        Back
-      </Button>
     </div>
   );
 };
