@@ -104,4 +104,4 @@ To create the correct schema, simply select "Create a new schema in the selected
 # Tutorial Resources: 
 * https://sequelize.org/docs/v6/other-topics/migrations/ 
 * https://reactjs.org/tutorial/tutorial.html 
-* https://www.bezkoder.com/react-node-express-mysql/ 
+* https://www.bezkoder.com/react-node-express-mysql/. 
