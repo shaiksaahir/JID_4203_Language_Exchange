@@ -34,7 +34,7 @@ const FriendsList = () => {
 
   return (
     <div className="screen-Background">
-      <div className="friends-list-container">
+      <div className="screen-content">
         <h2>Your Friends List</h2>
         <p className="instructions">Please Click on a User to Remove them from Friends List</p>
         {friends.length === 0 ? (
@@ -56,9 +56,9 @@ const FriendsList = () => {
       </div>
       {/* Back Button */}
       <div className="button-container">
-        <Button className="btn-back" onClick={handleBack}>
+        <button className="btn-back-02" onClick={handleBack}>
           Back
-        </Button>
+        </button>
       </div>
     </div>
   );

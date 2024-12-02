@@ -132,6 +132,7 @@ iframe
     padding: 15px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 15px rgba(99, 68, 166, 0.5); /* Box shadow with specified color */
 }
 
 .card {

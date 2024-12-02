@@ -61,9 +61,6 @@ function Videocall() {
                     <h1>Video Call</h1>
                     {!joined && (
                         <>
-                            <Button className='btn-join' onClick={handleJoinRoom}>
-                                Join Room
-                            </Button>
                             <div className="screen-Content">
                                 <h5>Enter Room Number 1-4</h5>
                                 <input
@@ -71,11 +68,15 @@ function Videocall() {
                                     onChange={handleRoom} className="input"
                                     type="text" />
                             </div>
+                            <button className='btn-back-02' onClick={handleJoinRoom}>
+                                Join Room
+                            </button>
+                            <button className="btn-back-02" onClick={handleBack} >back</button>
                         </>
                     )}
                     {joined && <VideoRoom room={room} />}
                 </div>
-                <Button className="btn-help" onClick={handleBack} >back</Button>
+                
             </div>
         </div>
     );

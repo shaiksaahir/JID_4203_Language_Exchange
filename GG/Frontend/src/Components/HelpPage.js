@@ -108,7 +108,7 @@ const toggle = index => {
             
         </AccordionSection>
         </div>
-        <Button className="btn-help" onClick={handleBack} >back</Button>
+        <button className="btn-help-02" onClick={handleBack} >back</button>
       </div>
       </div>
       
