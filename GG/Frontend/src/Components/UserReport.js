@@ -105,8 +105,10 @@ function UserReport() {
                     
                     {/* Buttons */}
                     <div className="button-container">
-                        <Button className="btn-fetch-user" onClick={fetchUserProficiencyAndRating}>Fetch User</Button>
-                        <Button className="btn-back" onClick={handleBack}>Back</Button>
+                        <button className="btn-back" onClick={handleBack}>Back</button>
+                        <button className="btn-fetch" onClick={handleFetchUser}>
+                            Fetch User
+                        </button>
                     </div>
                 </div>
             </div>
