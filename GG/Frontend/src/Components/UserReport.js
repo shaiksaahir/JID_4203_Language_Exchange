@@ -124,10 +124,10 @@ function UserReport() {
 
                     {/* Buttons */}
                     <div className="button-container">
-                        <Button className="btn-back" onClick={handleBack}>Back</Button>
-                        <Button className="btn-fetch-user" onClick={handleFetchUser}>
+                        <button className="btn-back" onClick={handleBack}>Back</button>
+                        <button className="btn-fetch" onClick={handleFetchUser}>
                             Fetch User
-                        </Button>
+                        </button>
                     </div>
                 </div>
             </div>
