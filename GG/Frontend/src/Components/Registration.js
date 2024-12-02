@@ -46,6 +46,12 @@ function Registration() {
     setPassword(e.target.value);
     setSubmitted(false);
   };
+
+  const handleBack = () => {
+    navigate({
+      pathname: "/login", // Navigate to Registration page
+    });
+  };
  
   // Handling the form submission
   const handleSubmit = async(e) => {
@@ -155,6 +161,19 @@ function Registration() {
             <button className="btn-login"  onClick={handleSubmit}>
               Create Profile
             </button>
+            <div
+                className="login"
+                style={{
+                    color: "black",
+                    cursor: "pointer",
+                    fontWeight: "normal",
+                    transition: "color 0.3s ease",
+                }}
+                onClick={handleBack}
+                onMouseEnter={(e) => (e.target.style.color = "#6344A6")}
+                onMouseLeave={(e) => (e.target.style.color = "black")}
+                >Already have an account? Login!
+             </div>
             </div>
           </form>
         </div>
