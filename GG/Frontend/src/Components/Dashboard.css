@@ -19,18 +19,19 @@
   width: 100%; /* Ensure the button group spans the container */
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Space between the buttons */
+  gap: 8px; /* Space between the buttons */
   align-items: center;
 }
 
 .dashboard-right {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 buttons per row */
-  grid-gap: 60px; /* Increased spacing between buttons */
+  grid-gap: 25px; /* Increased spacing between buttons */
   width: 80%;
   margin: auto;
   justify-items: center; /* Center grid items */
   align-items: center;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .user-info {
@@ -39,46 +40,45 @@
 }
 
 .btn-questions, .btn-logout {
-  background-color: #6344A6; /* Solid color */
-        width: 100%;
-        margin-top: 10px;
-        margin-bottom: 20px; /* Add extra separation from adjacent elements */
-        padding: 14px 20px; /* Increased padding for a more natural feel */
-        font-size: 18px; /* Slightly larger text */
-        font-weight: bold;
-        border-radius: 8px; /* Rounded corners */
-        border: none;
-        color: white;
-        cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%; /* Adjust width for alignment */
+  font-size: 16px;
+  margin: 8px;;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  background-color: #6344A6;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
       
-        &:hover {
-          background-color: darken(#6344A6, 10%);
-          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-          transform: translateY(-2px);
-        }
-      
-        &:focus {
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
-        }
-      
-        &:active {
-          background-color: lighten(#6344A6, 10%);
-          transform: translateY(0);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
+  }
+
+  &:active {
+    background-color: lighten(#6344A6, 10%);
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.btn-questions:hover,
+.btn-logout:hover {
+  background-color: #7a56c8;
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-action {
-  width: 200px; /* Square button dimensions */
-  height: 200px;
+  width: 350px; /* Square button dimensions */
+  height: 350px;
   border-radius: 15px; /* Slightly rounded corners */
   border: none;
   color: white;
   background-color: #6344A6; /* Solid purple */
-  font-size: 18px; /* Adjust text size */
+  font-size: 40px; /* Adjust text size */
   text-align: center;
   cursor: pointer;
   display: flex; /* Center text inside the button */
@@ -100,5 +100,39 @@
     background-color: lighten(#6344A6, 10%);
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .dashboard-left,
+  .dashboard-right {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .dashboard-right {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+
+  .btn-action {
+    width: 150px;
+    height: 150px;
+    font-size: 20px;
   }
 }

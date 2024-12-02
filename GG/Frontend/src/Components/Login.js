@@ -25,6 +25,12 @@ function Login (){
        setSubmitted(false);
     }
 
+    const handleBack = () => {
+        navigate({
+          pathname: "/register", // Navigate to Registration page
+        });
+      };
+
 //    const [search] = useSearchParams();
 //    const id = search.get("id");
 //    console.log(id)
@@ -90,7 +96,20 @@ function Login (){
               <button className="btn-login" onClick={handleOnClick}>
                 Login
               </button>
-              <div className="forgot-password">Forgot your password?</div>
+              <div
+                className="register"
+                style={{
+                    color: "black",
+                    cursor: "pointer",
+                    fontWeight: "normal",
+                    transition: "color 0.3s ease",
+                }}
+                onClick={handleBack}
+                onMouseEnter={(e) => (e.target.style.color = "#6344A6")}
+                onMouseLeave={(e) => (e.target.style.color = "black")}
+                >
+                Don't have an account? Register!
+              </div>
             </div>
           </div>
         </div>
