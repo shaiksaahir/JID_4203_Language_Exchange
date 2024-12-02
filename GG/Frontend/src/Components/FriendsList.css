@@ -19,6 +19,7 @@
     flex-direction: column;
     justify-content: flex-start; /* Align items at the top */
     overflow: hidden; /* Prevent overflow */
+    box-shadow: 0 4px 15px rgba(99, 68, 166, 0.5); /* Box shadow with specified color */
 }
 
 .friends-list-container h2 {
