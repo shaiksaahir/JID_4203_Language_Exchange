@@ -1,53 +1,116 @@
+.screen-Background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4; /* Neutral grey background */
+}
+
 .friends-list-container {
-    max-width: 500px;
+    width: 450px; /* Fixed width */
+    height: 500px; /* Fixed height */
     margin: 0 auto;
     padding: 20px;
-    background-color: #f7f9fc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* White container background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items at the top */
+    overflow: hidden; /* Prevent overflow */
 }
 
 .friends-list-container h2 {
     font-size: 24px;
     color: #333;
+    margin-bottom: 10px;
+}
+
+.instructions {
+    font-size: 14px;
+    color: #555; /* Muted instructional text color */
     margin-bottom: 20px;
 }
 
 .no-friends-message {
     font-size: 16px;
     color: #777;
+    margin-top: 20px;
 }
 
 .friends-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping of friend chips */
+    gap: 10px; /* Space between chips */
+    justify-content: center; /* Center-align the grid */
+    align-content: flex-start; /* Align content at the top */
+    height: calc(100% - 100px); /* Adjust height to fit within container */
+    overflow: auto; /* Add scrolling if necessary */
 }
 
 .friend-chip {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     background-color: #e0f7fa;
     color: #00796b;
-    border-radius: 20px;
-    padding: 10px 15px;
-    font-size: 16px;
+    border-radius: 15px; /* Rounded corners for chips */
+    padding: 5px 10px; /* Adjust padding for a clean look */
+    font-size: 14px; /* Font size for usernames */
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Prevent wrapping of names */
+    max-width: 100%; /* Ensure the chip doesn’t exceed container width */
 }
 
 .friend-chip:hover {
     background-color: #b2dfdb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .remove-icon {
     margin-left: 8px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     color: #ff5252;
     cursor: pointer;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-back {
+    background-color: #6344A6; /* Purple background for consistency */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back:hover {
+    background-color: #502e8c; /* Darker purple on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-back:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 68, 166, 0.3);
+}
+
+.btn-back:active {
+    background-color: #7a5cb2; /* Lighter purple on click */
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

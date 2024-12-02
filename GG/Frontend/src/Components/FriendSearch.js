@@ -323,40 +323,6 @@ const FriendSearch = () => {
             </tbody>
           </table>
         </div>
-
-        <h2>Recent Chat Partners</h2>
-        <ul className="recent-chat-list">
-          {recentChatPartners.length === 0 ? (
-            <li>No recent chat partners.</li>
-          ) : (
-            recentChatPartners.map((user, index) => (
-              <li key={index} className="recent-chat-partner">
-                <button
-                  className="user-button"
-                  onClick={() => handleUserClick(user)}
-                >
-                  {user.firstName} {user.lastName}
-                </button>
-                <button
-                  className="remove-button"
-                  onClick={() => handleRemovePartner(user.id)}
-                >
-                  X
-                </button>
-              </li>
-            ))
-          )}
-        </ul>
-
-        {selectedUserProfile && (
-          <div className="compatibility-score">
-            <h3>
-              Compatibility Score with {selectedUserProfile.firstName}{' '}
-              {selectedUserProfile.lastName}:
-            </h3>
-            <p>{compatibilityScore}</p>
-          </div>
-        )}
       </div>
     </div>
   );

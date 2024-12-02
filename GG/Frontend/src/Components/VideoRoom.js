@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"; // Added useSearchParams
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYHAvnsHy/o3/iukFLVElUaIv22+mXGhNmSr95+C2cjusMUGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMJr+2TW8IZGSYxLaXmZEBAkF8bobcxJLkjNzE7My8dAYGANE0JDs=';
+const TOKEN = '007eJxTYNAWDBERru4St+eKNtiq42z9nynQpfKaCPexXo47BXPL3igwmBokmhumGViaJSVamJikGielmhgYpKRYJqcZmKeapph0ffBJbwhkZHjDasrCyACBID43Q25iSXJGbmJ2Zl46AwMAuSseaw==';
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
@@ -51,17 +51,57 @@ export const VideoRoom = ({ room }) => {
     };
 
     const handleMute = async () => {
-        setMute((prevMute) => !prevMute);
-        if (localTracks[0]) {
-            await localTracks[0].setEnabled(!mute);
-        }
+        setMute((prevMute) => {
+            const newMute = !prevMute; // Toggle the mute state
+            if (localTracks[0]) {
+                if (newMute) {
+                    client.unpublish(localTracks[0]).catch((error) => {
+                        console.error("Error unpublishing audio track:", error);
+                    });
+                } else {
+                    client.publish(localTracks[0]).catch((error) => {
+                        console.error("Error publishing audio track:", error);
+                    });
+                }
+            }
+            return newMute; // Update the state
+        });
     };
-
+    
     const toggleHideVideo = async () => {
-        setHidden((prevHidden) => !prevHidden);
-        if (localTracks[1]) {
-            await localTracks[1].setEnabled(!hidden);
+        if (!localTracks[1]) {
+            console.error("Video track not initialized");
+            return;
         }
+    
+        const newHidden = !hidden;
+    
+        if (newHidden) {
+            // Stop publishing the video track (remove it for other users)
+            await client.unpublish(localTracks[1]).catch((error) => {
+                console.error("Error unpublishing video track:", error);
+            });
+    
+            // Remove this user from the `users` list
+            setUsers((prevUsers) => prevUsers.filter((user) => user.uid !== client.uid));
+        } else {
+            // Start publishing the video track (re-add it for other users)
+            await client.publish(localTracks[1]).catch((error) => {
+                console.error("Error publishing video track:", error);
+            });
+    
+            // Re-add this user to the `users` list
+            setUsers((prevUsers) => [
+                ...prevUsers,
+                {
+                    uid: client.uid,
+                    videoTrack: localTracks[1],
+                    audioTrack: localTracks[0],
+                },
+            ]);
+        }
+    
+        setHidden(newHidden); // Update the `hidden` state
     };
 
     const handleEndCall = () => {
@@ -84,22 +124,29 @@ export const VideoRoom = ({ room }) => {
     useEffect(() => {
         client.on('user-published', handleUserJoined);
         client.on('user-left', handleUserLeft);
+        client.on('user-unpublished', (user, mediaType) => {
+            if (mediaType === 'video') {
+                setUsers((prevUsers) =>
+                    prevUsers.filter((u) => u.uid !== user.uid)
+                );
+            }
+        });
 
         var roomChannel = CHANNEL;
         var roomToken = TOKEN;
 
         if (room === '1') {
             roomChannel = 'Room A';
-            roomToken = '007eJxTYKiZeue80dmVLBliOr/Na1o+ZTzRkeNmu/fsTI9voZxnmZQCg6lBorlhmoGlWVKihYlJqnFSqomBQUqKZXKagXmqaYqJNJtdekMgI8PfLcZMjAwQCOKzMQTl5+cqODIwAAA3Gh4z';
+            roomToken = '007eJxTYNjg/cbktOOB7d7CfnO9PEo/MwV+7Xjypajt7WJ9xhidrQsVGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMln/1SW8IZGQw71dkYWSAQBCfjSEoPz9XwZGBAQC6JiAy';
         } else if (room === '2') {
             roomChannel = 'Room 2';
-            roomToken = '007eJxTYJDd9TB4+51lIiIaFxZbP/E5EFThdOHUuejHIbsPrHyWEPtCgcHUINHcMM3A0iwp0cLEJNU4KdXEwCAlxTI5zcA81TTFxIHNLr0hkJGB0/cWCyMDBIL4bAxB+fm5CkYMDAAWJiDQ';
+            roomToken = '007eJxTYODd1C2nx9Ef9S9rgv7k39pTfnk6bjz7hI312utFXivzpycrMJgaJJobphlYmiUlWpiYpBonpZoYGKSkWCanGZinmqaYrPzgk94QyMiwIuEKIyMDBIL4bAxB+fm5CkYMDACXiCCe';
         } else if (room === '3') {
             roomChannel = 'Room 3';
-            roomToken = '007eJxTYLhym3nzEt5tZSJff1z2fP+t8kvgqfsp2xq27+RM5liloN2pwGBqkGhumGZgaZaUaGFikmqclGpiYJCSYpmcZmCeappiksdml94QyMhQqf2UkZEBAkF8Noag/PxcBWMGBgA2ryEV';
+            roomToken = '007eJxTYPh6eW3PfVZTDxO2VYe0Tr/m+n1P9H0NR2Ch9Q3n0xMroyoVGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNM9n/1SW8IZGS4yj+RiZEBAkF8Noag/PxcBWMGBgDPBiC8';
         } else if (room === '4') {
             roomChannel = 'Room 4';
-            roomToken = '007eJxTYHh+4/+FwDmd05dvdbvTx2e9Vfk/w9nXaZP4XL7pFhpuWtSvwGBqkGhumGZgaZaUaGFikmqclGpiYJCSYpmcZmCeappi0spml94QyMgwfd4DRkYGCATx2RiC8vNzFUwYGAA46CGD';
+            roomToken = '007eJxTYNBU4fq27nfw40qpn69iBboei2VznGVfb8LNk9WlLP1DnkWBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMXkylef9IZARoZw7/dMjAwQCOKzMQTl5+cqmDAwAADqOh37';
         }
 
         console.log("room:", room);
@@ -142,11 +189,16 @@ export const VideoRoom = ({ room }) => {
 
     return (
         <div className="video-room-container">
+            {/* Video Grid */}
             <div className="video-grid">
-                {users.map((user) =>
-                    !hidden ? <VideoPlayer key={user.uid} user={user} /> : null
-                )}
-            </div>
+    {users.map((user) => (
+        <div key={user.uid} className="video-box">
+            <VideoPlayer user={user} />
+        </div>
+    ))}
+</div>
+    
+            {/* Controls */}
             <Button className="btn-mute" onClick={handleMute}>
                 {mute ? 'Unmute' : 'Mute'}
             </Button>

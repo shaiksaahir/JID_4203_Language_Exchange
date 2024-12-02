@@ -12,8 +12,8 @@ function UserReport() {
 
     const [users, setUsers] = useState([]); // Store user options
     const [selectedUser, setSelectedUser] = useState(null); // Store selected user
-    const [userProficiency, setUserProficiency] = useState("N/A"); // Store user's proficiency
-    const [userRating, setUserRating] = useState("N/A"); // Store user's rating
+    const [userInfo, setUserInfo] = useState(null); // Store user info (rating, proficiency, comments)
+    const [hidden, setHidden] = useState(false); // Track if the user has "hide" visibility
 
     // Fetch users on component mount
     useEffect(() => {
@@ -22,10 +22,9 @@ function UserReport() {
                 const userData = await handleGetAllUsersApi(); // Fetch user data
                 const userOptions = userData.map((user) => ({
                     value: user.id,
-                    label: `${user.firstName} ${user.lastName}`,
+                    label: `${user.firstName} ${user.lastName}`, // Match display structure
                 }));
                 setUsers(userOptions);
-                console.log("User options for dropdown:", userOptions);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -40,35 +39,32 @@ function UserReport() {
         console.log("Selected user:", selectedOption);
     };
 
-    // Fetch proficiency and rating for the selected user
-    const fetchUserProficiencyAndRating = async () => {
-        if (!selectedUser) {
-            console.warn("No user selected.");
-            return;
-        }
+    // Fetch selected user's profile data when "Fetch User" button is clicked
+    const handleFetchUser = async () => {
+        if (selectedUser) {
+            try {
+                const response = await handleGetUserProfileApi(selectedUser.value);
+                console.log("Fetched user profile:", response.data);
 
-        console.log("Fetching proficiency and rating for user ID:", selectedUser.value);
+                const userProfile = response.data;
 
-        try {
-            const response = await handleGetUserProfileApi(selectedUser.value);
-            const userProfile = response.data;
-
-            console.log("Complete fetched data structure:", userProfile);
-
-            // Validate and set proficiency and rating if available
-            if (userProfile && userProfile.proficiency && userProfile.rating) {
-                setUserProficiency(userProfile.proficiency);
-                setUserRating(userProfile.rating);
-                console.log("Proficiency:", userProfile.proficiency, "Rating:", userProfile.rating);
-            } else {
-                console.warn("Proficiency or rating data is missing.");
-                setUserProficiency("N/A");
-                setUserRating("N/A");
+                // Check visibility and set state accordingly
+                if (userProfile.visibility === "Hide") {
+                    setHidden(true);
+                    setUserInfo(null); // Clear existing user info
+                } else {
+                    setHidden(false);
+                    setUserInfo({
+                        rating: userProfile.rating || "N/A",
+                        proficiency: userProfile.proficiency || "N/A",
+                        comments: userProfile.comments || "N/A",
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user profile:", error);
             }
-        } catch (error) {
-            console.error("Error fetching user's proficiency and rating:", error);
-            setUserProficiency("N/A");
-            setUserRating("N/A");
+        } else {
+            console.log("No user selected.");
         }
     };
 
@@ -96,13 +92,36 @@ function UserReport() {
                             className="user-report-dropdown"
                         />
                     </div>
-                    
-                    {/* Display proficiency and rating */}
-                    <div className="user-info">
-                        <p><strong>Proficiency:</strong> {userProficiency}</p>
-                        <p><strong>Rating:</strong> {userRating}</p>
-                    </div>
-                    
+
+                    {/* Conditional rendering based on visibility */}
+                    {hidden ? (
+                        <div className="data-display">
+                            <h3>User Information is Hidden</h3>
+                        </div>
+                    ) : (
+                        userInfo && (
+                            <>
+                                {/* Display rating */}
+                                <div className="data-display">
+                                    <h3>Rating:</h3>
+                                    <p>{userInfo.rating}</p>
+                                </div>
+
+                                {/* Display proficiency */}
+                                <div className="data-display">
+                                    <h3>Proficiency:</h3>
+                                    <p>{userInfo.proficiency}</p>
+                                </div>
+
+                                {/* Display comments */}
+                                <div className="data-display">
+                                    <h3>Comments:</h3>
+                                    <p>{userInfo.comments}</p>
+                                </div>
+                            </>
+                        )
+                    )}
+
                     {/* Buttons */}
                     <div className="button-container">
                         <button className="btn-back" onClick={handleBack}>Back</button>

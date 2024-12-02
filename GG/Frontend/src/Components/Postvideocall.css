@@ -1,10 +1,33 @@
+.videocall-Background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
 .videocall-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f7f9fc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* Narrowed the width */
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #6344A6; /* Purple background */
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    font-family: 'HK Sentiments', sans-serif;
+    color: white; /* Text color to ensure readability */
+    height: 620px; /* Increase this value to make the box taller */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out elements */
+}
+
+.feedback-title {
+    text-align: center; /* Center the title */
+    font-size: 24px; /* Larger font size */
+    font-weight: bold; /* Make it bold */
+    margin-bottom: 20px; /* Add spacing below the title */
+    color: rgb(217, 217, 217); /* White text to match the purple background */
+    font-family: 'DM Serif Display', serif; /* Stylish font */
 }
 
 .form-container {
@@ -12,68 +35,155 @@
 }
 
 .videocall-form .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .videocall-form label {
     font-weight: bold;
     display: block;
-    margin-bottom: 5px;
-    color: #333;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: white; /* Label color for contrast */
 }
 
 .input {
     width: 100%;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    margin-top: 5px;
-    font-size: 16px;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+    border-color: white; /* Focus border color */
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2);
+    outline: none;
 }
 
 .stars {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     font-size: 24px;
     cursor: pointer;
 }
 
 .star {
-    color: #ccc;
+    color: white;
+    transition: color 0.2s ease;
 }
 
 .star.selected {
-    color: #ffc107;
+    color: #ffc107; /* Highlighted stars */
 }
 
 .rating-output {
-    margin-top: 5px;
-    color: #555;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ddd; /* Muted text color */
+    text-align: center;
 }
 
 .buttons-container {
     display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    margin-top: 20px;
+    gap: 20px;
+    justify-content: center; /* Align buttons next to each other */
+    margin-top: 30px;
 }
 
-.user-selection {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.user-selection label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.user-dropdown {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+button {
+    background-color: #ffffff; /* White buttons for contrast */
+    color: #6344A6; /* Purple text */
+    padding: 12px 20px;
     font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+button:hover {
+    background-color: #f4f4f4; /* Slightly darker on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3); /* Focus ring */
+}
+
+button:active {
+    background-color: #e0e0e0; /* Slightly lighter on click */
+    transform: translateY(2px); /* Subtle press effect */
+}
+
+.btn-back, .btn-submit, .btn-add-friend {
+    background-color: #007bff; /* Blue for Back, Submit, and Add Friend buttons */
+    color: white;
+}
+
+.btn-back:hover,
+.btn-submit:hover,
+.btn-add-friend:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-back:active,
+.btn-submit:active,
+.btn-add-friend:active {
+    background-color: #004085; /* Even darker blue on click */
+}
+
+.select-container {
+    margin-bottom: 20px;
+}
+
+/* Adjust dropdown menu styles */
+.form-group .react-select__control {
+    background-color: white; /* White dropdown background */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 6px; /* Rounded corners */
+    box-shadow: none; /* Remove shadow */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color: black; /* Ensure default text color */
+}
+
+.form-group .react-select__control:hover {
+    border-color: #6344A6; /* Purple border on hover */
+}
+
+.form-group .react-select__menu {
+    background-color: white; /* White dropdown options background */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 6px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for options */
+}
+
+.form-group .react-select__option {
+    color: black; /* Black text for dropdown options */
+    background-color: white; /* Default background */
+    padding: 10px; /* Add some padding for better spacing */
+    transition: background-color 0.2s ease; /* Smooth transition for hover */
+}
+
+.form-group .react-select__option:hover {
+    background-color: #f0f0f0; /* Slightly grayer background on hover */
+    color: black; /* Ensure text remains black */
+}
+
+.form-group .react-select__option--is-focused {
+    background-color: #f0f0f0; /* Slightly grayer background for focused option */
+    color: black; /* Ensure focused text remains black */
+}
+
+.form-group .react-select__option--is-selected {
+    background-color: #f0f0f0; /* Slightly grayer background for selected option */
+    color: black; /* Ensure text remains black */
+}
+
+.form-group .react-select__single-value {
+    color: black; /* Black text for selected option in the input field */
 }
