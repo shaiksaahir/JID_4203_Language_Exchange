@@ -344,13 +344,13 @@ const [search] = useSearchParams();
         
 
         </div>
-        <Button className="btn-Screen"  onClick={handleSubmit}>
-          Create Profile
-        </Button>
+        <button className="btn-back-02"  onClick={handleSubmit}>
+          Update Profile
+        </button>
       </form>
       </div>
       <div>
-        <Button className="btn-help" onClick={handleBack}>Back</Button>
+        <button className="btn-back-02" onClick={handleBack}>Back</button>
       </div>
       </div>
     </div>

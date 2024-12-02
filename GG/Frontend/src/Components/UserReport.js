@@ -124,7 +124,7 @@ function UserReport() {
 
                     {/* Buttons */}
                     <div className="button-container">
-                        <button className="btn-back" onClick={handleBack}>Back</button>
+                        <button className="btn-back-02" onClick={handleBack}>Back</button>
                         <button className="btn-fetch" onClick={handleFetchUser}>
                             Fetch User
                         </button>

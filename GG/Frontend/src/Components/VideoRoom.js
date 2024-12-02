@@ -199,15 +199,15 @@ export const VideoRoom = ({ room }) => {
 </div>
     
             {/* Controls */}
-            <Button className="btn-mute" onClick={handleMute}>
+            <button className="btn-mute" onClick={handleMute} >
                 {mute ? 'Unmute' : 'Mute'}
-            </Button>
-            <Button className="btn-hide" onClick={toggleHideVideo}>
+            </button>
+            <button className="btn-hide" onClick={toggleHideVideo}>
                 {hidden ? 'Show Video' : 'Hide Video'}
-            </Button>
-            <Button className="btn-end-call" onClick={handleEndCall}>
+            </button>
+            <button className="btn-end-call" onClick={handleEndCall}>
                 End Call
-            </Button>
+            </button>
         </div>
     );
 };
