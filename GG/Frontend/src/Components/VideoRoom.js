@@ -3,9 +3,11 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
 import Button from 'react-bootstrap/Button';
 import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"; // Added useSearchParams
+import translate from 'translate';
+import './Videocall.css';
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYNAWDBERru4St+eKNtiq42z9nynQpfKaCPexXo47BXPL3igwmBokmhumGViaJSVamJikGielmhgYpKRYJqcZmKeapph0ffBJbwhkZHjDasrCyACBID43Q25iSXJGbmJ2Zl46AwMAuSseaw==';
+const TOKEN = '007eJxTYHAwSnERl7277XDhJXMrvkvtfWZHl27+uvKAvvpkCWvnq38UGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMVt8ISG8IZGQQaCtkYmSAQBCfmyE3sSQ5IzcxOzMvnYEBAAzhIfU=';
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
@@ -18,6 +20,10 @@ export const VideoRoom = ({ room }) => {
     const [localTracks, setLocalTracks] = useState([]);
     const [mute, setMute] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const [inputText, setInputText] = useState(''); // For user text input
+    const [conversationText, setConversationText] = useState(''); // Stores translated conversation
+    const [isTranslating, setIsTranslating] = useState(false); // Indicates translation progress
+
 
     const navigate = useNavigate();
     const [search] = useSearchParams(); // Added useSearchParams
@@ -67,21 +73,21 @@ export const VideoRoom = ({ room }) => {
             return newMute; // Update the state
         });
     };
-    
+
     const toggleHideVideo = async () => {
         if (!localTracks[1]) {
             console.error("Video track not initialized");
             return;
         }
-    
+
         const newHidden = !hidden;
-    
+
         if (newHidden) {
             // Stop publishing the video track (remove it for other users)
             await client.unpublish(localTracks[1]).catch((error) => {
                 console.error("Error unpublishing video track:", error);
             });
-    
+
             // Remove this user from the `users` list
             setUsers((prevUsers) => prevUsers.filter((user) => user.uid !== client.uid));
         } else {
@@ -89,7 +95,7 @@ export const VideoRoom = ({ room }) => {
             await client.publish(localTracks[1]).catch((error) => {
                 console.error("Error publishing video track:", error);
             });
-    
+
             // Re-add this user to the `users` list
             setUsers((prevUsers) => [
                 ...prevUsers,
@@ -100,7 +106,7 @@ export const VideoRoom = ({ room }) => {
                 },
             ]);
         }
-    
+
         setHidden(newHidden); // Update the `hidden` state
     };
 
@@ -111,7 +117,7 @@ export const VideoRoom = ({ room }) => {
             localTrack.close();
         }
         client.unpublish().then(() => client.leave());
-    
+
         // Navigate to PostVideocall page with the user ID
         navigate({
             pathname: "/PostVideocall",
@@ -120,6 +126,37 @@ export const VideoRoom = ({ room }) => {
             }).toString()
         });
     };
+
+    const translateInput = async (text) => {
+        try {
+            setIsTranslating(true); // Indicate translation is in progress
+            const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text); // Check if text is Korean
+            const translatedText = isKorean
+                ? await translate(text, { to: "en", from: "ko" })
+                : await translate(text, { to: "ko", from: "en" });
+            setIsTranslating(false); // Reset translation state
+            return translatedText;
+        } catch (error) {
+            console.error("Translation failed:", error);
+            setIsTranslating(false); // Reset on error
+            return "Translation error. Please try again."; // Fallback message
+        }
+    };
+
+    const handleKeyPress = async (e) => {
+        if (e.key === 'Enter' && inputText.trim() !== '') {
+            const translatedText = await translateInput(inputText); // Translate user input
+            setConversationText((prevText) => prevText + (prevText ? '\n' : '') + translatedText); // Append to conversation
+            setInputText(''); // Clear the input field
+        }
+    };
+
+    useEffect(() => {
+        const logElement = document.querySelector('.conversation-log');
+        if (logElement) {
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+    }, [conversationText]);
 
     useEffect(() => {
         client.on('user-published', handleUserJoined);
@@ -191,13 +228,13 @@ export const VideoRoom = ({ room }) => {
         <div className="video-room-container">
             {/* Video Grid */}
             <div className="video-grid">
-    {users.map((user) => (
-        <div key={user.uid} className="video-box">
-            <VideoPlayer user={user} />
-        </div>
-    ))}
-</div>
-    
+                {users.map((user) => (
+                    <div key={user.uid} className="video-box">
+                        <VideoPlayer user={user} />
+                    </div>
+                ))}
+            </div>
+
             {/* Controls */}
             <Button className="btn-mute" onClick={handleMute}>
                 {mute ? 'Unmute' : 'Mute'}
@@ -208,6 +245,25 @@ export const VideoRoom = ({ room }) => {
             <Button className="btn-end-call" onClick={handleEndCall}>
                 End Call
             </Button>
+            {/* Text Input for Translation */}
+            <div className="conversation-box">
+                <div className="conversation-log">
+                    {conversationText.split('\n').map((line, index) => (
+                        <p key={index}>{line}</p>
+                    ))}
+                </div>
+            </div>
+            {/* Text Input for Translation */}
+            <div className="text-input-container">
+                <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Type a message and press Enter"
+                />
+                {isTranslating && <p>Translating...</p>}
+            </div>
         </div>
     );
 };
