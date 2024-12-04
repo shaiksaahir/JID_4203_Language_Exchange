@@ -1,4 +1,3 @@
-// FriendSearch.js
 import React, { useState, useEffect } from 'react';
 import {
   handleGetUserNamesApi,
@@ -24,6 +23,7 @@ const FriendSearch = () => {
   const [error, setError] = useState(null);
   const [selectedUserProfile, setSelectedUserProfile] = useState(null);
   const [compatibilityScore, setCompatibilityScore] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(''); // For success message
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get('id');
@@ -205,6 +205,14 @@ const FriendSearch = () => {
       const updatedFriends = [...storedFriends, user];
       localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
       setRecentChatPartners(updatedFriends);
+
+      // Display success message
+      setSuccessMessage('User has been Successfully Added to your Friends List');
+
+      // Clear the message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
     }
   };
 
@@ -323,6 +331,13 @@ const FriendSearch = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Success Message */}
+        {successMessage && (
+          <div className="success-message">
+            <p>{successMessage}</p>
+          </div>
+        )}
       </div>
     </div>
   );

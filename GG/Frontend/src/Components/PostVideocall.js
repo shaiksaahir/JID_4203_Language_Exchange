@@ -16,6 +16,7 @@ function PostVideocall() {
     const [rating, setRating] = useState(0);
     const [targetLanguageProficiency, setTargetLanguageProficiency] = useState('');
     const [comment, setComment] = useState('');
+    const [successMessage, setSuccessMessage] = useState(''); // For success messages
 
     const TargetLanguageProficiency = [
         { value: "Beginner", label: "Beginner" },
@@ -68,6 +69,12 @@ function PostVideocall() {
             const updatedFriends = [...storedFriends, { firstName, lastName }];
             localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
             console.log(`${firstName} ${lastName} added to friends list.`);
+            setSuccessMessage('User has been Successfully Added to your Friends List');
+
+            // Clear success message after 3 seconds
+            setTimeout(() => {
+                setSuccessMessage('');
+            }, 3000);
         } else {
             console.log(`${firstName} ${lastName} is already in your friends list.`);
         }
@@ -89,7 +96,13 @@ function PostVideocall() {
             // Add comment
             await handleAddComment(chatPartnerId, comment);
             console.log("Comment added successfully.");
-            
+
+            setSuccessMessage('Thanks for submitting a User Review!');
+
+            // Clear success message after 3 seconds
+            setTimeout(() => {
+                setSuccessMessage('');
+            }, 3000);
         } catch (error) {
             console.error("Failed to update rating, proficiency, or add comment:", error);
         }
@@ -155,6 +168,13 @@ function PostVideocall() {
                     </Button>
                     <Button className="btn-add-friend" onClick={handleAddFriend}>Add Friend</Button>
                 </div>
+
+                {/* Success Message */}
+                {successMessage && (
+                    <div className="success-message">
+                        <p>{successMessage}</p>
+                    </div>
+                )}
             </div>
         </div>
     );    
