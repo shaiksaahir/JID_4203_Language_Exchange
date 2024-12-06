@@ -69,6 +69,17 @@ const handleAddComment = (userId, comment) => {
     });
 };
 
+const handleAddToFriendsList = (userId, friendsList) => {
+    return axios.post('/api/v1/addToFriendsList', {
+        userId: userId,
+        friendsList: friendsList, // Expecting an array or a formatted string
+    });
+};
+
+const handleGetFriendsList = (userId) => {
+    return axios.get(`/api/v1/getFriendsList?id=${userId}`);
+};
+
 export const handleGetUserProficiencyAndRating = async (userId) => {
     try {
         const response = await axios.get(`/api/v1/getUserProfile/${userId}`);
@@ -80,4 +91,4 @@ export const handleGetUserProficiencyAndRating = async (userId) => {
 };
 
 
-export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout, handleUpdateRating, handleUpdateProficiency, handleAddComment}
+export {handleLoginApi, handleRegisterApi, handleProfileCreationAPI, handleChatApi, handleGetUser, getMessages, addMessage, handleTranslator, handleMatch, handleGetProfile, handleDataPopulation, handleUserLogout, handleUpdateRating, handleUpdateProficiency, handleAddComment, handleAddToFriendsList, handleGetFriendsList}

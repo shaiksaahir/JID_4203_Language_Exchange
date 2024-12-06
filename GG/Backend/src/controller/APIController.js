@@ -219,6 +219,66 @@ let getUserProficiencyAndRating = async (req, res) => {
     }
 };
 
+let addToFriendsList = async (req, res) => {
+    let { userId, friendsList } = req.body; // Expecting friendsList as an array or a string
+    if (!userId || !friendsList) {
+        return res.status(400).json({
+            message: 'Missing userId or friendsList'
+        });
+    }
+
+    try {
+        // Update logic
+        await pool.execute('UPDATE UserProfile SET friends_list = ? WHERE id = ?', [
+            friendsList.join(', '), // Ensure this is a string
+            userId,
+        ]);
+
+        return res.status(200).json({
+            message: 'Friends list updated successfully',
+        });
+    } catch (error) {
+        console.error('Error updating friends list:', error);
+        return res.status(500).json({
+            message: 'Error updating friends list',
+            error: error.message,
+        });
+    }
+};
+
+let getFriendsList = async (req, res) => {
+    const { id: userId } = req.query;
+
+    if (!userId) {
+        return res.status(400).json({
+            message: 'Missing user ID',
+        });
+    }
+
+    try {
+        const [rows] = await pool.execute(
+            'SELECT friends_list FROM UserProfile WHERE id = ?',
+            [userId]
+        );
+
+        if (rows.length > 0) {
+            const friendsList = rows[0].friends_list
+                ? rows[0].friends_list.split(', ')
+                : [];
+            return res.status(200).json({ friendsList });
+        } else {
+            return res.status(404).json({
+                message: 'User not found',
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching friends list:', error);
+        return res.status(500).json({
+            message: 'Error fetching friends list',
+        });
+    }
+};
+
 module.exports = { 
-    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating, updateProficiency, addComment, getUserProficiencyAndRating // added getUserNames as an export
+    addFriend, getAllUsers, createNewUser, updateUser, deleteUser, getUserNames, getUserPreferences, getUserProfile, updateRating, updateProficiency, addComment, getUserProficiencyAndRating, addToFriendsList, getFriendsList // added getUserNames as an export
 }

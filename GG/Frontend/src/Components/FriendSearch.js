@@ -12,6 +12,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { getUserData } from '../Utils/userData'; // Import to retrieve stored current user data
+import { handleAddToFriendsList, handleGetFriendsList } from '../Services/userService';
 
 const FriendSearch = () => {
   const [filterInput, setFilterInput] = useState('');
@@ -27,8 +28,12 @@ const FriendSearch = () => {
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get('id');
+  const [userList, setUserList] = useState(''); // Initialize the list as an empty string
+
 
   useEffect(() => {
+
+    
     const fetchUserData = async () => {
       try {
         console.log(
@@ -67,6 +72,31 @@ const FriendSearch = () => {
 
         console.log('Fetched user names:', userResponse.data);
         console.log('Retrieved current user data:', currentUserData);
+        console.log('current user id:', id);
+
+        // Fetch friends list for the current user
+        try {
+          console.log('Fetching friends list for user ID:', id);
+      
+          const friendsResponse = await handleGetFriendsList(id);
+          console.log('Full friendsResponse:', friendsResponse);
+      
+          // Safely access friendsList
+          const friendsList = friendsResponse?.friendsList;
+      
+          if (Array.isArray(friendsList)) {
+              setUserList(friendsList.join(', ')); // Convert the list to a string
+              console.log(userList);
+          } else {
+              console.error('Unexpected friendsList type:', friendsList);
+              setUserList(''); // Reset to empty string on unexpected structure
+          }
+        } catch (friendsError) {
+            console.error('Error fetching friends list:', friendsError);
+            setUserList(''); // Reset to empty string on fetch error
+        }
+      
+
 
         setLoading(false);
       } catch (err) {
@@ -194,8 +224,11 @@ const FriendSearch = () => {
     }
   };
 
-  const handleUserClick = (user) => {
+  
+
+  const handleUserClick = async (user) => {
     console.log('User clicked:', user);
+    console.log('Friend List:', userList);
     fetchUserProfile(user.id);
     if (!recentChatPartners.some((partner) => partner.id === user.id)) {
       setRecentChatPartners([...recentChatPartners, user]);
@@ -205,6 +238,31 @@ const FriendSearch = () => {
       const updatedFriends = [...storedFriends, user];
       localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
       setRecentChatPartners(updatedFriends);
+    }
+    if (!userList.split(', ').includes(user.firstName) || !userList.split(', ').includes(user.lastName)) {
+      console.log(user.firstName);
+      const updatedList = userList
+        ? `${userList}, ${user.firstName} ${user.lastName}`
+        : `${user.firstName} ${user.lastName}`;
+      setUserList(updatedList);
+      console.log(updatedList);
+
+      try {
+        const response = await handleAddToFriendsList(id, updatedList.split(', '));
+        // Check if response contains the expected structure
+        if (response && response.data && response.data.message) {
+            console.log(response.data.message);
+        } else {
+            console.error('Unexpected response structure:', response);
+        }
+      } catch (error) {
+          // Handle both request and response errors
+          if (error.response) {
+              console.error('API Error:', error.response.data);
+          } else {
+              console.error('Request Error:', error.message);
+          }
+      }
     }
   };
 
