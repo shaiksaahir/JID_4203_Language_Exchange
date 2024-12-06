@@ -1,0 +1,16 @@
+.conversation-box {
+    width: 100%;
+    max-height: 200px; /* Set max height to define the scrollable area */
+    overflow-y: auto; /* Enable scrolling only on this container */
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.conversation-log {
+    height: auto; /* Allow the log to adapt to its content */
+    overflow: visible; /* Disable scrolling here to prevent overlap */
+    display: flex;
+    flex-direction: column; /* Ensures messages stack vertically */
+}
