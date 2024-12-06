@@ -4,9 +4,11 @@ import { createSearchParams, useSearchParams, useNavigate } from "react-router-d
 import Button from 'react-bootstrap/Button';
 import { handleGetAllUsersApi } from '../Services/findFriendsService';
 import Select from "react-select";
-import { handleUpdateRating, handleUpdateProficiency, handleAddComment } from '../Services/userService';
+import { handleUpdateRating, handleUpdateProficiency, handleAddComment, handleGetUser } from '../Services/userService';
+import { handleGetFriendsList, handleAddToFriendsList, handleGetProfile } from '../Services/userService'; // Import your API handler
 
 function PostVideocall() {
+    const [friends, setFriends] = useState([]);
     const navigate = useNavigate();
     const [search] = useSearchParams();
     const id = search.get("id");
@@ -39,6 +41,17 @@ function PostVideocall() {
         setPartner(chatPartnerId || null); // Update state with chat partner's ID
         console.log("Chat Partner ID:", chatPartnerId);
 
+        const fetchPartnerProfile = async () => {
+            try {
+                console.log("Fetching first and last name from the database for user ID:", chatPartnerId);
+                const response = await handleGetProfile(chatPartnerId);
+                console.log('First name:', response.id);
+            } catch (error) {
+                console.error('Error fetching name:', error);
+            }
+        };
+        fetchPartnerProfile();
+
         const fetchUsers = async () => {
             try {
                 const userData = await handleGetAllUsersApi();
@@ -49,8 +62,38 @@ function PostVideocall() {
         };
         fetchUsers();
     }, [id]);
+
+    // Second useEffect: Fetch friends from the database
+    useEffect(() => {
+        const fetchFriendsFromDB = async () => {
+        if (!id) {
+            console.error('User ID is missing in the query string.');
+            return;
+        }
+
+        try {
+            console.log("Fetching friends list from the database for user ID:", id);
+            const response = await handleGetFriendsList(id);
+            console.log("Full API Response:", response);
+        
+            // Adjusted to check the correct structure
+            if (response?.friendsList && Array.isArray(response.friendsList)) {
+                setFriends(response.friendsList); // Directly set friends from the database
+                console.log("Friends list from database:", response.friendsList);
+            } else {
+                console.error('Unexpected response structure:', response);
+                setFriends([]); // Default to an empty array if the structure is invalid
+            }
+        } catch (error) {
+            console.error('Error fetching friends list:', error);
+            setFriends([]); // Handle the error by resetting to an empty array
+        }
+        };
+
+        fetchFriendsFromDB();
+    }, [id]); // Dependencies: id and friends state
     
-    const handleAddFriend = () => {
+    const handleAddFriend = async () => {
         const friend = users.find(user => String(user.id) === String(chatPartnerId));
         if (!friend) {
             console.error("No user found with chatPartnerId:", chatPartnerId);
@@ -60,6 +103,7 @@ function PostVideocall() {
         const firstName = friend.firstName;
         const lastName = friend.lastName;
 
+<<<<<<< Updated upstream
         const storedFriends = JSON.parse(localStorage.getItem('friendsList')) || [];
         const friendExists = storedFriends.some(
             f => f.firstName === firstName && f.lastName === lastName
@@ -78,6 +122,51 @@ function PostVideocall() {
         } else {
             console.log(`${firstName} ${lastName} is already in your friends list.`);
         }
+=======
+        if (!friends.includes(`${firstName} ${lastName}`)) {
+            console.log(`Adding user: ${firstName} ${lastName}`);
+            
+            const updatedList = friends
+              ? `${friends}, ${firstName} ${lastName}`
+              : `${firstName} ${lastName}`;
+            setFriends(updatedList);
+            console.log("Updated Friends List:", updatedList);
+      
+            try {
+              const response = await handleAddToFriendsList(id, updatedList.split(', '));
+              // Check if response contains the expected structure
+              if (response && response.data && response.data.message) {
+                  console.log(response.data.message);
+              } else {
+                  console.error('Unexpected response structure:', response);
+              }
+      
+                // Display success message
+              setSuccessMessage('User has been Successfully Added to your Friends List');
+      
+              // Clear the message after 3 seconds
+              setTimeout(() => {
+                setSuccessMessage('');
+              }, 3000);
+      
+            } catch (error) {
+                // Handle both request and response errors
+                if (error.response) {
+                    console.error('API Error:', error.response.data);
+                } else {
+                    console.error('Request Error:', error.message);
+                }
+            }
+          } else {
+              // Display fail message if user is already on the friend list
+              setSuccessMessage('User is already on your friends list!');
+      
+              // Clear the message after 3 seconds
+              setTimeout(() => {
+                setSuccessMessage('');
+              }, 3000);
+          }
+>>>>>>> Stashed changes
     };
 
     const handleSubmit = async (e) => {
