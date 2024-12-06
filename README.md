@@ -39,6 +39,8 @@
 * Post Video Call page now automatically fetches your recent chat partner.
 ### Known Issues
 * Missing AI-enhanced speaking and listening games.
+* Back button is not visually consistent in Post Video Call page.
+* A blank user occasionally appears in the Friends List after adding a friend from the Post Video Call page.
 
 # Install Guide
 ## PREREQUISITES 
