@@ -239,13 +239,16 @@ const FriendSearch = () => {
       localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
       setRecentChatPartners(updatedFriends);
     }
-    if (!userList.split(', ').includes(user.firstName) || !userList.split(', ').includes(user.lastName)) {
-      console.log(user.firstName);
+
+
+    if (!userList.split(', ').includes(`${user.firstName} ${user.lastName}`)) {
+      console.log(`Adding user: ${user.firstName} ${user.lastName}`);
+      
       const updatedList = userList
         ? `${userList}, ${user.firstName} ${user.lastName}`
         : `${user.firstName} ${user.lastName}`;
       setUserList(updatedList);
-      console.log(updatedList);
+      console.log("Updated Friends List:", updatedList);
 
       try {
         const response = await handleAddToFriendsList(id, updatedList.split(', '));
@@ -255,6 +258,15 @@ const FriendSearch = () => {
         } else {
             console.error('Unexpected response structure:', response);
         }
+
+          // Display success message
+        setSuccessMessage('User has been Successfully Added to your Friends List');
+
+        // Clear the message after 3 seconds
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000);
+
       } catch (error) {
           // Handle both request and response errors
           if (error.response) {
@@ -263,6 +275,14 @@ const FriendSearch = () => {
               console.error('Request Error:', error.message);
           }
       }
+    } else {
+        // Display fail message if user is already on the friend list
+        setSuccessMessage('User is already on your friends list!');
+
+        // Clear the message after 3 seconds
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000);
     }
   };
 
