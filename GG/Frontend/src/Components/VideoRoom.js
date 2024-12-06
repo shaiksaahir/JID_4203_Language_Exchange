@@ -3,9 +3,11 @@ import AgoraRTC from 'agora-rtc-sdk-ng';
 import { VideoPlayer } from './VideoPlayer';
 import Button from 'react-bootstrap/Button';
 import { useNavigate, createSearchParams, useSearchParams } from "react-router-dom"; // Added useSearchParams
+import translate from 'translate';
+import './VideoRoom.css';
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYNAWDBERru4St+eKNtiq42z9nynQpfKaCPexXo47BXPL3igwmBokmhumGViaJSVamJikGielmhgYpKRYJqcZmKeapph0ffBJbwhkZHjDasrCyACBID43Q25iSXJGbmJ2Zl46AwMAuSseaw==';
+const TOKEN = '007eJxTYOhhrnb9uYLpTaDLQwkDQ9vpG38Ufpk68XDbtiXpGz59ZAtQYDA1SDQ3TDOwNEtKtDAxSTVOSjUxMEhJsUxOMzBPNU0xeRcalN4QyMjw7tlCFkYGCATxuRlyE0uSM3ITszPz0hkYALNiJKE=';
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
@@ -18,6 +20,9 @@ export const VideoRoom = ({ room }) => {
     const [localTracks, setLocalTracks] = useState([]);
     const [mute, setMute] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const [inputText, setInputText] = useState(''); // For user text input
+    const [conversationText, setConversationText] = useState(''); // Stores translated conversation
+    const [isTranslating, setIsTranslating] = useState(false);
 
     const navigate = useNavigate();
     const [search] = useSearchParams(); // Added useSearchParams
@@ -67,21 +72,21 @@ export const VideoRoom = ({ room }) => {
             return newMute; // Update the state
         });
     };
-    
+
     const toggleHideVideo = async () => {
         if (!localTracks[1]) {
             console.error("Video track not initialized");
             return;
         }
-    
+
         const newHidden = !hidden;
-    
+
         if (newHidden) {
             // Stop publishing the video track (remove it for other users)
             await client.unpublish(localTracks[1]).catch((error) => {
                 console.error("Error unpublishing video track:", error);
             });
-    
+
             // Remove this user from the `users` list
             setUsers((prevUsers) => prevUsers.filter((user) => user.uid !== client.uid));
         } else {
@@ -89,7 +94,7 @@ export const VideoRoom = ({ room }) => {
             await client.publish(localTracks[1]).catch((error) => {
                 console.error("Error publishing video track:", error);
             });
-    
+
             // Re-add this user to the `users` list
             setUsers((prevUsers) => [
                 ...prevUsers,
@@ -100,7 +105,7 @@ export const VideoRoom = ({ room }) => {
                 },
             ]);
         }
-    
+
         setHidden(newHidden); // Update the `hidden` state
     };
 
@@ -111,7 +116,7 @@ export const VideoRoom = ({ room }) => {
             localTrack.close();
         }
         client.unpublish().then(() => client.leave());
-    
+
         // Navigate to PostVideocall page with the user ID
         navigate({
             pathname: "/PostVideocall",
@@ -120,6 +125,37 @@ export const VideoRoom = ({ room }) => {
             }).toString()
         });
     };
+
+    const translateInput = async (text) => {
+        try {
+            setIsTranslating(true); // Indicate translation is in progress
+            const isKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(text); // Check if text is Korean
+            const translatedText = isKorean
+                ? await translate(text, { to: "en", from: "ko" })
+                : await translate(text, { to: "ko", from: "en" });
+            setIsTranslating(false); // Reset translation state
+            return translatedText;
+        } catch (error) {
+            console.error("Translation failed:", error);
+            setIsTranslating(false); // Reset on error
+            return "Translation error. Please try again."; // Fallback message
+        }
+    };
+
+    const handleKeyPress = async (e) => {
+        if (e.key === 'Enter' && inputText.trim() !== '') {
+            const translatedText = await translateInput(inputText); // Translate user input
+            setConversationText((prevText) => prevText + (prevText ? '\n' : '') + translatedText); // Append to conversation
+            setInputText(''); // Clear the input field
+        }
+    };
+
+    useEffect(() => {
+        const logElement = document.querySelector('.conversation-log');
+        if (logElement) {
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+    }, [conversationText]);
 
     useEffect(() => {
         client.on('user-published', handleUserJoined);
@@ -137,16 +173,16 @@ export const VideoRoom = ({ room }) => {
 
         if (room === '1') {
             roomChannel = 'Room A';
-            roomToken = '007eJxTYNjg/cbktOOB7d7CfnO9PEo/MwV+7Xjypajt7WJ9xhidrQsVGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMln/1SW8IZGQw71dkYWSAQBCfjSEoPz9XwZGBAQC6JiAy';
+            roomToken = '007eJxTYKhW6z5Y3NLkvujEnWMuei6XFp39osQi+F/MW3L5xewZTe0KDKYGieaGaQaWZkmJFiYmqcZJqSYGBikplslpBuappikmeg5B6Q2BjAxVO6RZGRkgEMRnYwjKz89VcGRgAACJBB8q';
         } else if (room === '2') {
             roomChannel = 'Room 2';
-            roomToken = '007eJxTYODd1C2nx9Ef9S9rgv7k39pTfnk6bjz7hI312utFXivzpycrMJgaJJobphlYmiUlWpiYpBonpZoYGKSkWCanGZinmqaYrPzgk94QyMiwIuEKIyMDBIL4bAxB+fm5CkYMDACXiCCe';
+            roomToken = '007eJxTYBA4Wzn1cYpx5YETbb1is2LnzG5cyFgdN2fidan7hseCF4cqMJgaJJobphlYmiUlWpiYpBonpZoYGKSkWCanGZinmqaYBDoEpTcEMjLwpbGwMjJAIIjPxhCUn5+rYMTAAACBMB6J';
         } else if (room === '3') {
             roomChannel = 'Room 3';
-            roomToken = '007eJxTYPh6eW3PfVZTDxO2VYe0Tr/m+n1P9H0NR2Ch9Q3n0xMroyoVGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNM9n/1SW8IZGS4yj+RiZEBAkF8Noag/PxcBWMGBgDPBiC8';
+            roomToken = '007eJxTYIg1nCttfWbzr12fni0/Omt6SWn/P6EjYUwt4eGX0w05bHcqMJgaJJobphlYmiUlWpiYpBonpZoYGKSkWCanGZinmqaYpDsEpTcEMjJ8n8bFzMgAgSA+G0NQfn6ugjEDAwDWciAt';
         } else if (room === '4') {
             roomChannel = 'Room 4';
-            roomToken = '007eJxTYNBU4fq27nfw40qpn69iBboei2VznGVfb8LNk9WlLP1DnkWBwdQg0dwwzcDSLCnRwsQk1Tgp1cTAICXFMjnNwDzVNMXkylef9IZARoZw7/dMjAwQCOKzMQTl5+cqmDAwAADqOh37';
+            roomToken = '007eJxTYLjpr5WadlVS50hBoPsXLn+zeQWnYiZXN93V0OhqmhC946wCg6lBorlhmoGlWVKihYlJqnFSqomBQUqKZXKagXmqaYpJvUNQekMgI8PtOl1mRgYIBPHZGILy83MVTBgYAD2eHsA=';
         }
 
         console.log("room:", room);
@@ -191,13 +227,13 @@ export const VideoRoom = ({ room }) => {
         <div className="video-room-container">
             {/* Video Grid */}
             <div className="video-grid">
-    {users.map((user) => (
-        <div key={user.uid} className="video-box">
-            <VideoPlayer user={user} />
-        </div>
-    ))}
-</div>
-    
+                {users.map((user) => (
+                    <div key={user.uid} className="video-box">
+                        <VideoPlayer user={user} />
+                    </div>
+                ))}
+            </div>
+
             {/* Controls */}
             <button className="btn-mute" onClick={handleMute} >
                 {mute ? 'Unmute' : 'Mute'}
@@ -208,6 +244,24 @@ export const VideoRoom = ({ room }) => {
             <button className="btn-end-call" onClick={handleEndCall}>
                 End Call
             </button>
+            <div className="conversation-box">
+                <div className="conversation-log">
+                    {conversationText.split('\n').map((line, index) => (
+                        <p key={index}>{line}</p>
+                    ))}
+                </div>
+            </div>
+            {/* Text Input for Translation */}
+            <div className="text-input-container">
+                <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Type a message and press Enter"
+                />
+                {isTranslating && <p>Translating...</p>}
+            </div>
         </div>
     );
 };
