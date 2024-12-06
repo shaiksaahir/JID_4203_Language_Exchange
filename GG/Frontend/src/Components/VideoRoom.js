@@ -7,7 +7,7 @@ import translate from 'translate';
 import './VideoRoom.css';
 
 const APP_ID = '50a71f096ba844e3be400dd9cf07e5d4';  // Your Agora APP_ID
-const TOKEN = '007eJxTYHAwSnERl7277XDhJXMrvkvtfWZHl27+uvKAvvpkCWvnq38UGEwNEs0N0wwszZISLUxMUo2TUk0MDFJSLJPTDMxTTVNMVt8ISG8IZGQQaCtkYmSAQBCfmyE3sSQ5IzcxOzMvnYEBAAzhIfU=';
+const TOKEN = '007eJxTYOhhrnb9uYLpTaDLQwkDQ9vpG38Ufpk68XDbtiXpGz59ZAtQYDA1SDQ3TDOwNEtKtDAxSTVOSjUxMEhJsUxOMzBPNU0xeRcalN4QyMjw7tlCFkYGCATxuRlyE0uSM3ITszPz0hkYALNiJKE=';
 const CHANNEL = 'matchmaking';
 
 const client = AgoraRTC.createClient({
