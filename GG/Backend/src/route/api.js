@@ -17,6 +17,8 @@ const initAPIRoute = (app) => {
     router.post('/update-proficiency', APIController.updateProficiency);
     router.post('/add-comment', APIController.addComment);
     router.get('/getUserProficiencyAndRating/:userId', APIController.getUserProficiencyAndRating);
+    router.post('/addToFriendsList', APIController.addToFriendsList);
+    router.get('/getFriendsList', APIController.getFriendsList);
   
     return app.use('/api/v1/', router)
 }
