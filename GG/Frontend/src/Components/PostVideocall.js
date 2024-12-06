@@ -103,26 +103,6 @@ function PostVideocall() {
         const firstName = friend.firstName;
         const lastName = friend.lastName;
 
-<<<<<<< Updated upstream
-        const storedFriends = JSON.parse(localStorage.getItem('friendsList')) || [];
-        const friendExists = storedFriends.some(
-            f => f.firstName === firstName && f.lastName === lastName
-        );
-
-        if (!friendExists) {
-            const updatedFriends = [...storedFriends, { firstName, lastName }];
-            localStorage.setItem('friendsList', JSON.stringify(updatedFriends));
-            console.log(`${firstName} ${lastName} added to friends list.`);
-            setSuccessMessage('User has been Successfully Added to your Friends List');
-
-            // Clear success message after 3 seconds
-            setTimeout(() => {
-                setSuccessMessage('');
-            }, 3000);
-        } else {
-            console.log(`${firstName} ${lastName} is already in your friends list.`);
-        }
-=======
         if (!friends.includes(`${firstName} ${lastName}`)) {
             console.log(`Adding user: ${firstName} ${lastName}`);
             
@@ -166,7 +146,6 @@ function PostVideocall() {
                 setSuccessMessage('');
               }, 3000);
           }
->>>>>>> Stashed changes
     };
 
     const handleSubmit = async (e) => {
